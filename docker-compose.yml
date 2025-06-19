@@ -1,0 +1,7 @@
+services:
+  stremio-hisense:
+    build: .
+    container_name: stremio-hisense-server
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
