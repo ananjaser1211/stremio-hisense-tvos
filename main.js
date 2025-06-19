@@ -9504,8 +9504,8 @@
                     settings: null
                 },
                 q = e => ({
-                    baseUrl: e.baseUrl,
-                    transportUrl: e.selected ? e.selected.transportUrl : null,
+                    baseUrl: "http://192.168.1.167:11470",
+                    transportUrl: "http://192.168.1.167:11470",
                     settings: s(e.settings)
                 }),
                 F = () => {
