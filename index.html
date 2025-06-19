@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="shortcut icon" type="image/ico" href="assets/favicon.ico" />
+    <title>Stremio - Freedom to Stream</title>
+    <script defer="defer" src="runtime.js"></script>
+    <script defer="defer" src="main.js"></script>
+    <script defer="defer" src="webOSTV.js"></script>
+</head>
+
+<body>
+    <script>
+        window.top.postMessage(JSON.stringify({
+            id: 0,
+            scope: 'Status',
+            name: 'ready',
+        }), '*');
+        // detect strange case of Vidaa TV with 720p viewport
+        setTimeout(() => {
+            window.screen720p = false
+            try {
+                if (Hisense_GetFirmWareVersion() && window.innerHeight === 720) {
+                    window.screen720p = true
+                }
+            } catch (e) {}
+            if (window.screen720p) {
+                document.body.style.zoom = '65%';
+            }
+        })
+    </script><noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+</body>
+
+</html>
