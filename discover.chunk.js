@@ -1,18 +1,33 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [8842], {
-        3447: (e, t, n) => {
+        249: (e, t, n) => {
+            n.d(t, {
+                A: () => i
+            });
+            var s = n(5556),
+                r = n.n(s),
+                o = n(3645),
+                a = n.n(o)()(r());
+            a.push([e.id, ".discover-sKRNy .content-sFo_t {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  overflow: visible;\n}\n.discover-sKRNy .content-sFo_t > * {\n  margin: 1rem 0 1rem 0;\n}\n.discover-sKRNy .content-sFo_t > :first-child {\n  margin-top: 0;\n}\n.discover-sKRNy .content-sFo_t > :last-child {\n  margin-bottom: 0;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW {\n  z-index: 1;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > :first-child {\n  margin-left: 0;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > :last-child {\n  margin-right: 0;\n}\n", ""]), a.locals = {
+                discover: "discover-sKRNy",
+                content: "content-sFo_t",
+                filters: "filters-C_DVW"
+            };
+            const i = a
+        },
+        4781: (e, t, n) => {
             n.r(t), n.d(t, {
                 default: () => W
             });
-            var s = n(8224),
-                r = n(6886),
-                o = (n(9144), n(9784), n(7961), n(5073), n(656)),
-                a = n(5994),
-                i = n(4922),
-                l = n(1407),
-                c = n(1043),
-                d = (n(3238), n(7253));
+            var s = n(9151),
+                r = n(9225),
+                o = (n(8579), n(5235), n(1064), n(2432), n(1088)),
+                a = n(9132),
+                i = n(8327),
+                l = n(6870),
+                c = n(1157),
+                d = (n(7105), n(5585));
             const g = ({
                 selectable: e
             }) => {
@@ -51,19 +66,19 @@
                     })))))
                 }
             };
-            var v = n(1727),
+            var v = n(43),
                 u = n.n(v),
-                p = n(8156),
+                p = n(5920),
                 m = n.n(p),
-                h = n(9792),
+                h = n(3004),
                 f = n.n(h),
-                y = n(3735),
+                y = n(7419),
                 _ = n.n(y),
-                C = n(2283),
+                C = n(1663),
                 b = n.n(C),
-                x = n(7128),
+                x = n(1612),
                 N = n.n(x),
-                k = n(5772),
+                k = n(249),
                 K = {};
             K.styleTagTransform = N(), K.setAttributes = _(), K.insert = f().bind(null, "head"), K.domAPI = m(), K.insertStyleElement = b();
             u()(k.A, K);
@@ -180,21 +195,6 @@
                         }
                     })
                 }
-        },
-        5772: (e, t, n) => {
-            n.d(t, {
-                A: () => i
-            });
-            var s = n(2608),
-                r = n.n(s),
-                o = n(6305),
-                a = n.n(o)()(r());
-            a.push([e.id, ".discover-sKRNy .content-sFo_t {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  overflow: visible;\n}\n.discover-sKRNy .content-sFo_t > * {\n  margin: 1rem 0 1rem 0;\n}\n.discover-sKRNy .content-sFo_t > :first-child {\n  margin-top: 0;\n}\n.discover-sKRNy .content-sFo_t > :last-child {\n  margin-bottom: 0;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW {\n  z-index: 1;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > :first-child {\n  margin-left: 0;\n}\n.discover-sKRNy .content-sFo_t .filters-C_DVW > :last-child {\n  margin-right: 0;\n}\n", ""]), a.locals = {
-                discover: "discover-sKRNy",
-                content: "content-sFo_t",
-                filters: "filters-C_DVW"
-            };
-            const i = a
         }
     }
 ]);

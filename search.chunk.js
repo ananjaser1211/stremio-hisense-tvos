@@ -1,28 +1,13 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [187], {
-        163: (e, n, t) => {
+        927: (e, n, t) => {
             t.d(n, {
                 A: () => l
             });
-            var r = t(2608),
+            var r = t(5556),
                 a = t.n(r),
-                i = t(6305),
-                s = t.n(i)()(a());
-            s.push([e.id, ".history-naEKv {\n  flex: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: space-between;\n  width: 100%;\n  padding: 1rem 4rem 2rem 4rem;\n  margin-top: 8rem;\n}\n.history-naEKv > * {\n  margin: 1rem 0 1rem 0;\n}\n.history-naEKv > :first-child {\n  margin-top: 0;\n}\n.history-naEKv > :last-child {\n  margin-bottom: 0;\n}\n.history-naEKv .items-K8a2A {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  width: 100%;\n}\n.history-naEKv .button-zjUJY {\n  align-self: flex-end;\n}\n", ""]), s.locals = {
-                history: "history-naEKv",
-                items: "items-K8a2A",
-                button: "button-zjUJY"
-            };
-            const l = s
-        },
-        4846: (e, n, t) => {
-            t.d(n, {
-                A: () => l
-            });
-            var r = t(2608),
-                a = t.n(r),
-                i = t(6305),
+                i = t(3645),
                 s = t.n(i)()(a());
             s.push([e.id, ".search-guyhx {\n  display: flex;\n  flex-direction: column;\n}\n.search-guyhx .heading-AvPuR {\n  z-index: 1;\n  position: absolute;\n  width: 100%;\n  padding: 2rem 4rem 1rem 4rem;\n}\n.search-guyhx .container-RxHME .item-preview-AGbhU {\n  padding-top: 6rem;\n}\n.search-guyhx .container-RxHME .content-XYvEJ {\n  z-index: 1;\n  position: relative;\n  overflow: hidden;\n}\n", ""]), s.locals = {
                 search: "search-guyhx",
@@ -33,30 +18,58 @@
             };
             const l = s
         },
-        7135: (e, n, t) => {
+        6104: (e, n, t) => {
+            t.d(n, {
+                A: () => l
+            });
+            var r = t(5556),
+                a = t.n(r),
+                i = t(3645),
+                s = t.n(i)()(a());
+            s.push([e.id, ".history-naEKv {\n  flex: auto;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: space-between;\n  width: 100%;\n  padding: 1rem 4rem 2rem 4rem;\n  margin-top: 8rem;\n}\n.history-naEKv > * {\n  margin: 1rem 0 1rem 0;\n}\n.history-naEKv > :first-child {\n  margin-top: 0;\n}\n.history-naEKv > :last-child {\n  margin-bottom: 0;\n}\n.history-naEKv .items-K8a2A {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  width: 100%;\n}\n.history-naEKv .button-zjUJY {\n  align-self: flex-end;\n}\n", ""]), s.locals = {
+                history: "history-naEKv",
+                items: "items-K8a2A",
+                button: "button-zjUJY"
+            };
+            const l = s
+        },
+        6427: (e, n, t) => {
+            t.d(n, {
+                A: () => l
+            });
+            var r = t(5556),
+                a = t.n(r),
+                i = t(3645),
+                s = t.n(i)()(a());
+            s.push([e.id, ".item-yZUQn {\n  justify-content: flex-start;\n  width: 100%;\n  overflow: hidden;\n}\n", ""]), s.locals = {
+                item: "item-yZUQn"
+            };
+            const l = s
+        },
+        9543: (e, n, t) => {
             t.r(n), t.d(n, {
                 default: () => _
             });
-            var r = t(8224),
-                a = t(6886),
-                i = (t(9144), t(3311), t(5073), t(656)),
-                s = t(7253),
-                l = t(1043),
-                o = t(4922),
-                c = t(5994),
-                u = t(1727),
+            var r = t(9151),
+                a = t(9225),
+                i = (t(8579), t(5894), t(2432), t(1088)),
+                s = t(5585),
+                l = t(1157),
+                o = t(8327),
+                c = t(9132),
+                u = t(43),
                 d = t.n(u),
-                h = t(8156),
+                h = t(5920),
                 g = t.n(h),
-                m = t(9792),
+                m = t(3004),
                 v = t.n(m),
-                y = t(3735),
+                y = t(7419),
                 A = t.n(y),
-                p = t(2283),
+                p = t(1663),
                 b = t.n(p),
-                f = t(7128),
+                f = t(1612),
                 x = t.n(f),
-                E = t(9650),
+                E = t(6427),
                 w = {};
             w.styleTagTransform = x(), w.setAttributes = A(), w.insert = v().bind(null, "head"), w.domAPI = g(), w.insertStyleElement = b();
             d()(E.A, w);
@@ -75,7 +88,7 @@
                         }
                     })
                 };
-            var K = t(163),
+            var K = t(6104),
                 k = {};
             k.styleTagTransform = x(), k.setAttributes = A(), k.insert = v().bind(null, "head"), k.domAPI = g(), k.insertStyleElement = b();
             d()(K.A, k);
@@ -120,12 +133,12 @@
                 })), (0, a.gb)((() => (0, r.s7)(t, H.history))), t;
                 var t
             };
-            var T = t(4846),
+            var T = t(927),
                 S = {};
             S.styleTagTransform = x(), S.setAttributes = A(), S.insert = v().bind(null, "head"), S.domAPI = g(), S.insertStyleElement = b();
             d()(T.A, S);
             const j = T.A && T.A.locals ? T.A.locals : void 0;
-            var G = t(1407),
+            var G = t(6870),
                 L = (0, r.vs)("<div>");
             const U = "search",
                 _ = () => {
@@ -265,19 +278,6 @@
                         }
                     })
                 }
-        },
-        9650: (e, n, t) => {
-            t.d(n, {
-                A: () => l
-            });
-            var r = t(2608),
-                a = t.n(r),
-                i = t(6305),
-                s = t.n(i)()(a());
-            s.push([e.id, ".item-yZUQn {\n  justify-content: flex-start;\n  width: 100%;\n  overflow: hidden;\n}\n", ""]), s.locals = {
-                item: "item-yZUQn"
-            };
-            const l = s
         }
     }
 ]);

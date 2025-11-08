@@ -52,12 +52,13 @@
             enumerable: !0,
             get: r[e]
         })
-    }, i.f = {}, i.e = t => Promise.all(Object.keys(i.f).reduce(((r, e) => (i.f[e](t, r), r)), [])), i.u = t => (({
+    }, i.f = {}, i.e = t => Promise.all(Object.keys(i.f).reduce(((r, e) => (i.f[e](t, r), r)), [])), i.u = t => ({
         187: "search",
         239: "translations13",
         344: "translations32",
         467: "translations6",
         478: "translations3",
+        631: "translations44",
         940: "translations36",
         1088: "player",
         1397: "translations20",
@@ -68,6 +69,7 @@
         3276: "translations1",
         3287: "translations2",
         3373: "translations28",
+        3429: "translations46",
         3749: "translations37",
         4036: "translations10",
         4206: "translations23",
@@ -81,6 +83,7 @@
         5710: "addons",
         5714: "translations38",
         5779: "translations26",
+        6180: "video",
         6415: "details",
         6472: "settings",
         6547: "translations31",
@@ -94,6 +97,7 @@
         7669: "translations0",
         7673: "translations15",
         7811: "translations40",
+        7822: "translations45",
         7920: "library",
         7962: "home",
         8061: "translations8",
@@ -107,7 +111,7 @@
         9494: "translations12",
         9576: "translations25",
         9643: "translations17"
-    }[t] || t) + ".chunk.js"), i.g = function() {
+    }[t] + ".chunk.js"), i.g = function() {
         if ("object" == typeof globalThis) return globalThis;
         try {
             return this || new Function("return this")()

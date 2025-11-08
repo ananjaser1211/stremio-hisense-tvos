@@ -1,19 +1,19 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [7920], {
-        2398: (e, n, t) => {
+        254: (e, n, t) => {
             t.r(n), t.d(n, {
                 default: () => A
             });
-            var r = t(8224),
-                l = t(6886),
-                i = (t(9144), t(4582), t(5073), t(656)),
-                a = t(7253),
-                o = t(1407),
-                s = t(1043),
-                c = t(4922),
-                d = t(5994);
-            t(9784), t(3238);
+            var r = t(9151),
+                l = t(9225),
+                i = (t(8579), t(8433), t(2432), t(1088)),
+                a = t(5585),
+                o = t(6870),
+                s = t(1157),
+                c = t(8327),
+                d = t(9132);
+            t(5235), t(7105);
             const g = ({
                 selectable: e
             }) => {
@@ -41,19 +41,19 @@
                     })))
                 }
             };
-            var h = t(1727),
+            var h = t(43),
                 u = t.n(h),
-                b = t(8156),
+                b = t(5920),
                 m = t.n(b),
-                p = t(9792),
+                p = t(3004),
                 v = t.n(p),
-                f = t(3735),
+                f = t(7419),
                 y = t.n(f),
-                L = t(2283),
+                L = t(1663),
                 N = t.n(L),
-                x = t(7128),
+                x = t(1612),
                 J = t.n(x),
-                w = t(3356),
+                w = t(9169),
                 B = {};
             B.styleTagTransform = J(), B.setAttributes = y(), B.insert = v().bind(null, "head"), B.domAPI = m(), B.insertStyleElement = N();
             u()(w.A, B);
@@ -207,13 +207,13 @@
                     })
                 }
         },
-        3356: (e, n, t) => {
+        9169: (e, n, t) => {
             t.d(n, {
                 A: () => o
             });
-            var r = t(2608),
+            var r = t(5556),
                 l = t.n(r),
-                i = t(6305),
+                i = t(3645),
                 a = t.n(i)()(l());
             a.push([e.id, ".library-J0Lti .placeholder-zN3fb {\n  z-index: 1;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.library-J0Lti .placeholder-zN3fb > * {\n  margin: 0.75rem 0 0.75rem 0;\n}\n.library-J0Lti .placeholder-zN3fb > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .placeholder-zN3fb > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .placeholder-zN3fb .image-uUIaS {\n  height: calc(18rem - 1.5rem);\n  width: calc(18rem - 1.5rem);\n}\n.library-J0Lti .placeholder-zN3fb .text-uY5su {\n  font-size: 1.75rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.library-J0Lti .content-haNlB {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  overflow: visible;\n}\n.library-J0Lti .content-haNlB > * {\n  margin: 1rem 0 1rem 0;\n}\n.library-J0Lti .content-haNlB > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .content-haNlB > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 {\n  z-index: 1;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :first-child {\n  margin-left: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :last-child {\n  margin-right: 0;\n}\n", ""]), a.locals = {
                 library: "library-J0Lti",
