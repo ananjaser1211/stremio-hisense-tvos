@@ -1,14 +1,16 @@
-# 📺 Stremio Hisense TVOS (v1.7.6) — Self-hosted Edition
+# 📺 Stremio Hisense TVOS (v1.9.2) — Self-hosted Edition
 
-> This is a forked **dump of the Stremio Hisense v1.7.6 TVOS web app**. I do not claim ownership of the original code.  
+> This is a forked **dump of the Stremio Hisense v1.9.2 TVOS web app**. I do not claim ownership of the original code.  
 > This project is only intended for **educational and self-hosted purposes**, allowing local control of the base server URL for Stremio.
 
 ---
 
 ## What is this?
 
-This repo contains a **static copy of the Stremio Hisense web app** (version 1.7.6) used on Vidaa-based Smart TVs.  
+This repo contains a **static copy of the Stremio Hisense web app** (version 1.9.2) used on Vidaa-based Smart TVs.  
 The purpose of this fork is to **modify the default server IP (`127.0.0.1:11470`)** to point to your own **self-hosted Stremio server**, enabling features like **torrent streaming**, etc.
+
+Update: As of App v1.8.x Stremio WebOS has a feature to set the server baseURL from settings. this is no longer required as is only available for self-hosting purposes.
 
 ---
 
