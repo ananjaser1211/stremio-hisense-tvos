@@ -1,30 +1,30 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [5710], {
-        2181: (n, e, t) => {
+        6523: (n, e, t) => {
             t.r(e), t.d(e, {
                 default: () => J
             });
-            var i = t(9151),
-                a = t(9225),
+            var i = t(7781),
+                a = t(2555),
                 s = t(9170),
-                d = t(5585),
-                o = t(1157),
-                r = t(6193),
-                l = t(9132),
-                c = t(43),
+                d = t(3497),
+                o = t(330),
+                r = t(1517),
+                l = t(6066),
+                c = t(2434),
                 h = t.n(c),
-                g = t(5920),
+                g = t(5235),
                 m = t.n(g),
-                A = t(3004),
+                A = t(6049),
                 S = t.n(A),
-                u = t(7419),
+                u = t(8938),
                 _ = t.n(u),
-                f = t(1663),
+                f = t(502),
                 L = t.n(f),
-                T = t(1612),
+                T = t(3611),
                 U = t.n(T),
-                v = t(8649),
+                v = t(7404),
                 I = {};
             I.styleTagTransform = U(), I.setAttributes = _(), I.insert = S().bind(null, "head"), I.domAPI = m(), I.insertStyleElement = L();
             h()(v.A, I);
@@ -73,13 +73,13 @@
                 })
             }
         },
-        8649: (n, e, t) => {
+        7404: (n, e, t) => {
             t.d(e, {
                 A: () => o
             });
-            var i = t(5556),
+            var i = t(4474),
                 a = t.n(i),
-                s = t(3645),
+                s = t(2670),
                 d = t.n(s)()(a());
             d.push([n.id, ".addons-LUJe6 {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.addons-LUJe6 > * {\n  margin: 1.25rem 0 1.25rem 0;\n}\n.addons-LUJe6 > :first-child {\n  margin-top: 0;\n}\n.addons-LUJe6 > :last-child {\n  margin-bottom: 0;\n}\n.addons-LUJe6 .icon-4a3iU {\n  height: 10rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.addons-LUJe6 .heading-q2AKI {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  max-width: 65vw;\n  text-align: center;\n}\n.addons-LUJe6 .heading-q2AKI > * {\n  margin: 0.25rem 0 0.25rem 0;\n}\n.addons-LUJe6 .heading-q2AKI > :first-child {\n  margin-top: 0;\n}\n.addons-LUJe6 .heading-q2AKI > :last-child {\n  margin-bottom: 0;\n}\n.addons-LUJe6 .heading-q2AKI .title-ZSLYp {\n  font-size: 1.8rem;\n  font-weight: 700;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.addons-LUJe6 .heading-q2AKI .note-y2pKA {\n  font-size: 1.5rem;\n  font-weight: 500;\n  font-style: italic;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n", ""]), d.locals = {
                 addons: "addons-LUJe6",

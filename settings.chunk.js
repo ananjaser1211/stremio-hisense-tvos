@@ -1,19 +1,6 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [6472], {
-        1582: (e, t, o) => {
-            o.d(t, {
-                A: () => s
-            });
-            var n = o(5556),
-                r = o.n(n),
-                a = o(3645),
-                i = o.n(a)()(r());
-            i.push([e.id, ".settings-jvCLz {\n  position: relative;\n}\n", ""]), i.locals = {
-                settings: "settings-jvCLz"
-            };
-            const s = i
-        },
         4303: (e, t, o) => {
             o.d(t, {
                 Mj: () => E
@@ -330,18 +317,18 @@
                     return e instanceof k ? e : new k(e)
                 }
         },
-        5998: (e, t, o) => {
+        5819: (e, t, o) => {
             o.r(t), o.d(t, {
                 default: () => E
             });
-            var n = o(9225),
-                r = (o(8579), o(2432), o(5585)),
-                a = o(1157),
-                i = o(1088),
-                s = o(9132),
-                l = o(8327),
-                c = (o(8433), o(2011), o(5235), o(4997), o(7105), o(4303)),
-                h = o(289);
+            var n = o(2555),
+                r = (o(4999), o(7100), o(3497)),
+                a = o(330),
+                i = o(1200),
+                s = o(6066),
+                l = o(8688),
+                c = (o(2517), o(6471), o(6399), o(1273), o(7621), o(4303)),
+                h = o(2497);
             const d = e => (0, c.Mj)(e).toRgbString(),
                 u = l.eo.all.sort(((e, t) => e.label < t.label ? -1 : e.label > t.label ? 1 : 0)),
                 p = (e, t, o) => {
@@ -393,6 +380,14 @@
                             options: [{
                                 checked: () => g.backgroundBlur(),
                                 onClick: () => g.setBackgroundBlur(!g.backgroundBlur())
+                            }]
+                        }, {
+                            label: "SETTINGS_BLUR_UNWATCHED_IMAGE",
+                            options: [{
+                                checked: () => b().hideSpoilers,
+                                onClick: () => v({
+                                    hideSpoilers: !b().hideSpoilers
+                                })
                             }]
                         }]
                     }, {
@@ -589,7 +584,7 @@
                         options: [{
                             label: "SETTINGS_VERSION",
                             options: [{
-                                label: "Theater v1.9.2 "
+                                label: "Theater v1.10.0 "
                             }]
                         }, {
                             label: "SETTINGS_PLATFORM",
@@ -615,19 +610,19 @@
                         }]
                     }]
                 };
-            var m = o(43),
+            var m = o(2434),
                 f = o.n(m),
-                g = o(5920),
+                g = o(5235),
                 y = o.n(g),
-                b = o(3004),
+                b = o(6049),
                 v = o.n(b),
-                w = o(7419),
+                w = o(8938),
                 S = o.n(w),
-                C = o(1663),
+                C = o(502),
                 T = o.n(C),
-                P = o(1612),
+                P = o(3611),
                 U = o.n(P),
-                A = o(1582),
+                A = o(6120),
                 I = {};
             I.styleTagTransform = U(), I.setAttributes = S(), I.insert = v().bind(null, "head"), I.domAPI = y(), I.insertStyleElement = T();
             f()(A.A, I);
@@ -722,6 +717,19 @@
                         }
                     })
                 }
+        },
+        6120: (e, t, o) => {
+            o.d(t, {
+                A: () => s
+            });
+            var n = o(4474),
+                r = o.n(n),
+                a = o(2670),
+                i = o.n(a)()(r());
+            i.push([e.id, ".settings-jvCLz {\n  position: relative;\n}\n", ""]), i.locals = {
+                settings: "settings-jvCLz"
+            };
+            const s = i
         }
     }
 ]);

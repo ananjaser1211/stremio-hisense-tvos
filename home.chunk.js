@@ -1,30 +1,30 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [7962], {
-        1353: (e, t, n) => {
+        6971: (e, t, n) => {
             n.r(t), n.d(t, {
                 default: () => B
             });
-            var o = n(9151),
-                r = n(9225),
-                a = (n(8579), n(2011), n(5235), n(4997), n(2432), n(5585)),
-                s = n(1157),
-                i = n(9132),
-                l = n(8327),
-                c = n(289),
-                u = n(43),
+            var o = n(7781),
+                r = n(2555),
+                a = (n(4999), n(6471), n(7100), n(3497)),
+                s = n(330),
+                i = n(6066),
+                l = n(8688),
+                c = n(2497),
+                u = n(2434),
                 d = n.n(u),
-                g = n(5920),
+                g = n(5235),
                 h = n.n(g),
-                m = n(3004),
+                m = n(6049),
                 v = n.n(m),
-                f = n(7419),
+                f = n(8938),
                 p = n.n(f),
-                w = n(1663),
+                w = n(502),
                 C = n.n(w),
-                b = n(1612),
+                b = n(3611),
                 A = n.n(b),
-                k = n(2473),
+                k = n(8884),
                 y = {};
             y.styleTagTransform = A(), y.setAttributes = p(), y.insert = v().bind(null, "head"), y.domAPI = h(), y.insertStyleElement = C();
             d()(k.A, y);
@@ -144,13 +144,13 @@
                     })
                 }
         },
-        2473: (e, t, n) => {
+        8884: (e, t, n) => {
             n.d(t, {
                 A: () => i
             });
-            var o = n(5556),
+            var o = n(4474),
                 r = n.n(o),
-                a = n(3645),
+                a = n(2670),
                 s = n.n(a)()(r());
             s.push([e.id, ".home-qPkGc .content-BPvBy {\n  z-index: 1;\n  position: relative;\n  overflow: hidden;\n}\n", ""]), s.locals = {
                 home: "home-qPkGc",

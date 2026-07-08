@@ -1,13 +1,53 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [6415], {
-        193: (e, n, t) => {
+        297: (e, n, t) => {
             t.d(n, {
                 A: () => s
             });
-            var r = t(5556),
+            var r = t(4474),
                 i = t.n(r),
-                a = t(3645),
+                a = t(2670),
+                o = t.n(a)()(i());
+            o.push([e.id, ".streams-ky0iI {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n}\n.streams-ky0iI > * {\n  margin: 0.75rem 0 0.75rem 0;\n}\n.streams-ky0iI > :first-child {\n  margin-top: 0;\n}\n.streams-ky0iI > :last-child {\n  margin-bottom: 0;\n}\n.streams-ky0iI .filters-ShFgd {\n  flex: none;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.streams-ky0iI .filters-ShFgd > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.streams-ky0iI .filters-ShFgd > :first-child {\n  margin-left: 0;\n}\n.streams-ky0iI .filters-ShFgd > :last-child {\n  margin-right: 0;\n}\n.streams-ky0iI .streams-list-atX0D {\n  flex: none;\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  padding-left: 4rem;\n}\n.streams-ky0iI .streams-list-atX0D > * {\n  margin: 0 1em 0 1em;\n}\n.streams-ky0iI .streams-list-atX0D > :first-child {\n  margin-left: 0;\n}\n.streams-ky0iI .streams-list-atX0D > :last-child {\n  margin-right: 0;\n}\n.streams-ky0iI .streams-list-atX0D .error-PL4_L {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0 0.5rem;\n  font-size: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n.streams-ky0iI .stream-details-bgXP4 {\n  flex: 1 0 auto;\n  position: relative;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  padding: 0 4rem;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem {\n  flex: 1 0 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  border-radius: 1em;\n  padding: 4rem 4rem;\n  background-color: rgba(255, 255, 255, 0.03);\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > * {\n  margin: 0.25rem 0 0.25rem 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > :first-child {\n  margin-top: 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > :last-child {\n  margin-bottom: 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem .name-pmYIm {\n  font-size: 2rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem .description-M3izB {\n  white-space: pre;\n  font-size: 1.6rem;\n  font-weight: 500;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n", ""]), o.locals = {
+                streams: "streams-ky0iI",
+                filters: "filters-ShFgd",
+                "streams-list": "streams-list-atX0D",
+                error: "error-PL4_L",
+                "stream-details": "stream-details-bgXP4",
+                inner: "inner-a1cem",
+                name: "name-pmYIm",
+                description: "description-M3izB"
+            };
+            const s = o
+        },
+        2880: (e, n, t) => {
+            t.d(n, {
+                A: () => s
+            });
+            var r = t(4474),
+                i = t.n(r),
+                a = t(2670),
+                o = t.n(a)()(i());
+            o.push([e.id, ".video-xYWmH {\n  flex: 0 0 auto;\n  position: relative;\n  height: 20rem;\n  border-radius: 1em;\n  opacity: 0.5;\n  overflow: hidden;\n  background-color: rgba(255, 255, 255, 0.03);\n  will-change: transform, opacity;\n  transition: transform 0.1s ease-out, opacity 0.1s ease-out;\n  width: calc(20rem * (16 / 9));\n}\n.video-xYWmH .indicator-BeMF_ {\n  z-index: 1;\n  position: absolute;\n  top: 1rem;\n  left: 1rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: center;\n  padding: 0.75rem 1rem;\n  border-radius: 0.5em;\n  background-color: #0c0c10;\n}\n.video-xYWmH .indicator-BeMF_ > * {\n  margin: 0 0.375rem 0 0.375rem;\n}\n.video-xYWmH .indicator-BeMF_ > :first-child {\n  margin-left: 0;\n}\n.video-xYWmH .indicator-BeMF_ > :last-child {\n  margin-right: 0;\n}\n.video-xYWmH .indicator-BeMF_ .episode-OaWDb {\n  flex: none;\n  font-size: 1.2rem;\n  font-weight: 600;\n  line-height: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.video-xYWmH .indicator-BeMF_ .watched-icon-NszqV {\n  flex: none;\n  height: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.video-xYWmH .overlay-EO8ce {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.video-xYWmH .overlay-EO8ce .icon-P2LFT {\n  height: 6rem;\n  color: hsla(0, 0%, 100%, 0.9);\n  opacity: 0.5;\n}\n.video-xYWmH .thumbnail-E7g8E {\n  z-index: 0;\n  position: relative;\n  height: 100%;\n  width: 100%;\n  background-size: cover;\n  background-position: center center;\n}\n.video-xYWmH .thumbnail-E7g8E.blurred-u0MxK {\n  filter: blur(1rem);\n  -webkit-filter: blur(1rem);\n}\n.video-xYWmH:hover {\n  opacity: 1;\n}\n.video-xYWmH[focused] {\n  opacity: 1;\n  transform: scale(1.06);\n}\n", ""]), o.locals = {
+                video: "video-xYWmH",
+                indicator: "indicator-BeMF_",
+                episode: "episode-OaWDb",
+                "watched-icon": "watched-icon-NszqV",
+                overlay: "overlay-EO8ce",
+                icon: "icon-P2LFT",
+                thumbnail: "thumbnail-E7g8E",
+                blurred: "blurred-u0MxK"
+            };
+            const s = o
+        },
+        3523: (e, n, t) => {
+            t.d(n, {
+                A: () => s
+            });
+            var r = t(4474),
+                i = t.n(r),
+                a = t(2670),
                 o = t.n(a)()(i());
             o.push([e.id, ".videos-vmDwk {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n}\n.videos-vmDwk > * {\n  margin: 1rem 0 1rem 0;\n}\n.videos-vmDwk > :first-child {\n  margin-top: 0;\n}\n.videos-vmDwk > :last-child {\n  margin-bottom: 0;\n}\n.videos-vmDwk .filters-V7aR7 {\n  flex: none;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.videos-vmDwk .filters-V7aR7 > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.videos-vmDwk .filters-V7aR7 > :first-child {\n  margin-left: 0;\n}\n.videos-vmDwk .filters-V7aR7 > :last-child {\n  margin-right: 0;\n}\n.videos-vmDwk .videos-list-cruNx {\n  flex: none;\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  padding-left: 4rem;\n}\n.videos-vmDwk .videos-list-cruNx > * {\n  margin: 0 1em 0 1em;\n}\n.videos-vmDwk .videos-list-cruNx > :first-child {\n  margin-left: 0;\n}\n.videos-vmDwk .videos-list-cruNx > :last-child {\n  margin-right: 0;\n}\n.videos-vmDwk .actions-Q6BJy {\n  flex: none;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.videos-vmDwk .actions-Q6BJy > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.videos-vmDwk .actions-Q6BJy > :first-child {\n  margin-left: 0;\n}\n.videos-vmDwk .actions-Q6BJy > :last-child {\n  margin-right: 0;\n}\n", ""]), o.locals = {
                 videos: "videos-vmDwk",
@@ -17,13 +57,16 @@
             };
             const s = o
         },
-        348: (e, n, t) => {
+        5026: (e, n, t) => {
+            e.exports = t.p + "shield.png"
+        },
+        5629: (e, n, t) => {
             t.d(n, {
                 A: () => s
             });
-            var r = t(5556),
+            var r = t(4474),
                 i = t.n(r),
-                a = t(3645),
+                a = t(2670),
                 o = t.n(a)()(i());
             o.push([e.id, ".stream-rpXLF {\n  flex: none;\n  position: relative;\n  height: 9rem;\n  width: 30rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  border-radius: 1em;\n  padding: 0 2rem;\n  background-color: rgba(255, 255, 255, 0.03);\n  opacity: 0.6;\n  overflow: hidden;\n  user-select: none;\n}\n.stream-rpXLF .play-icon-Z9iaQ {\n  flex: none;\n  position: relative;\n  height: 4.5rem;\n  width: 4.5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-right: 2rem;\n  border-radius: 100%;\n  transition: background-color 0.1s ease-in;\n}\n.stream-rpXLF .play-icon-Z9iaQ .icon-MGVZf {\n  flex: none;\n  height: 3rem;\n  width: 3rem;\n  margin-left: 0.5rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.stream-rpXLF .details-d5pag {\n  flex: 0 1 auto;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  overflow: hidden;\n}\n.stream-rpXLF .details-d5pag > * {\n  margin: 0.25rem 0 0.25rem 0;\n}\n.stream-rpXLF .details-d5pag > :first-child {\n  margin-top: 0;\n}\n.stream-rpXLF .details-d5pag > :last-child {\n  margin-bottom: 0;\n}\n.stream-rpXLF .details-d5pag .name-IfzDf {\n  flex: none;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.stream-rpXLF .details-d5pag .description-yTp1H {\n  flex: none;\n  font-size: 1.3rem;\n  font-weight: 500;\n  color: hsla(0, 0%, 100%, 0.5);\n  white-space: nowrap;\n}\n.stream-rpXLF:hover,\n.stream-rpXLF[focused] {\n  opacity: 1;\n}\n.stream-rpXLF[focused] .play-icon-Z9iaQ {\n  background-color: hsl(147.7, 68%, 51.7%);\n}\n", ""]), o.locals = {
                 stream: "stream-rpXLF",
@@ -35,24 +78,49 @@
             };
             const s = o
         },
-        2177: (e, n, t) => {
-            t.r(n), t.d(n, {
-                default: () => ge
+        7712: (e, n, t) => {
+            t.d(n, {
+                A: () => s
             });
-            var r = t(9151),
-                i = t(9225),
-                a = (t(3116), t(8579), t(5235), t(1064), t(2432), t(432)),
-                o = t(9132),
-                s = t(1088),
-                l = t(1157),
-                d = (t(3557), t(8734), t(8952), t(4997), t(9463), t(7105), t(7500)),
+            var r = t(4474),
+                i = t.n(r),
+                a = t(2670),
+                o = t.n(a)()(i());
+            o.push([e.id, ".details-omgjE {\n  display: flex;\n  flex-direction: column;\n}\n.details-omgjE .background-G0atu {\n  z-index: 0;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  user-select: none;\n}\n.details-omgjE .background-G0atu .overlay-IpSXf {\n  z-index: 1;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  background-color: #0c0c10;\n  opacity: 0.95;\n}\n.details-omgjE .background-G0atu .image-fkksf {\n  z-index: 0;\n  height: 100%;\n}\n.details-omgjE .background-G0atu .image-fkksf.blurred-LTDh_ {\n  filter: blur(15px);\n}\n.details-omgjE .info-c3Gsa {\n  z-index: 1;\n  flex: none;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  height: 44vh;\n  padding: 2rem 4rem;\n  user-select: none;\n}\n.details-omgjE .info-c3Gsa > * {\n  margin: 0.5rem 0 0.5rem 0;\n}\n.details-omgjE .info-c3Gsa > :first-child {\n  margin-top: 0;\n}\n.details-omgjE .info-c3Gsa > :last-child {\n  margin-bottom: 0;\n}\n.details-omgjE .info-c3Gsa.info-720p-jPzlb {\n  height: 67vh;\n}\n.details-omgjE .info-c3Gsa .logo-rSs1m {\n  flex: none;\n  height: calc(10rem - 1rem);\n  margin-bottom: 2rem;\n  border-radius: 1em;\n}\n.details-omgjE .info-c3Gsa .title-OL31B {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 3.7rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.details-omgjE .info-c3Gsa .video-title-dEjBn {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 2rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.details-omgjE .info-c3Gsa .video-date-U5BHg {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n.details-omgjE .info-c3Gsa .description-Vy9xR {\n  flex: none;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 4;\n  font-size: 1.7rem;\n  font-weight: 500;\n  color: hsla(0, 0%, 100%, 0.5);\n  overflow: hidden;\n}\n.details-omgjE .content-eCvgF {\n  z-index: 1;\n  flex: 1 0 auto;\n  position: relative;\n}\n", ""]), o.locals = {
+                details: "details-omgjE",
+                background: "background-G0atu",
+                overlay: "overlay-IpSXf",
+                image: "image-fkksf",
+                blurred: "blurred-LTDh_",
+                info: "info-c3Gsa",
+                "info-720p": "info-720p-jPzlb",
+                logo: "logo-rSs1m",
+                title: "title-OL31B",
+                "video-title": "video-title-dEjBn",
+                "video-date": "video-date-U5BHg",
+                description: "description-Vy9xR",
+                content: "content-eCvgF"
+            };
+            const s = o
+        },
+        8826: (e, n, t) => {
+            t.r(n), t.d(n, {
+                default: () => me
+            });
+            var r = t(7781),
+                i = t(2555),
+                a = (t(928), t(4999), t(6399), t(1012), t(7100), t(2408)),
+                o = t(6066),
+                s = t(1200),
+                l = t(330),
+                d = (t(2113), t(5802), t(5020), t(1273), t(6019), t(7621), t(7500)),
                 c = t.n(d),
-                m = t(5585),
-                u = t(6870),
+                m = t(3497),
+                u = t(9238),
                 g = t(9170),
-                v = t(289),
-                h = t(8327),
-                f = (t(7647), t(7055), t(7531), t(8994), t(9217), t(5636), (0, r.vs)("<div><h1>Warning / 경고")),
+                v = t(2497),
+                h = t(8688),
+                f = (t(3785), t(7763), t(3391), t(1430), t(589), t(4512), (0, r.vs)("<div><h1>Warning / 경고")),
                 p = (0, r.vs)("<div><p>You are about to exit Stremio and open <!>. If you do this you will have to open Stremio again from the Home Screen. Are you sure?</p><p>Stremio를 종료하고 <!>를 열려고 합니다. 이렇게 하면 홈 화면에서 Stremio를 다시 열어야 합니다. 확실하신가요?"),
                 b = (0, r.vs)("<div class=buttons>");
             const x = {
@@ -134,26 +202,26 @@
                     var n
                 }
             });
-            var Y = t(43),
-                I = t.n(Y),
-                S = t(5920),
-                E = t.n(S),
-                F = t(3004),
-                L = t.n(F),
-                D = t(7419),
-                z = t.n(D),
-                j = t(1663),
-                P = t.n(j),
-                C = t(1612),
-                T = t.n(C),
-                W = t(348),
-                X = {};
-            X.styleTagTransform = T(), X.setAttributes = z(), X.insert = L().bind(null, "head"), X.domAPI = E(), X.insertStyleElement = P();
-            I()(W.A, X);
-            const B = W.A && W.A.locals ? W.A.locals : void 0;
-            var G = (0, r.vs)("<div>"),
+            var Y = t(2434),
+                S = t.n(Y),
+                I = t(5235),
+                E = t.n(I),
+                F = t(6049),
+                D = t.n(F),
+                L = t(8938),
+                z = t.n(L),
+                j = t(502),
+                C = t.n(j),
+                P = t(3611),
+                T = t.n(P),
+                W = t(5629),
+                O = {};
+            O.styleTagTransform = T(), O.setAttributes = z(), O.insert = D().bind(null, "head"), O.domAPI = E(), O.insertStyleElement = C();
+            S()(W.A, O);
+            const X = W.A && W.A.locals ? W.A.locals : void 0;
+            var B = (0, r.vs)("<div>"),
                 H = (0, r.vs)("<div><div></div><div>");
-            const V = e => {
+            const _ = e => {
                 const n = (0, v.Vj)(),
                     t = (0, s.W6)(),
                     [a, o, l] = (0, h.zD)(),
@@ -181,7 +249,7 @@
                     };
                 return [(0, i.a0)(u.zo, {
                     get class() {
-                        return B.stream
+                        return X.stream
                     },
                     get autoFocus() {
                         return e.autoFocus
@@ -192,15 +260,15 @@
                     onPress: p,
                     onClick: p,
                     get children() {
-                        return [(o = G(), (0, r.Yr)(o, (0, i.a0)(g.A, {
+                        return [(o = B(), (0, r.Yr)(o, (0, i.a0)(g.A, {
                             get class() {
-                                return B.icon
+                                return X.icon
                             },
                             name: "play"
-                        })), (0, i.gb)((() => (0, r.s7)(o, B["play-icon"]))), o), (n = H(), t = n.firstChild, a = t.nextSibling, (0, r.Yr)(t, (() => e.stream.name)), (0, r.Yr)(a, (() => e.stream.description)), (0, i.gb)((e => {
-                            var i = B.details,
-                                o = B.name,
-                                s = B.description;
+                        })), (0, i.gb)((() => (0, r.s7)(o, X["play-icon"]))), o), (n = H(), t = n.firstChild, a = t.nextSibling, (0, r.Yr)(t, (() => e.stream.name)), (0, r.Yr)(a, (() => e.stream.description)), (0, i.gb)((e => {
+                            var i = X.details,
+                                o = X.name,
+                                s = X.description;
                             return i !== e.e && (0, r.s7)(n, e.e = i), o !== e.t && (0, r.s7)(t, e.t = o), s !== e.a && (0, r.s7)(a, e.a = s), e
                         }), {
                             e: void 0,
@@ -233,16 +301,14 @@
                     }
                 })]
             };
-            var O = t(8848),
-                _ = {};
-            _.styleTagTransform = T(), _.setAttributes = z(), _.insert = L().bind(null, "head"), _.domAPI = E(), _.insertStyleElement = P();
-            I()(O.A, _);
-            const U = O.A && O.A.locals ? O.A.locals : void 0;
-            var M = (0, r.vs)("<div>This addon did not return any content."),
-                R = (0, r.vs)("<div>No addons were able to return any content."),
-                N = (0, r.vs)("<div>"),
-                $ = (0, r.vs)("<div><div><div></div><div>");
-            const Q = e => {
+            var G = t(297),
+                V = {};
+            V.styleTagTransform = T(), V.setAttributes = z(), V.insert = D().bind(null, "head"), V.domAPI = E(), V.insertStyleElement = C();
+            S()(G.A, V);
+            const M = G.A && G.A.locals ? G.A.locals : void 0;
+            var R = (0, r.vs)("<div>"),
+                N = (0, r.vs)("<div><div><div></div><div>");
+            const U = e => {
                 var n, t;
                 const {
                     t: a
@@ -282,9 +348,9 @@
                         addon: p(),
                         stream: x()
                     }, !0)
-                })), Y = N(), (0, r.Yr)(Y, (0, i.a0)(u.Gk, {
+                })), Y = R(), (0, r.Yr)(Y, (0, i.a0)(u.Gk, {
                     get class() {
-                        return U.filters
+                        return M.filters
                     },
                     leave: ["left", "down"],
                     get children() {
@@ -308,12 +374,12 @@
                             onChange: k
                         }), (0, i.a0)(i.wv, {
                             get when() {
-                                return g.supportsRating() && "movie" === e.type
+                                return (0, r.ph)((() => !!g.supportsRating()))() && "movie" === e.type
                             },
                             get children() {
                                 return (0, i.a0)(l.GW, {
                                     get class() {
-                                        return U.rating
+                                        return M.rating
                                     },
                                     get rating() {
                                         return e.rating
@@ -330,7 +396,7 @@
                     }
                 }), null), (0, r.Yr)(Y, (0, i.a0)(l.OY, {
                     get class() {
-                        return U["streams-list"]
+                        return M["streams-list"]
                     },
                     axis: "horizontal",
                     get index() {
@@ -354,7 +420,7 @@
                                             get each() {
                                                 return w()
                                             },
-                                            children: (e, n) => (0, i.a0)(V, {
+                                            children: (e, n) => (0, i.a0)(_, {
                                                 get stream() {
                                                     return e()
                                                 },
@@ -374,8 +440,8 @@
                                         var n
                                     },
                                     get children() {
-                                        var e = M();
-                                        return (0, i.gb)((() => (0, r.s7)(e, U.error))), e
+                                        var e = R();
+                                        return (0, r.Yr)(e, (() => a("NO_STREAMS_FROM_ADDON"))), (0, i.gb)((() => (0, r.s7)(e, M.error))), e
                                     }
                                 }), (0, i.a0)(i.YG, {
                                     get when() {
@@ -385,7 +451,7 @@
                                     },
                                     get children() {
                                         var e = R();
-                                        return (0, i.gb)((() => (0, r.s7)(e, U.error))), e
+                                        return (0, r.Yr)(e, (() => a("NO_STREAMS_FROM_ADDONS"))), (0, i.gb)((() => (0, r.s7)(e, M.error))), e
                                     }
                                 })]
                             }
@@ -400,11 +466,11 @@
                         })()
                     },
                     children: e => {
-                        return n = $(), t = n.firstChild, a = t.firstChild, o = a.nextSibling, (0, r.Yr)(a, (() => e().name)), (0, r.Yr)(o, (() => e().description)), (0, i.gb)((e => {
-                            var i = U["stream-details"],
-                                s = U.inner,
-                                l = U.name,
-                                d = U.description;
+                        return n = N(), t = n.firstChild, a = t.firstChild, o = a.nextSibling, (0, r.Yr)(a, (() => e().name)), (0, r.Yr)(o, (() => e().description)), (0, i.gb)((e => {
+                            var i = M["stream-details"],
+                                s = M.inner,
+                                l = M.name,
+                                d = M.description;
                             return i !== e.e && (0, r.s7)(n, e.e = i), s !== e.t && (0, r.s7)(t, e.t = s), l !== e.a && (0, r.s7)(a, e.a = l), d !== e.o && (0, r.s7)(o, e.o = d), e
                         }), {
                             e: void 0,
@@ -414,28 +480,30 @@
                         }), n;
                         var n, t, a, o
                     }
-                }), null), (0, i.gb)((() => (0, r.s7)(Y, c()(e.class, U.streams)))), Y;
+                }), null), (0, i.gb)((() => (0, r.s7)(Y, c()(e.class, M.streams)))), Y;
                 var Y
             };
-            t(2695), t(5777), t(5708), t(5633), t(922), t(5889), t(637);
-            var K = t(7743),
-                J = {};
-            J.styleTagTransform = T(), J.setAttributes = z(), J.insert = L().bind(null, "head"), J.domAPI = E(), J.insertStyleElement = P();
-            I()(K.A, J);
-            const Z = K.A && K.A.locals ? K.A.locals : void 0;
-            var q = (0, r.vs)("<div> "),
-                ee = (0, r.vs)("<div>");
-            const ne = e => {
+            t(8267), t(4965), t(9024), t(5381), t(774), t(8109), t(6705);
+            var $ = t(2880),
+                K = {};
+            K.styleTagTransform = T(), K.setAttributes = z(), K.insert = D().bind(null, "head"), K.domAPI = E(), K.insertStyleElement = C();
+            S()($.A, K);
+            const Q = $.A && $.A.locals ? $.A.locals : void 0;
+            var J = (0, r.vs)("<div> "),
+                Z = (0, r.vs)("<div>");
+            const q = e => {
                 const {
                     t: n
-                } = (0, m.B)(), t = (0, s.W6)(), a = () => {
+                } = (0, m.B)(), {
+                    ctx: t
+                } = (0, o.gK)(), a = (0, s.W6)(), l = () => {
                     var n;
-                    const r = null !== (n = e.deepLinks.player) && void 0 !== n ? n : e.deepLinks.metaDetailsStreams;
-                    t.navigate(r)
+                    const t = null !== (n = e.deepLinks.player) && void 0 !== n ? n : e.deepLinks.metaDetailsStreams;
+                    a.navigate(t)
                 };
                 return (0, i.a0)(u.zo, {
                     get class() {
-                        return Z.video
+                        return Q.video
                     },
                     get autoFocus() {
                         return e.autoFocus
@@ -443,23 +511,23 @@
                     onFocus: () => {
                         e.onFocus(e.index)
                     },
-                    onPress: a,
-                    onClick: a,
+                    onPress: l,
+                    onClick: l,
                     get children() {
                         return [(0, i.a0)(i.wv, {
                             get when() {
                                 return e.episode || e.watched
                             },
                             get children() {
-                                var t = ee();
+                                var t = Z();
                                 return (0, r.Yr)(t, (0, i.a0)(i.wv, {
                                     get when() {
                                         return e.episode
                                     },
                                     get children() {
-                                        var t = q(),
+                                        var t = J(),
                                             a = t.firstChild;
-                                        return (0, r.Yr)(t, (() => n("EPISODE_ABBREVIATION")), a), (0, r.Yr)(t, (() => e.episode), null), (0, i.gb)((() => (0, r.s7)(t, Z.episode))), t
+                                        return (0, r.Yr)(t, (() => n("EPISODE_ABBREVIATION")), a), (0, r.Yr)(t, (() => e.episode), null), (0, i.gb)((() => (0, r.s7)(t, Q.episode))), t
                                     }
                                 }), null), (0, r.Yr)(t, (0, i.a0)(i.wv, {
                                     get when() {
@@ -468,45 +536,47 @@
                                     get children() {
                                         return (0, i.a0)(g.A, {
                                             get class() {
-                                                return Z["watched-icon"]
+                                                return Q["watched-icon"]
                                             },
                                             name: "checkmark"
                                         })
                                     }
-                                }), null), (0, i.gb)((() => (0, r.s7)(t, Z.indicator))), t
+                                }), null), (0, i.gb)((() => (0, r.s7)(t, Q.indicator))), t
                             }
-                        }), (a = ee(), (0, r.Yr)(a, (0, i.a0)(i.wv, {
+                        }), (o = Z(), (0, r.Yr)(o, (0, i.a0)(i.wv, {
                             get when() {
                                 return e.upcoming
                             },
                             get children() {
                                 return (0, i.a0)(g.A, {
                                     get class() {
-                                        return Z.icon
+                                        return Q.icon
                                     },
                                     name: "hourglass"
                                 })
                             }
-                        })), (0, i.gb)((() => (0, r.s7)(a, Z.overlay))), a), (t = ee(), (0, i.gb)((n => {
-                            var i = Z.thumbnail,
-                                a = `url(${e.thumbnail})`;
-                            return i !== n.e && (0, r.s7)(t, n.e = i), a !== n.t && (null != (n.t = a) ? t.style.setProperty("background-image", a) : t.style.removeProperty("background-image")), n
+                        })), (0, i.gb)((() => (0, r.s7)(o, Q.overlay))), o), (a = Z(), (0, i.gb)((n => {
+                            var i = c()(Q.thumbnail, {
+                                    [Q.blurred]: t.settings().hideSpoilers && e.season && e.episode && !e.watched
+                                }),
+                                o = `url(${e.thumbnail})`;
+                            return i !== n.e && (0, r.s7)(a, n.e = i), o !== n.t && (0, r.$h)(a, "background-image", n.t = o), n
                         }), {
                             e: void 0,
                             t: void 0
-                        }), t)];
-                        var t, a
+                        }), a)];
+                        var a, o
                     }
                 })
             };
-            var te = t(193),
-                re = {};
-            re.styleTagTransform = T(), re.setAttributes = z(), re.insert = L().bind(null, "head"), re.domAPI = E(), re.insertStyleElement = P();
-            I()(te.A, re);
-            const ie = te.A && te.A.locals ? te.A.locals : void 0;
-            var ae = (0, r.vs)("<div><div>");
-            const oe = 10,
-                se = e => {
+            var ee = t(3523),
+                ne = {};
+            ne.styleTagTransform = T(), ne.setAttributes = z(), ne.insert = D().bind(null, "head"), ne.domAPI = E(), ne.insertStyleElement = C();
+            S()(ee.A, ne);
+            const te = ee.A && ee.A.locals ? ee.A.locals : void 0;
+            var re = (0, r.vs)("<div><div>");
+            const ie = 10,
+                ae = e => {
                     var n, t, a;
                     const {
                         t: d
@@ -520,19 +590,19 @@
                         return null !== (n = e.videos.find((({
                             id: e
                         }) => e === t))) && void 0 !== n ? n : null
-                    }), ["id"]), I = (0, i.To)((() => e.videos.filter((({
+                    }), ["id"]), S = (0, i.To)((() => e.videos.filter((({
                         season: e
-                    }) => !A().length || e === p())))), S = () => I().length > 50 ? [...Array(Math.ceil(I().length / oe))].map(((e, n) => I().slice(n * oe, n * oe + oe))) : [], E = () => S().map(((e, n) => ({
+                    }) => !A().length || e === p())))), I = () => S().length > 50 ? [...Array(Math.ceil(S().length / ie))].map(((e, n) => S().slice(n * ie, n * ie + ie))) : [], E = () => I().map(((e, n) => ({
                         value: n.toString(),
-                        label: `${d("EPISODE")} ${n*oe+1} .. ${n*oe+oe}`,
+                        label: `${d("EPISODE")} ${n*ie+1} .. ${n*ie+ie}`,
                         selected: x() === n
                     }))), F = () => {
                         const e = x();
-                        return null !== e && S()[e] ? S()[e] : I()
-                    }, L = () => {
+                        return null !== e && I()[e] ? I()[e] : S()
+                    }, D = () => {
                         const e = w();
                         return null !== e && F()[e] ? F()[e] : null
-                    }, D = e => {
+                    }, L = e => {
                         e && (0, i.vA)((() => {
                             b(parseInt(e)), k(null), k(0)
                         }))
@@ -541,19 +611,19 @@
                             y(parseInt(e)), k(null), k(0)
                         }))
                     }, j = e => {
-                        L() && k(e)
-                    }, P = () => {
-                        const e = L();
+                        D() && k(e)
+                    }, C = () => {
+                        const e = D();
                         e && g.toggleVideoWatched(e)
                     };
                     return (0, h.k9)(Y, (e => {
                         e && e.season && b(e.season)
                     }), !1), (0, h.k9)(p, (() => {
                         const e = g.lastWatchedVideoId(),
-                            n = e && I().map((({
+                            n = e && S().map((({
                                 id: e
                             }) => e)).indexOf(e),
-                            t = n && n > 0 && Math.floor(n / oe);
+                            t = n && n > 0 && Math.floor(n / ie);
                         t && t > 0 && y(t)
                     }), !1), (0, h.k9)([p, x], (() => {
                         const e = g.lastWatchedVideoId(),
@@ -562,7 +632,7 @@
                             }) => e)).indexOf(e);
                         n && n > 0 && k(n)
                     }), !1), (0, i.EH)((() => {
-                        const n = L();
+                        const n = D();
                         n && e.onChange(n)
                     })), (0, i.EH)((() => {
                         f({
@@ -570,9 +640,9 @@
                             range: x(),
                             video: w()
                         }, !0)
-                    })), C = ae(), T = C.firstChild, (0, r.Yr)(C, (0, i.a0)(u.Gk, {
+                    })), P = re(), T = P.firstChild, (0, r.Yr)(P, (0, i.a0)(u.Gk, {
                         get class() {
-                            return ie.filters
+                            return te.filters
                         },
                         leave: ["left", "down"],
                         get children() {
@@ -589,7 +659,7 @@
                                                 selected: p() === e
                                             })))
                                         },
-                                        onChange: D
+                                        onChange: L
                                     })
                                 }
                             }), (0, i.a0)(i.wv, {
@@ -611,7 +681,7 @@
                                 get children() {
                                     return (0, i.a0)(l.GW, {
                                         get class() {
-                                            return ie.rating
+                                            return te.rating
                                         },
                                         get rating() {
                                             return e.rating
@@ -626,9 +696,9 @@
                                 }
                             })]
                         }
-                    }), T), (0, r.Yr)(C, (0, i.a0)(l.OY, {
+                    }), T), (0, r.Yr)(P, (0, i.a0)(l.OY, {
                         get class() {
-                            return ie["videos-list"]
+                            return te["videos-list"]
                         },
                         axis: "horizontal",
                         get index() {
@@ -643,7 +713,7 @@
                                 get each() {
                                     return F()
                                 },
-                                children: (e, n) => (0, i.a0)(ne, (0, i.v6)(e, {
+                                children: (e, n) => (0, i.a0)(q, (0, i.v6)(e, {
                                     index: n,
                                     get autoFocus() {
                                         return w() === n
@@ -654,7 +724,7 @@
                         }
                     }), T), (0, r.Yr)(T, (0, i.a0)(i.wv, {
                         get when() {
-                            return L()
+                            return D()
                         },
                         children: e => (0, i.a0)(l.$n, {
                             get icon() {
@@ -663,26 +733,26 @@
                             get label() {
                                 return (0, r.ph)((() => !!e().watched))() ? d("MARK_AS_UNWATCHED") : d("MARK_AS_WATCHED")
                             },
-                            onPress: P
+                            onPress: C
                         })
                     })), (0, i.gb)((n => {
-                        var t = c()(e.class, ie.videos),
-                            i = ie.actions;
-                        return t !== n.e && (0, r.s7)(C, n.e = t), i !== n.t && (0, r.s7)(T, n.t = i), n
+                        var t = c()(e.class, te.videos),
+                            i = te.actions;
+                        return t !== n.e && (0, r.s7)(P, n.e = t), i !== n.t && (0, r.s7)(T, n.t = i), n
                     }), {
                         e: void 0,
                         t: void 0
-                    }), C;
-                    var C, T
+                    }), P;
+                    var P, T
                 };
-            var le = t(3749),
-                de = {};
-            de.styleTagTransform = T(), de.setAttributes = z(), de.insert = L().bind(null, "head"), de.domAPI = E(), de.insertStyleElement = P();
-            I()(le.A, de);
-            const ce = le.A && le.A.locals ? le.A.locals : void 0;
-            var me = (0, r.vs)("<div><div>"),
-                ue = (0, r.vs)("<div>");
-            const ge = () => {
+            var oe = t(7712),
+                se = {};
+            se.styleTagTransform = T(), se.setAttributes = z(), se.insert = D().bind(null, "head"), se.domAPI = E(), se.insertStyleElement = C();
+            S()(oe.A, se);
+            const le = oe.A && oe.A.locals ? oe.A.locals : void 0;
+            var de = (0, r.vs)("<div><div>"),
+                ce = (0, r.vs)("<div>");
+            const me = () => {
                 const e = (0, s.g)(),
                     {
                         type: n,
@@ -720,7 +790,7 @@
                     Y = () => {
                         g.setRating("liked")
                     },
-                    I = () => {
+                    S = () => {
                         g.setRating("loved")
                     };
                 return (0, i.EH)((() => {
@@ -737,17 +807,17 @@
                     })
                 })), (0, i.a0)(l.YW, {
                     get class() {
-                        return ce.details
+                        return le.details
                     },
                     nested: !0,
                     get children() {
-                        return [(t = me(), a = t.firstChild, (0, r.Yr)(t, (0, i.a0)(l._V, {
+                        return [(t = de(), a = t.firstChild, (0, r.Yr)(t, (0, i.a0)(l._V, {
                             get class() {
-                                return ce.image
+                                return le.image
                             },
                             get classList() {
                                 return {
-                                    [ce.blurred]: m.backgroundBlur()
+                                    [le.blurred]: m.backgroundBlur()
                                 }
                             },
                             get src() {
@@ -755,26 +825,26 @@
                                 var e, n
                             }
                         }), null), (0, i.gb)((e => {
-                            var n = ce.background,
-                                i = ce.overlay;
+                            var n = le.background,
+                                i = le.overlay;
                             return n !== e.e && (0, r.s7)(t, e.e = n), i !== e.t && (0, r.s7)(a, e.t = i), e
                         }), {
                             e: void 0,
                             t: void 0
-                        }), t), (e = ue(), (0, r.Yr)(e, (0, i.a0)(l._V, {
+                        }), t), (e = ce(), (0, r.Yr)(e, (0, i.a0)(l._V, {
                             get class() {
-                                return ce.logo
+                                return le.logo
                             },
                             get src() {
                                 var e, n;
                                 return (null === (e = f()) || void 0 === e ? void 0 : e.logo) || (null === (n = f()) || void 0 === n ? void 0 : n.poster)
                             },
                             get children() {
-                                var e = ue();
+                                var e = ce();
                                 return (0, r.Yr)(e, (() => {
                                     var e;
                                     return null === (e = f()) || void 0 === e ? void 0 : e.name
-                                })), (0, i.gb)((() => (0, r.s7)(e, ce.title))), e
+                                })), (0, i.gb)((() => (0, r.s7)(e, le.title))), e
                             }
                         }), null), (0, r.Yr)(e, (0, i.a0)(i.wv, {
                             get when() {
@@ -782,7 +852,7 @@
                                 return null === (e = b()) || void 0 === e ? void 0 : e.title
                             },
                             children: e => {
-                                return n = ue(), (0, r.Yr)(n, k, null), (0, r.Yr)(n, e, null), (0, i.gb)((() => (0, r.s7)(n, ce["video-title"]))), n;
+                                return n = ce(), (0, r.Yr)(n, k, null), (0, r.Yr)(n, e, null), (0, i.gb)((() => (0, r.s7)(n, le["video-title"]))), n;
                                 var n
                             }
                         }), null), (0, r.Yr)(e, (0, i.a0)(i.wv, {
@@ -791,7 +861,7 @@
                                 var e, n, t
                             },
                             children: e => {
-                                return n = ue(), (0, r.Yr)(n, e), (0, i.gb)((() => (0, r.s7)(n, ce.description))), n;
+                                return n = ce(), (0, r.Yr)(n, e), (0, i.gb)((() => (0, r.s7)(n, le.description))), n;
                                 var n
                             }
                         }), null), (0, r.Yr)(e, (0, i.a0)(i.wv, {
@@ -808,11 +878,11 @@
                                 })()
                             },
                             children: e => {
-                                return n = ue(), (0, r.Yr)(n, e), (0, i.gb)((() => (0, r.s7)(n, ce["video-date"]))), n;
+                                return n = ce(), (0, r.Yr)(n, e), (0, i.gb)((() => (0, r.s7)(n, le["video-date"]))), n;
                                 var n
                             }
-                        }), null), (0, i.gb)((() => (0, r.s7)(e, c()(ce.info, {
-                            [ce["info-720p"]]: window.screen720p
+                        }), null), (0, i.gb)((() => (0, r.s7)(e, c()(le.info, {
+                            [le["info-720p"]]: window.screen720p
                         })))), e), (0, i.a0)(i.dO, {
                             get fallback() {
                                 return (0, i.a0)(l.Rh, {
@@ -825,16 +895,16 @@
                                         return w().length
                                     },
                                     get children() {
-                                        return (0, i.a0)(Q, {
+                                        return (0, i.a0)(U, {
                                             get class() {
-                                                return ce.content
+                                                return le.content
                                             },
                                             get addonsStreams() {
                                                 return w()
                                             },
                                             rating: p,
                                             onLiked: Y,
-                                            onLoved: I,
+                                            onLoved: S,
                                             get type() {
                                                 return n()
                                             }
@@ -845,16 +915,16 @@
                                         return !d()
                                     },
                                     get children() {
-                                        return (0, i.a0)(se, {
+                                        return (0, i.a0)(ae, {
                                             get class() {
-                                                return ce.content
+                                                return le.content
                                             },
                                             get videos() {
                                                 return y()
                                             },
                                             rating: p,
                                             onLiked: Y,
-                                            onLoved: I,
+                                            onLoved: S,
                                             onChange: A
                                         })
                                     }
@@ -865,73 +935,6 @@
                     }
                 })
             }
-        },
-        3749: (e, n, t) => {
-            t.d(n, {
-                A: () => s
-            });
-            var r = t(5556),
-                i = t.n(r),
-                a = t(3645),
-                o = t.n(a)()(i());
-            o.push([e.id, ".details-omgjE {\n  display: flex;\n  flex-direction: column;\n}\n.details-omgjE .background-G0atu {\n  z-index: 0;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  user-select: none;\n}\n.details-omgjE .background-G0atu .overlay-IpSXf {\n  z-index: 1;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  background-color: #0c0c10;\n  opacity: 0.95;\n}\n.details-omgjE .background-G0atu .image-fkksf {\n  z-index: 0;\n  height: 100%;\n}\n.details-omgjE .background-G0atu .image-fkksf.blurred-LTDh_ {\n  filter: blur(15px);\n}\n.details-omgjE .info-c3Gsa {\n  z-index: 1;\n  flex: none;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  height: 44vh;\n  padding: 2rem 4rem;\n  user-select: none;\n}\n.details-omgjE .info-c3Gsa > * {\n  margin: 0.5rem 0 0.5rem 0;\n}\n.details-omgjE .info-c3Gsa > :first-child {\n  margin-top: 0;\n}\n.details-omgjE .info-c3Gsa > :last-child {\n  margin-bottom: 0;\n}\n.details-omgjE .info-c3Gsa.info-720p-jPzlb {\n  height: 67vh;\n}\n.details-omgjE .info-c3Gsa .logo-rSs1m {\n  flex: none;\n  height: calc(10rem - 1rem);\n  margin-bottom: 2rem;\n  border-radius: 1em;\n}\n.details-omgjE .info-c3Gsa .title-OL31B {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 3.7rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n  white-space: nowrap;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.details-omgjE .info-c3Gsa .video-title-dEjBn {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 2rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.details-omgjE .info-c3Gsa .video-date-U5BHg {\n  flex: none;\n  margin-bottom: 0.5rem;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n.details-omgjE .info-c3Gsa .description-Vy9xR {\n  flex: none;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 4;\n  font-size: 1.7rem;\n  font-weight: 500;\n  color: hsla(0, 0%, 100%, 0.5);\n  overflow: hidden;\n}\n.details-omgjE .content-eCvgF {\n  z-index: 1;\n  flex: 1 0 auto;\n  position: relative;\n}\n", ""]), o.locals = {
-                details: "details-omgjE",
-                background: "background-G0atu",
-                overlay: "overlay-IpSXf",
-                image: "image-fkksf",
-                blurred: "blurred-LTDh_",
-                info: "info-c3Gsa",
-                "info-720p": "info-720p-jPzlb",
-                logo: "logo-rSs1m",
-                title: "title-OL31B",
-                "video-title": "video-title-dEjBn",
-                "video-date": "video-date-U5BHg",
-                description: "description-Vy9xR",
-                content: "content-eCvgF"
-            };
-            const s = o
-        },
-        5026: (e, n, t) => {
-            e.exports = t.p + "shield.png"
-        },
-        7743: (e, n, t) => {
-            t.d(n, {
-                A: () => s
-            });
-            var r = t(5556),
-                i = t.n(r),
-                a = t(3645),
-                o = t.n(a)()(i());
-            o.push([e.id, ".video-xYWmH {\n  flex: 0 0 auto;\n  position: relative;\n  height: 20rem;\n  border-radius: 1em;\n  opacity: 0.5;\n  overflow: hidden;\n  background-color: rgba(255, 255, 255, 0.03);\n  will-change: transform, opacity;\n  transition: transform 0.1s ease-out, opacity 0.1s ease-out;\n  width: calc(20rem * (16 / 9));\n}\n.video-xYWmH .indicator-BeMF_ {\n  z-index: 1;\n  position: absolute;\n  top: 1rem;\n  left: 1rem;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: center;\n  padding: 0.75rem 1rem;\n  border-radius: 0.5em;\n  background-color: #0c0c10;\n}\n.video-xYWmH .indicator-BeMF_ > * {\n  margin: 0 0.375rem 0 0.375rem;\n}\n.video-xYWmH .indicator-BeMF_ > :first-child {\n  margin-left: 0;\n}\n.video-xYWmH .indicator-BeMF_ > :last-child {\n  margin-right: 0;\n}\n.video-xYWmH .indicator-BeMF_ .episode-OaWDb {\n  flex: none;\n  font-size: 1.2rem;\n  font-weight: 600;\n  line-height: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.video-xYWmH .indicator-BeMF_ .watched-icon-NszqV {\n  flex: none;\n  height: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.video-xYWmH .overlay-EO8ce {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.video-xYWmH .overlay-EO8ce .icon-P2LFT {\n  height: 6rem;\n  color: hsla(0, 0%, 100%, 0.9);\n  opacity: 0.5;\n}\n.video-xYWmH .thumbnail-E7g8E {\n  z-index: 0;\n  position: relative;\n  height: 100%;\n  width: 100%;\n  background-size: cover;\n  background-position: center center;\n}\n.video-xYWmH:hover {\n  opacity: 1;\n}\n.video-xYWmH[focused] {\n  opacity: 1;\n  transform: scale(1.06);\n}\n", ""]), o.locals = {
-                video: "video-xYWmH",
-                indicator: "indicator-BeMF_",
-                episode: "episode-OaWDb",
-                "watched-icon": "watched-icon-NszqV",
-                overlay: "overlay-EO8ce",
-                icon: "icon-P2LFT",
-                thumbnail: "thumbnail-E7g8E"
-            };
-            const s = o
-        },
-        8848: (e, n, t) => {
-            t.d(n, {
-                A: () => s
-            });
-            var r = t(5556),
-                i = t.n(r),
-                a = t(3645),
-                o = t.n(a)()(i());
-            o.push([e.id, ".streams-ky0iI {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n}\n.streams-ky0iI > * {\n  margin: 0.75rem 0 0.75rem 0;\n}\n.streams-ky0iI > :first-child {\n  margin-top: 0;\n}\n.streams-ky0iI > :last-child {\n  margin-bottom: 0;\n}\n.streams-ky0iI .filters-ShFgd {\n  flex: none;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.streams-ky0iI .filters-ShFgd > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.streams-ky0iI .filters-ShFgd > :first-child {\n  margin-left: 0;\n}\n.streams-ky0iI .filters-ShFgd > :last-child {\n  margin-right: 0;\n}\n.streams-ky0iI .streams-list-atX0D {\n  flex: none;\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  padding-left: 4rem;\n}\n.streams-ky0iI .streams-list-atX0D > * {\n  margin: 0 1em 0 1em;\n}\n.streams-ky0iI .streams-list-atX0D > :first-child {\n  margin-left: 0;\n}\n.streams-ky0iI .streams-list-atX0D > :last-child {\n  margin-right: 0;\n}\n.streams-ky0iI .streams-list-atX0D .error-PL4_L {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0 0.5rem;\n  font-size: 1.5rem;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n.streams-ky0iI .stream-details-bgXP4 {\n  flex: 1 0 auto;\n  position: relative;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  padding: 0 4rem;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem {\n  flex: 1 0 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  border-radius: 1em;\n  padding: 4rem 4rem;\n  background-color: rgba(255, 255, 255, 0.03);\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > * {\n  margin: 0.25rem 0 0.25rem 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > :first-child {\n  margin-top: 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem > :last-child {\n  margin-bottom: 0;\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem .name-pmYIm {\n  font-size: 2rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.streams-ky0iI .stream-details-bgXP4 .inner-a1cem .description-M3izB {\n  white-space: pre;\n  font-size: 1.6rem;\n  font-weight: 500;\n  color: hsla(0, 0%, 100%, 0.5);\n}\n", ""]), o.locals = {
-                streams: "streams-ky0iI",
-                filters: "filters-ShFgd",
-                "streams-list": "streams-list-atX0D",
-                error: "error-PL4_L",
-                "stream-details": "stream-details-bgXP4",
-                inner: "inner-a1cem",
-                name: "name-pmYIm",
-                description: "description-M3izB"
-            };
-            const s = o
         }
     }
 ]);

@@ -1,19 +1,37 @@
 "use strict";
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [7920], {
-        254: (e, n, t) => {
+        7228: (e, n, t) => {
+            t.d(n, {
+                A: () => o
+            });
+            var r = t(4474),
+                l = t.n(r),
+                i = t(2670),
+                a = t.n(i)()(l());
+            a.push([e.id, ".library-J0Lti .placeholder-zN3fb {\n  z-index: 1;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.library-J0Lti .placeholder-zN3fb > * {\n  margin: 0.75rem 0 0.75rem 0;\n}\n.library-J0Lti .placeholder-zN3fb > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .placeholder-zN3fb > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .placeholder-zN3fb .image-uUIaS {\n  height: calc(18rem - 1.5rem);\n  width: calc(18rem - 1.5rem);\n}\n.library-J0Lti .placeholder-zN3fb .text-uY5su {\n  font-size: 1.75rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.library-J0Lti .content-haNlB {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  overflow: visible;\n}\n.library-J0Lti .content-haNlB > * {\n  margin: 1rem 0 1rem 0;\n}\n.library-J0Lti .content-haNlB > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .content-haNlB > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 {\n  z-index: 1;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :first-child {\n  margin-left: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :last-child {\n  margin-right: 0;\n}\n", ""]), a.locals = {
+                library: "library-J0Lti",
+                placeholder: "placeholder-zN3fb",
+                image: "image-uUIaS",
+                text: "text-uY5su",
+                content: "content-haNlB",
+                filters: "filters-R1HS3"
+            };
+            const o = a
+        },
+        9493: (e, n, t) => {
             t.r(n), t.d(n, {
                 default: () => A
             });
-            var r = t(9151),
-                l = t(9225),
-                i = (t(8579), t(8433), t(2432), t(1088)),
-                a = t(5585),
-                o = t(6870),
-                s = t(1157),
-                c = t(8327),
-                d = t(9132);
-            t(5235), t(7105);
+            var r = t(7781),
+                l = t(2555),
+                i = (t(4999), t(2517), t(7100), t(1200)),
+                a = t(3497),
+                o = t(9238),
+                s = t(330),
+                c = t(8688),
+                d = t(6066);
+            t(6399), t(7621);
             const g = ({
                 selectable: e
             }) => {
@@ -41,19 +59,19 @@
                     })))
                 }
             };
-            var h = t(43),
+            var h = t(2434),
                 u = t.n(h),
-                b = t(5920),
+                b = t(5235),
                 m = t.n(b),
-                p = t(3004),
+                p = t(6049),
                 v = t.n(p),
-                f = t(7419),
+                f = t(8938),
                 y = t.n(f),
-                L = t(1663),
+                L = t(502),
                 N = t.n(L),
-                x = t(1612),
+                x = t(3611),
                 J = t.n(x),
-                w = t(9169),
+                w = t(7228),
                 B = {};
             B.styleTagTransform = J(), B.setAttributes = y(), B.insert = v().bind(null, "head"), B.domAPI = m(), B.insertStyleElement = N();
             u()(w.A, B);
@@ -206,24 +224,6 @@
                         }
                     })
                 }
-        },
-        9169: (e, n, t) => {
-            t.d(n, {
-                A: () => o
-            });
-            var r = t(5556),
-                l = t.n(r),
-                i = t(3645),
-                a = t.n(i)()(l());
-            a.push([e.id, ".library-J0Lti .placeholder-zN3fb {\n  z-index: 1;\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.library-J0Lti .placeholder-zN3fb > * {\n  margin: 0.75rem 0 0.75rem 0;\n}\n.library-J0Lti .placeholder-zN3fb > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .placeholder-zN3fb > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .placeholder-zN3fb .image-uUIaS {\n  height: calc(18rem - 1.5rem);\n  width: calc(18rem - 1.5rem);\n}\n.library-J0Lti .placeholder-zN3fb .text-uY5su {\n  font-size: 1.75rem;\n  font-weight: 600;\n  color: hsla(0, 0%, 100%, 0.9);\n}\n.library-J0Lti .content-haNlB {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  overflow: visible;\n}\n.library-J0Lti .content-haNlB > * {\n  margin: 1rem 0 1rem 0;\n}\n.library-J0Lti .content-haNlB > :first-child {\n  margin-top: 0;\n}\n.library-J0Lti .content-haNlB > :last-child {\n  margin-bottom: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 {\n  z-index: 1;\n  display: flex;\n  flex-direction: row;\n  padding: 0 4rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > * {\n  margin: 0 0.75rem 0 0.75rem;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :first-child {\n  margin-left: 0;\n}\n.library-J0Lti .content-haNlB .filters-R1HS3 > :last-child {\n  margin-right: 0;\n}\n", ""]), a.locals = {
-                library: "library-J0Lti",
-                placeholder: "placeholder-zN3fb",
-                image: "image-uUIaS",
-                text: "text-uY5su",
-                content: "content-haNlB",
-                filters: "filters-R1HS3"
-            };
-            const o = a
         }
     }
 ]);

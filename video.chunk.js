@@ -1,257 +1,6 @@
 /*! For license information please see video.chunk.js.LICENSE.txt */
 (self.webpackChunkstremio_theater = self.webpackChunkstremio_theater || []).push([
     [6180], {
-        118: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(6205);
-
-            function o(e) {
-                var t = (e = e || {}).containerElement;
-                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var r = document.createElement("video");
-                r.style.width = "100%", r.style.height = "100%", r.style.backgroundColor = "black", r.controls = !1, r.playsInline = !0, r.onerror = function() {
-                    ! function() {
-                        if (u) return;
-                        var e;
-                        switch (r.error.code) {
-                            case 1:
-                                e = s.HTML_VIDEO.MEDIA_ERR_ABORTED;
-                                break;
-                            case 2:
-                                e = s.HTML_VIDEO.MEDIA_ERR_NETWORK;
-                                break;
-                            case 3:
-                                e = s.HTML_VIDEO.MEDIA_ERR_DECODE;
-                                break;
-                            case 4:
-                                e = s.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
-                                break;
-                            default:
-                                e = s.UNKNOWN_ERROR
-                        }
-                        g(Object.assign({}, e, {
-                            critical: !0,
-                            error: r.error
-                        }))
-                    }()
-                }, r.onended = function() {
-                    l.emit("ended")
-                }, r.onpause = function() {
-                    m("paused")
-                }, r.onplay = function() {
-                    m("paused")
-                }, r.ontimeupdate = function() {
-                    m("time")
-                }, r.ondurationchange = function() {
-                    m("duration")
-                }, r.onwaiting = function() {
-                    m("buffering")
-                }, r.onseeking = function() {
-                    m("time"), m("buffering")
-                }, r.onseeked = function() {
-                    m("time"), m("buffering")
-                }, r.onstalled = function() {
-                    m("buffering")
-                }, r.onplaying = function() {
-                    m("time"), m("buffering")
-                }, r.oncanplay = function() {
-                    m("buffering")
-                }, r.canplaythrough = function() {
-                    m("buffering")
-                }, r.onloadedmetadata = function() {
-                    m("loaded")
-                }, r.onloadeddata = function() {
-                    m("buffering")
-                }, r.onvolumechange = function() {
-                    m("volume"), m("muted")
-                }, r.onratechange = function() {
-                    m("playbackSpeed")
-                }, r.textTracks.onchange = function() {
-                    m("subtitlesTracks"), m("selectedSubtitlesTrackId"), f(), Array.from(r.textTracks).forEach((function(e) {
-                        e.oncuechange = f
-                    }))
-                }, t.appendChild(r);
-                var o = document.createElement("div");
-                o.style.position = "absolute", o.style.right = "0", o.style.bottom = "0", o.style.left = "0", o.style.zIndex = "1", o.style.textAlign = "center", t.style.position = "relative", t.style.zIndex = "0", t.appendChild(o);
-                var l = new n,
-                    u = !1,
-                    c = null,
-                    d = {
-                        stream: !1,
-                        loaded: !1,
-                        paused: !1,
-                        time: !1,
-                        duration: !1,
-                        buffering: !1,
-                        subtitlesTracks: !1,
-                        selectedSubtitlesTrackId: !1,
-                        audioTracks: !1,
-                        selectedAudioTrackId: !1,
-                        volume: !1,
-                        muted: !1,
-                        playbackSpeed: !1
-                    };
-
-                function h(e) {
-                    switch (e) {
-                        case "stream":
-                            return c;
-                        case "loaded":
-                            return null === c ? null : r.readyState >= r.HAVE_METADATA;
-                        case "paused":
-                            return null === c ? null : !!r.paused;
-                        case "time":
-                            return null !== c && null !== r.currentTime && isFinite(r.currentTime) ? Math.floor(1e3 * r.currentTime) : null;
-                        case "duration":
-                            return null !== c && null !== r.duration && isFinite(r.duration) ? Math.floor(1e3 * r.duration) : null;
-                        case "buffering":
-                            return null === c ? null : r.readyState < r.HAVE_FUTURE_DATA;
-                        case "subtitlesTracks":
-                            return null === c ? [] : Array.from(r.textTracks).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.language,
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            }));
-                        case "selectedSubtitlesTrackId":
-                            return null === c ? null : Array.from(r.textTracks).reduce((function(e, t, r) {
-                                return null === e && "showing" === t.mode ? "EMBEDDED_" + String(r) : e
-                            }), null);
-                        case "audioTracks":
-                            return null === c ? [] : r.audioTracks && Array.from(r.audioTracks).length ? Array.from(r.audioTracks).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.language,
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            })) : [];
-                        case "selectedAudioTrackId":
-                            return null === c ? null : r.audioTracks && Array.from(r.audioTracks).length ? Array.from(r.audioTracks).reduce((function(e, t, r) {
-                                return null === e && t.enabled ? "EMBEDDED_" + String(r) : e
-                            }), null) : null;
-                        case "volume":
-                            return u || null === r.volume || !isFinite(r.volume) ? null : Math.floor(100 * r.volume);
-                        case "muted":
-                            return u ? null : !!r.muted;
-                        case "playbackSpeed":
-                            return u || null === r.playbackRate || !isFinite(r.playbackRate) ? null : r.playbackRate;
-                        default:
-                            return null
-                    }
-                }
-
-                function f() {
-                    Array.from(r.textTracks).forEach((function(e) {
-                        Array.from(e.cues || []).forEach((function(e) {
-                            e.snapToLines = !1, e.line = 100
-                        }))
-                    }))
-                }
-
-                function g(e) {
-                    l.emit("error", e), e.critical && p("unload")
-                }
-
-                function m(e) {
-                    d[e] && l.emit("propChanged", e, h(e))
-                }
-
-                function p(e, n) {
-                    switch (e) {
-                        case "load":
-                            p("unload"), n && n.stream && "string" == typeof n.stream.url ? (c = n.stream, m("stream"), m("loaded"), r.autoplay = "boolean" != typeof n.autoplay || n.autoplay, r.currentTime = null !== n.time && isFinite(n.time) ? parseInt(n.time, 10) / 1e3 : 0, m("paused"), m("time"), m("duration"), m("buffering"), r.textTracks && (r.textTracks.onaddtrack = function() {
-                                r.textTracks.onaddtrack = null, setTimeout((function() {
-                                    m("subtitlesTracks"), m("selectedSubtitlesTrackId")
-                                }))
-                            }), r.audioTracks && (r.audioTracks.onaddtrack = function() {
-                                r.audioTracks.onaddtrack = null, setTimeout((function() {
-                                    m("audioTracks"), m("selectedAudioTrackId")
-                                }))
-                            }), r.src = c.url) : g(Object.assign({}, s.UNSUPPORTED_STREAM, {
-                                critical: !0,
-                                stream: n ? n.stream : null
-                            }));
-                            break;
-                        case "unload":
-                            c = null, Array.from(r.textTracks).forEach((function(e) {
-                                e.oncuechange = null
-                            })), r.removeAttribute("src"), r.load(), r.currentTime = 0, m("stream"), m("loaded"), m("paused"), m("time"), m("duration"), m("buffering"), m("subtitlesTracks"), m("selectedSubtitlesTrackId"), m("audioTracks"), m("selectedAudioTrackId");
-                            break;
-                        case "destroy":
-                            p("unload"), u = !0, m("volume"), m("muted"), m("playbackSpeed"), l.removeAllListeners(), r.onerror = null, r.onended = null, r.onpause = null, r.onplay = null, r.ontimeupdate = null, r.ondurationchange = null, r.onwaiting = null, r.onseeking = null, r.onseeked = null, r.onstalled = null, r.onplaying = null, r.oncanplay = null, r.canplaythrough = null, r.onloadeddata = null, r.onvolumechange = null, r.onratechange = null, r.textTracks.onchange = null, t.removeChild(r)
-                    }
-                }
-                this.on = function(e, t) {
-                    if (u) throw new Error("Video is destroyed");
-                    l.on(e, t)
-                }, this.dispatch = function(e) {
-                    if (u) throw new Error("Video is destroyed");
-                    if (e) switch ((e = a(i(e))).type) {
-                        case "observeProp":
-                            return t = e.propName, void(d.hasOwnProperty(t) && (l.emit("propValue", t, h(t)), d[t] = !0));
-                        case "setProp":
-                            return void
-                            function(e, t) {
-                                switch (e) {
-                                    case "paused":
-                                        null !== c && (t ? r.pause() : r.play(), m("paused"));
-                                        break;
-                                    case "time":
-                                        null !== c && null !== t && isFinite(t) && (r.currentTime = parseInt(t, 10) / 1e3, m("time"));
-                                        break;
-                                    case "selectedSubtitlesTrackId":
-                                        if (null !== c) {
-                                            Array.from(r.textTracks).forEach((function(e, r) {
-                                                e.mode = "EMBEDDED_" + String(r) === t ? "showing" : "disabled"
-                                            }));
-                                            var n = h("subtitlesTracks").find((function(e) {
-                                                return e.id === t
-                                            }));
-                                            n && (m("selectedSubtitlesTrackId"), l.emit("subtitlesTrackLoaded", n))
-                                        }
-                                        break;
-                                    case "selectedAudioTrackId":
-                                        if (null !== c)
-                                            for (var i = 0; i < r.audioTracks.length; i++) r.audioTracks[i].enabled = !("EMBEDDED_" + String(i) !== t);
-                                        var a = h("audioTracks").find((function(e) {
-                                            return e.id === t
-                                        }));
-                                        a && (m("selectedAudioTrackId"), l.emit("audioTrackLoaded", a));
-                                        break;
-                                    case "volume":
-                                        null !== t && isFinite(t) && (r.muted = !1, r.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100, m("muted"), m("volume"));
-                                        break;
-                                    case "muted":
-                                        r.muted = !!t, m("muted");
-                                        break;
-                                    case "playbackSpeed":
-                                        null !== t && isFinite(t) && (r.playbackRate = parseFloat(t), m("playbackSpeed"))
-                                }
-                            }(e.propName, e.propValue);
-                        case "command":
-                            return void p(e.commandName, e.commandArgs)
-                    }
-                    var t;
-                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
-                }
-            }
-            o.canPlayStream = function(e) {
-                return e ? Promise.resolve(!0) : Promise.resolve(!1)
-            }, o.manifest = {
-                name: "VidaaVideo",
-                external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "volume", "muted", "playbackSpeed"],
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
-            }, e.exports = o
-        },
         301: (e, t, r) => {
             "use strict";
             var n = r(8336),
@@ -270,10 +19,6 @@
                 }
             }
         },
-        323: (e, t, r) => {
-            var n = r(8392);
-            e.exports = n
-        },
         344: function(e, t, r) {
             var n;
             e.exports && (this.VTTCue = this.VTTCue || r(8684).VTTCue), (n = this).VTTCue.prototype.toJSON = function() {
@@ -291,283 +36,353 @@
                 return this.create(JSON.parse(e))
             }
         },
-        361: (e, t, r) => {
-            var n = r(323),
-                i = r(1245),
-                a = r(8584),
-                s = r(1483),
-                o = r(2949),
-                l = r(1012),
-                u = r(8803),
-                c = r(411),
-                d = r(6372),
-                h = r(8131),
-                f = r(1222),
-                g = r(437);
-            e.exports = function(e, t) {
-                return e.stream && "string" != typeof e.stream.externalUrl ? t.chromecastTransport && t.chromecastTransport.getCastState() === cast.framework.CastState.CONNECTED ? n : "string" == typeof e.stream.ytId ? g(f(d)) : "string" == typeof e.stream.playerFrameUrl ? g(c) : t.shellTransport ? h(f(i)) : "string" == typeof e.streamingServerURL ? "Tizen" === e.platform ? h(f(s)) : "webOS" === e.platform ? h(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? h(f(o)) : "Vidaa" === e.platform ? h(f(l)) : h(f(a)) : "string" == typeof e.stream.url ? "Tizen" === e.platform ? g(f(s)) : "webOS" === e.platform ? g(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? g(f(o)) : "Vidaa" === e.platform ? g(f(l)) : g(f(a)) : null : null
+        499: e => {
+            function t(e) {
+                for (var t = "", r = (e = e.replace(/<[a-zA-Z/][^>]*>/g, "")).split(/\n/); r.length > 3;) {
+                    for (var n = 3; n < r.length; n++) r[2] += "\n" + r[n];
+                    r.splice(3, r.length - 3)
+                }
+                var i = 0;
+                if (!r[0].match(/\d+:\d+:\d+/) && r[1].match(/\d+:\d+:\d+/) && (t += r[0].match(/\w+/) + "\n", i += 1), !r[i].match(/\d+:\d+:\d+/)) return "";
+                var a = r[1].match(/(\d+):(\d+):(\d+)(?:,(\d+))?\s*--?>\s*(\d+):(\d+):(\d+)(?:,(\d+))?/);
+                return a ? (t += a[1] + ":" + a[2] + ":" + a[3] + "." + a[4] + " --\x3e " + a[5] + ":" + a[6] + ":" + a[7] + "." + a[8] + "\n", r[i += 1] && (t += r[i] + "\n\n"), t) : ""
             }
-        },
-        411: (e, t, r) => {
-            var n = r(4880);
-            e.exports = n
-        },
-        437: (e, t, r) => {
-            var n = r(2900);
-            e.exports = n
-        },
-        856: (e, t, r) => {
-            var n = r(5852),
-                i = r(8868),
-                a = r(7444),
-                s = r(5126),
-                o = r(6435),
-                l = r(7169),
-                u = r(5940),
-                c = r(5082),
-                d = r(5071),
-                h = r(7255),
-                f = r(6205);
-            e.exports = function(e) {
-                function t(r) {
-                    var h = new e(r = r || {});
-                    h.on("error", (function(e) {
-                        T.emit("error", e), e.critical && R("unload")
-                    })), h.on("propValue", S.bind(null, "propValue")), h.on("propChanged", S.bind(null, "propChanged")), e.manifest.events.filter((function(e) {
-                        return !["error", "propValue", "propChanged"].includes(e)
-                    })).forEach((function(e) {
-                        h.on(e, function(e) {
-                            return function() {
-                                T.emit.apply(T, [e].concat(Array.from(arguments)))
+            e.exports = {
+                convert: function(e) {
+                    if (e.includes("WEBVTT")) return e;
+                    try {
+                        return function(e) {
+                            var r = e.replace(/\r+/g, ""),
+                                n = (r = r.replace(/^\s+|\s+$/g, "")).split("\n\n"),
+                                i = "";
+                            if (n.length > 0) {
+                                i += "WEBVTT\n\n";
+                                for (var a = 0; a < n.length; a += 1) i += t(n[a])
                             }
-                        }(e))
-                    }));
-                    var g = this,
-                        m = null,
-                        p = !1,
-                        v = [],
-                        y = null,
-                        T = new n,
-                        b = !1,
-                        E = {
-                            stream: !1,
-                            videoParams: !1
-                        };
-
-                    function S(e, t, r) {
-                        T.emit(e, t, L(t, r))
-                    }
-
-                    function A(e) {
-                        E[e] && T.emit("propChanged", e, L(e, null))
-                    }
-
-                    function k(e) {
-                        T.emit("error", e), e.critical && (R("unload"), h.dispatch({
-                            type: "command",
-                            commandName: "unload"
-                        }))
-                    }
-
-                    function L(e, t) {
-                        switch (e) {
-                            case "stream":
-                                return null !== m ? m.stream : null;
-                            case "videoParams":
-                                return y;
-                            default:
-                                return t
-                        }
-                    }
-
-                    function R(r, n) {
-                        switch (r) {
-                            case "load":
-                                return n && n.stream && "string" == typeof n.streamingServerURL ? (R("unload"), h.dispatch({
-                                    type: "command",
-                                    commandName: "unload"
-                                }), m = n, A("stream"), u(n.streamingServerURL, n.stream, n.seriesInfo, n.streamingServerSettings).then((function(e) {
-                                    var r = e.url,
-                                        s = e.infoHash,
-                                        o = e.fileIdx,
-                                        u = Array.isArray(n.formats) ? n.formats : l.formats,
-                                        c = Array.isArray(n.videoCodecs) ? n.videoCodecs : l.videoCodecs,
-                                        d = Array.isArray(n.audioCodecs) ? n.audioCodecs : l.audioCodecs,
-                                        h = null !== n.maxAudioChannels && isFinite(n.maxAudioChannels) ? n.maxAudioChannels : l.maxAudioChannels,
-                                        f = Object.assign({}, n, {
-                                            formats: u,
-                                            videoCodecs: c,
-                                            audioCodecs: d,
-                                            maxAudioChannels: h
-                                        });
-                                    return (n.forceTranscoding ? Promise.resolve(!1) : t.canPlayStream({
-                                        url: r
-                                    }, f)).catch((function(e) {
-                                        return console.warn("Media probe error", e), !1
-                                    })).then((function(e) {
-                                        if (e) return {
-                                            mediaURL: r,
-                                            infoHash: s,
-                                            fileIdx: o,
-                                            stream: {
-                                                url: r
-                                            }
-                                        };
-                                        var t = a(),
-                                            l = new URLSearchParams([
-                                                ["mediaURL", r]
-                                            ]);
-                                        return n.forceTranscoding && l.set("forceTranscoding", "1"), c.forEach((function(e) {
-                                            l.append("videoCodecs", e)
-                                        })), d.forEach((function(e) {
-                                            l.append("audioCodecs", e)
-                                        })), l.set("maxAudioChannels", h), {
-                                            mediaURL: r,
-                                            infoHash: s,
-                                            fileIdx: o,
-                                            stream: {
-                                                url: i.resolve(n.streamingServerURL, "/hlsv2/" + t + "/master.m3u8?" + l.toString()),
-                                                subtitles: Array.isArray(n.stream.subtitles) ? n.stream.subtitles.map((function(e) {
-                                                    return Object.assign({}, e, {
-                                                        url: "string" == typeof e.url ? i.resolve(n.streamingServerURL, "/subtitles.vtt?" + new URLSearchParams([
-                                                            ["from", e.url]
-                                                        ]).toString()) : e.url
-                                                    })
-                                                })) : [],
-                                                behaviorHints: {
-                                                    headers: {
-                                                        "content-type": "application/vnd.apple.mpegurl"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }))
-                                })).then((function(t) {
-                                    n === m && (h.dispatch({
-                                        type: "command",
-                                        commandName: "load",
-                                        commandArgs: Object.assign({}, n, {
-                                            stream: t.stream
-                                        })
-                                    }), p = !0, function() {
-                                        for (; v.length > 0;) {
-                                            var e = v.shift();
-                                            g.dispatch.call(g, e)
-                                        }
-                                    }(), d(h, e.manifest.props).then((function() {
-                                        return c(n.streamingServerURL, t.mediaURL, t.infoHash, t.fileIdx, n.stream.behaviorHints)
-                                    })).then((function(e) {
-                                        n === m && (y = e, A("videoParams"))
-                                    })).catch((function(e) {
-                                        n === m && (console.error(e), y = {
-                                            hash: null,
-                                            size: null,
-                                            filename: null
-                                        }, A("videoParams"))
-                                    })))
-                                })).catch((function(e) {
-                                    n === m && k(Object.assign({}, f.WITH_STREAMING_SERVER.CONVERT_FAILED, {
-                                        error: e,
-                                        critical: !0,
-                                        stream: n.stream,
-                                        streamingServerURL: n.streamingServerURL
-                                    }))
-                                }))) : k(Object.assign({}, f.UNSUPPORTED_STREAM, {
-                                    critical: !0,
-                                    stream: n ? n.stream : null,
-                                    streamingServerURL: n && "string" == typeof n.streamingServerURL ? n.streamingServerURL : null
-                                })), !0;
-                            case "addExtraSubtitlesTracks":
-                                return m && n && Array.isArray(n.tracks) && (p ? h.dispatch({
-                                    type: "command",
-                                    commandName: "addExtraSubtitlesTracks",
-                                    commandArgs: Object.assign({}, n, {
-                                        tracks: n.tracks.map((function(e) {
-                                            return Object.assign({}, e, {
-                                                fallbackUrl: e.url,
-                                                url: "string" == typeof e.url ? i.resolve(m.streamingServerURL, "/subtitles.vtt?" + new URLSearchParams([
-                                                    ["from", e.url]
-                                                ]).toString()) : e.url
-                                            })
-                                        }))
-                                    })
-                                }) : v.push({
-                                    type: "command",
-                                    commandName: "addExtraSubtitlesTracks",
-                                    commandArgs: n
-                                })), !0;
-                            case "unload":
-                                return m = null, p = !1, v = [], y = null, A("stream"), A("videoParams"), !1;
-                            case "destroy":
-                                return R("unload"), b = !0, h.dispatch({
-                                    type: "command",
-                                    commandName: "destroy"
-                                }), T.removeAllListeners(), !0;
-                            default:
-                                return !p && (v.push({
-                                    type: "command",
-                                    commandName: r,
-                                    commandArgs: n
-                                }), !0)
-                        }
-                    }
-                    this.on = function(e, t) {
-                        if (b) throw new Error("Video is destroyed");
-                        T.on(e, t)
-                    }, this.dispatch = function(e) {
-                        if (b) throw new Error("Video is destroyed");
-                        if (e) switch ((e = o(s(e))).type) {
-                            case "observeProp":
-                                if (function(e) {
-                                        switch (e) {
-                                            case "stream":
-                                            case "videoParams":
-                                                return T.emit("propValue", e, L(e, null)), E[e] = !0, !0;
-                                            default:
-                                                return !1
-                                        }
-                                    }(e.propName)) return;
-                                break;
-                            case "command":
-                                if (R(e.commandName, e.commandArgs)) return
-                        }
-                        h.dispatch(e)
+                            return i
+                        }(e)
+                    } catch (e) {
+                        throw new Error("Failed to convert srt to webvtt: " + e.message)
                     }
                 }
-                return t.canPlayStream = function(t, r) {
-                    return h().then((function(n) {
-                        if (!n) return e.canPlayStream(t);
-                        var a = new URLSearchParams([
-                            ["mediaURL", t.url]
-                        ]);
-                        return fetch(i.resolve(r.streamingServerURL, "/hlsv2/probe?" + a.toString())).then((function(e) {
-                            return e.json()
-                        })).then((function(e) {
-                            var t = r.formats.some((function(t) {
-                                    return -1 !== e.format.name.indexOf(t)
-                                })),
-                                n = e.streams.every((function(e) {
-                                    return "audio" === e.track ? e.channels <= r.maxAudioChannels && -1 !== r.audioCodecs.indexOf(e.codec) : "video" !== e.track || -1 !== r.videoCodecs.indexOf(e.codec)
-                                }));
-                            return t && n
-                        })).catch((function() {
-                            return e.canPlayStream(t)
-                        }))
-                    }))
-                }, t.manifest = {
-                    name: e.manifest.name + "WithStreamingServer",
-                    external: e.manifest.external,
-                    props: e.manifest.props.concat(["stream", "videoParams"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    })),
-                    commands: e.manifest.commands.concat(["load", "unload", "destroy", "addExtraSubtitlesTracks"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    })),
-                    events: e.manifest.events.concat(["propValue", "propChanged", "error"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    }))
-                }, t
             }
+        },
+        531: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(1522),
+                o = r(5227),
+                l = r(5416);
+
+            function u() {
+                var e = null,
+                    t = new n,
+                    r = !1;
+                this.on = function(e, n) {
+                    if (r) throw new Error("Video is destroyed");
+                    t.on(e, n)
+                }, this.dispatch = function(n, u) {
+                    if (r) throw new Error("Video is destroyed");
+                    if (!n) throw new Error("Invalid action dispatched: " + JSON.stringify(n));
+                    if (u = u || {}, "command" === (n = a(i(n))).type && "load" === n.commandName && n.commandArgs) {
+                        n.commandArgs.platform && o.set(n.commandArgs.platform);
+                        var c = s(n.commandArgs, u);
+                        if (null !== e && e.constructor !== c && (e.dispatch({
+                                type: "command",
+                                commandName: "destroy"
+                            }), e = null), null === e) {
+                            if (null === c) return void t.emit("error", Object.assign({}, l.UNSUPPORTED_STREAM, {
+                                error: new Error("No video implementation was selected"),
+                                critical: !0,
+                                stream: n.commandArgs.stream
+                            }));
+                            (e = new c(u)).on("ended", (function() {
+                                t.emit("ended")
+                            })), e.on("error", (function(e) {
+                                t.emit("error", e)
+                            })), e.on("propValue", (function(e, r) {
+                                t.emit("propValue", e, r)
+                            })), e.on("propChanged", (function(e, r) {
+                                t.emit("propChanged", e, r)
+                            })), e.on("subtitlesTrackLoaded", (function(e) {
+                                t.emit("subtitlesTrackLoaded", e)
+                            })), e.on("audioTrackLoaded", (function(e) {
+                                t.emit("audioTrackLoaded", e)
+                            })), e.on("extraSubtitlesTrackLoaded", (function(e) {
+                                t.emit("extraSubtitlesTrackLoaded", e)
+                            })), e.on("extraSubtitlesTrackAdded", (function(e) {
+                                t.emit("extraSubtitlesTrackAdded", e)
+                            })), c.manifest.external ? e.on("implementationChanged", (function(e) {
+                                t.emit("implementationChanged", e)
+                            })) : t.emit("implementationChanged", c.manifest)
+                        }
+                    }
+                    if (null !== e) try {
+                        e.dispatch(n)
+                    } catch (t) {
+                        console.error(e.constructor.manifest.name, t)
+                    }
+                    "command" === n.type && "destroy" === n.commandName && (e = null)
+                }, this.destroy = function() {
+                    r = !0, null !== e && (e.dispatch({
+                        type: "command",
+                        commandName: "destroy"
+                    }), e = null), t.removeAllListeners()
+                }
+            }
+            u.ERROR = l, e.exports = u
+        },
+        643: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(5416);
+
+            function o(e) {
+                var t = null !== (e = e || {}).timeChangedTimeout && isFinite(e.timeChangedTimeout) ? parseInt(e.timeChangedTimeout, 10) : 100,
+                    r = e.containerElement;
+                if (!(r instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var o = document.createElement("script");
+                o.type = "text/javascript", o.src = "https://www.youtube.com/iframe_api", o.onload = function() {
+                    if (g) return;
+                    if (!YT || "function" != typeof YT.ready) return void y();
+                    YT.ready((function() {
+                        g || (YT && YT.PlayerState && "function" == typeof YT.Player ? c = new YT.Player(l, {
+                            width: "100%",
+                            height: "100%",
+                            playerVars: {
+                                autoplay: 1,
+                                cc_load_policy: 3,
+                                controls: 0,
+                                disablekb: 1,
+                                enablejsapi: 1,
+                                fs: 0,
+                                iv_load_policy: 3,
+                                loop: 0,
+                                modestbranding: 1,
+                                playsinline: 1,
+                                rel: 0
+                            },
+                            events: {
+                                onError: T,
+                                onReady: b,
+                                onApiChange: E,
+                                onStateChange: S
+                            }
+                        }) : y())
+                    }))
+                }, o.onerror = y, r.appendChild(o);
+                var l = document.createElement("div");
+                l.style.width = "100%", l.style.height = "100%", l.style.backgroundColor = "black", r.appendChild(l);
+                var u = window.setInterval((function() {
+                        L("time"), L("volume"), L("muted"), L("playbackSpeed")
+                    }), t),
+                    c = null,
+                    d = !1,
+                    h = null,
+                    f = new n,
+                    g = !1,
+                    m = null,
+                    p = null,
+                    v = {
+                        stream: !1,
+                        loaded: !1,
+                        paused: !1,
+                        time: !1,
+                        duration: !1,
+                        buffering: !1,
+                        volume: !1,
+                        muted: !1,
+                        playbackSpeed: !1,
+                        subtitlesTracks: !1,
+                        selectedSubtitlesTrackId: !1
+                    };
+
+                function y() {
+                    g || k(Object.assign({}, s.YOUTUBE_VIDEO.API_LOAD_FAILED, {
+                        critical: !0
+                    }))
+                }
+
+                function T(e) {
+                    if (!g) {
+                        var t;
+                        switch (e.data) {
+                            case 2:
+                                t = s.YOUTUBE_VIDEO.INVALID_PARAMETER;
+                                break;
+                            case 5:
+                                t = s.YOUTUBE_VIDEO.HTML5_VIDEO;
+                                break;
+                            case 100:
+                                t = s.YOUTUBE_VIDEO.VIDEO_NOT_FOUND;
+                                break;
+                            case 101:
+                            case 150:
+                                t = s.YOUTUBE_VIDEO.VIDEO_NOT_EMBEDDABLE;
+                                break;
+                            default:
+                                t = s.UNKNOWN_ERROR
+                        }
+                        k(Object.assign({}, t, {
+                            critical: !0,
+                            error: e
+                        }))
+                    }
+                }
+
+                function b() {
+                    g || (d = !0, null !== h && (R("load", h), h = null))
+                }
+
+                function E() {
+                    g || ("function" == typeof c.loadModule && c.loadModule("captions"), "function" == typeof c.setOption && c.setOption("captions", "track", {}), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId"))
+                }
+
+                function S(e) {
+                    switch (L("buffering"), e.data) {
+                        case YT.PlayerState.ENDED:
+                            f.emit("ended");
+                            break;
+                        case YT.PlayerState.CUED:
+                        case YT.PlayerState.UNSTARTED:
+                        case YT.PlayerState.PAUSED:
+                        case YT.PlayerState.PLAYING:
+                            L("paused"), L("time"), L("duration")
+                    }
+                }
+
+                function A(e) {
+                    switch (e) {
+                        case "stream":
+                            return m;
+                        case "loaded":
+                            return null !== m || null;
+                        case "paused":
+                            return null === m || "function" != typeof c.getPlayerState ? null : c.getPlayerState() !== YT.PlayerState.PLAYING;
+                        case "time":
+                            return null !== m && "function" == typeof c.getCurrentTime && null !== c.getCurrentTime() && isFinite(c.getCurrentTime()) ? Math.floor(1e3 * c.getCurrentTime()) : null;
+                        case "duration":
+                            return null !== m && "function" == typeof c.getDuration && null !== c.getDuration() && isFinite(c.getDuration()) ? Math.floor(1e3 * c.getDuration()) : null;
+                        case "buffering":
+                            return null === m || "function" != typeof c.getPlayerState ? null : c.getPlayerState() === YT.PlayerState.BUFFERING;
+                        case "volume":
+                            return null !== m && "function" == typeof c.getVolume && null !== c.getVolume() && isFinite(c.getVolume()) ? c.getVolume() : null;
+                        case "muted":
+                            return null === m || "function" != typeof c.isMuted ? null : c.isMuted();
+                        case "playbackSpeed":
+                            return null !== m && "function" == typeof c.getPlaybackRate && null !== c.getPlaybackRate() && isFinite(c.getPlaybackRate()) ? c.getPlaybackRate() : null;
+                        case "subtitlesTracks":
+                            return null === m || "function" != typeof c.getOption ? [] : (c.getOption("captions", "tracklist") || []).filter((function(e) {
+                                return e && "string" == typeof e.languageCode
+                            })).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.languageCode,
+                                    label: "string" == typeof e.displayName ? e.displayName : e.languageCode,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            }));
+                        case "selectedSubtitlesTrackId":
+                            return null === m ? null : p;
+                        default:
+                            return null
+                    }
+                }
+
+                function k(e) {
+                    f.emit("error", e), e.critical && R("unload")
+                }
+
+                function L(e) {
+                    v[e] && f.emit("propChanged", e, A(e))
+                }
+
+                function R(e, t) {
+                    switch (e) {
+                        case "load":
+                            if (R("unload"), t && t.stream && "string" == typeof t.stream.ytId)
+                                if (d) {
+                                    m = t.stream, L("stream"), L("loaded");
+                                    var n = "boolean" != typeof t.autoplay || t.autoplay,
+                                        i = null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) / 1e3 : 0;
+                                    n && "function" == typeof c.loadVideoById ? c.loadVideoById({
+                                        videoId: t.stream.ytId,
+                                        startSeconds: i
+                                    }) : "function" == typeof c.cueVideoById && c.cueVideoById({
+                                        videoId: t.stream.ytId,
+                                        startSeconds: i
+                                    }), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId")
+                                } else h = t;
+                            else k(Object.assign({}, s.UNSUPPORTED_STREAM, {
+                                critical: !0,
+                                stream: t ? t.stream : null
+                            }));
+                            break;
+                        case "unload":
+                            h = null, m = null, L("stream"), L("loaded"), p = null, d && "function" == typeof c.stopVideo && c.stopVideo(), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId");
+                            break;
+                        case "destroy":
+                            R("unload"), g = !0, f.removeAllListeners(), clearInterval(u), d && "function" == typeof c.destroy && c.destroy(), r.removeChild(o), r.removeChild(l)
+                    }
+                }
+                this.on = function(e, t) {
+                    if (g) throw new Error("Video is destroyed");
+                    f.on(e, t)
+                }, this.dispatch = function(e) {
+                    if (g) throw new Error("Video is destroyed");
+                    if (e) switch ((e = a(i(e))).type) {
+                        case "observeProp":
+                            return t = e.propName, void(v.hasOwnProperty(t) && (f.emit("propValue", t, A(t)), v[t] = !0));
+                        case "setProp":
+                            return void
+                            function(e, t) {
+                                switch (e) {
+                                    case "paused":
+                                        null !== m && (t ? "function" == typeof c.pauseVideo && c.pauseVideo() : "function" == typeof c.playVideo && c.playVideo());
+                                        break;
+                                    case "time":
+                                        null !== m && "function" == typeof c.seekTo && null !== t && isFinite(t) && c.seekTo(parseInt(t, 10) / 1e3);
+                                        break;
+                                    case "volume":
+                                        null !== m && null !== t && isFinite(t) && ("function" == typeof c.unMute && c.unMute(), "function" == typeof c.setVolume && c.setVolume(Math.max(0, Math.min(100, parseInt(t, 10)))), L("muted"), L("volume"));
+                                        break;
+                                    case "muted":
+                                        null !== m && (t ? "function" == typeof c.mute && c.mute() : "function" == typeof c.unMute && c.unMute(), L("muted"));
+                                        break;
+                                    case "playbackSpeed":
+                                        null !== m && "function" == typeof c.setPlaybackRate && isFinite(t) && (c.setPlaybackRate(t), L("playbackSpeed"));
+                                        break;
+                                    case "selectedSubtitlesTrackId":
+                                        if (null !== m) {
+                                            p = null;
+                                            var r = A("subtitlesTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            "function" == typeof c.setOption && (r ? (p = r.id, c.setOption("captions", "track", {
+                                                languageCode: r.lang
+                                            }), f.emit("subtitlesTrackLoaded", r)) : c.setOption("captions", "track", {})), L("selectedSubtitlesTrackId")
+                                        }
+                                }
+                            }(e.propName, e.propValue);
+                        case "command":
+                            return void R(e.commandName, e.commandArgs)
+                    }
+                    var t;
+                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
+                }
+            }
+            o.canPlayStream = function(e) {
+                return Promise.resolve(e && "string" == typeof e.ytId)
+            }, o.manifest = {
+                name: "YouTubeVideo",
+                external: !1,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "volume", "muted", "playbackSpeed", "subtitlesTracks", "selectedSubtitlesTrackId"],
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded"]
+            }, e.exports = o
         },
         875: e => {
             "use strict";
@@ -593,12 +408,16 @@
                 return a
             }
         },
+        902: (e, t, r) => {
+            var n = r(3657);
+            e.exports = n
+        },
         942: (e, t, r) => {
             var n = r(1103);
             t.encode = n.encode, t.decode = n.decode
         },
         985: (e, t, r) => {
-            const n = r(2165);
+            const n = r(4546);
 
             function i(e) {
                 const t = function() {
@@ -646,8 +465,8 @@
                 return r
             }
         },
-        1012: (e, t, r) => {
-            var n = r(118);
+        1031: (e, t, r) => {
+            var n = r(643);
             e.exports = n
         },
         1042: e => {
@@ -687,12 +506,8 @@
                 return s.slice(0, a)
             }
         },
-        1222: (e, t, r) => {
-            var n = r(2556);
-            e.exports = n
-        },
-        1245: (e, t, r) => {
-            var n = r(4376);
+        1410: (e, t, r) => {
+            var n = r(7705);
             e.exports = n
         },
         1417: (e, t, r) => {
@@ -702,13 +517,35 @@
                 VTTRegion: r(7385).VTTRegion
             }
         },
-        1483: (e, t, r) => {
-            var n = r(2344);
-            e.exports = n
+        1464: e => {
+            e.exports = function(e, t) {
+                return t.includes("loaded") ? new Promise((function(t, r) {
+                    var n = null;
+                    e.on("propChanged", (function(e, i) {
+                        "loaded" === e && null !== i && null === n && (n = i, !0 === i ? t(!0) : !1 === i && r(Error("Player failed to load, will not retrieve video params")))
+                    })), e.dispatch({
+                        type: "observeProp",
+                        propName: "loaded"
+                    })
+                })) : Promise.resolve(!0)
+            }
         },
-        1552: (e, t, r) => {
-            var n = r(9382);
-            e.exports = n
+        1522: (e, t, r) => {
+            var n = r(1410),
+                i = r(2366),
+                a = r(4333),
+                s = r(8968),
+                o = r(5166),
+                l = r(7575),
+                u = r(6191),
+                c = r(7838),
+                d = r(1031),
+                h = r(902),
+                f = r(7495),
+                g = r(4812);
+            e.exports = function(e, t) {
+                return e.stream && "string" != typeof e.stream.externalUrl ? t.chromecastTransport && t.chromecastTransport.getCastState() === cast.framework.CastState.CONNECTED ? n : "string" == typeof e.stream.ytId ? g(f(d)) : "string" == typeof e.stream.playerFrameUrl ? g(c) : t.shellTransport ? h(f(i)) : "string" == typeof e.streamingServerURL ? "Tizen" === e.platform ? h(f(s)) : "webOS" === e.platform ? h(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? h(f(o)) : "Vidaa" === e.platform ? h(f(l)) : h(f(a)) : "string" == typeof e.stream.url ? "Tizen" === e.platform ? g(f(s)) : "webOS" === e.platform ? g(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? g(f(o)) : "Vidaa" === e.platform ? g(f(l)) : g(f(a)) : null : null
+            }
         },
         1615: function() {
             ! function(e) {
@@ -806,8 +643,431 @@
                 }
             }(this)
         },
+        1621: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(8742),
+                o = r(5416),
+                l = r(2152),
+                u = /^\{(\\an[1-8])+\}/i;
+
+            function c(e) {
+                var t = !0,
+                    r = 1,
+                    c = null,
+                    d = null,
+                    h = (e = e || {}).containerElement;
+                if (!(h instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var f, g = window.webapis.avplay,
+                    m = !1,
+                    p = 100,
+                    v = 0,
+                    y = "rgb(255, 255, 255)",
+                    T = "rgba(0, 0, 0, 0)",
+                    b = "rgb(34, 34, 34)",
+                    E = 1,
+                    S = document.createElement("object");
+                S.type = "application/avplayer", S.style.width = "100%", S.style.height = "100%", S.style.backgroundColor = "black";
+                var A = !0;
+
+                function k() {
+                    if (f) {
+                        var e = F("time"),
+                            t = f.duration - (e - f.now);
+                        t > 0 && L(t, f.text)
+                    }
+                }
+
+                function L(e, t) {
+                    if (!A) {
+                        var n = F("time"),
+                            i = t.replace(u, "");
+                        for (f = {
+                                duration: e,
+                                text: i,
+                                now: n
+                            }, R && (clearTimeout(R), R = !1); I.hasChildNodes();) I.removeChild(I.lastChild);
+                        I.style.bottom = v + "%", I.style.opacity = E;
+                        var a = document.createElement("span");
+                        a.innerHTML = i, a.style.display = "inline-block", a.style.padding = "0.2em", a.style.fontSize = Math.floor(p / 25) + "vmin", a.style.color = y, a.style.backgroundColor = T, a.style.textShadow = "1px 1px 0.1em " + b, I.appendChild(a), I.appendChild(document.createElement("br")), e && (R = setTimeout((function() {
+                            for (; I.hasChildNodes();) I.removeChild(I.lastChild)
+                        }), parseInt(e * r)))
+                    }
+                }
+                var R = !1;
+                g.setListener({
+                    onbufferingstart: function() {
+                        t = !0, U("buffering")
+                    },
+                    onbufferingprogress: function() {
+                        t = !0, U("buffering")
+                    },
+                    onbufferingcomplete: function() {
+                        t = !1, U("buffering")
+                    },
+                    oncurrentplaytime: function() {
+                        U("time")
+                    },
+                    onsubtitlechange: function(e, t) {
+                        L(e, t)
+                    },
+                    onstreamcompleted: function() {
+                        w.emit("ended")
+                    }
+                }), h.appendChild(S);
+                var I = document.createElement("div");
+                I.style.position = "absolute", I.style.right = "0", I.style.bottom = "0", I.style.left = "0", I.style.zIndex = "1", I.style.textAlign = "center", h.style.position = "relative", h.style.zIndex = "0", h.appendChild(I);
+                var w = new n,
+                    D = !1,
+                    C = null,
+                    x = 0,
+                    _ = null,
+                    O = {
+                        stream: !1,
+                        loaded: !1,
+                        paused: !1,
+                        time: !1,
+                        duration: !1,
+                        buffering: !1,
+                        subtitlesTracks: !1,
+                        selectedSubtitlesTrackId: !1,
+                        subtitlesOffset: !1,
+                        subtitlesSize: !1,
+                        subtitlesTextColor: !1,
+                        subtitlesBackgroundColor: !1,
+                        subtitlesOutlineColor: !1,
+                        subtitlesOpacity: !1,
+                        audioTracks: !1,
+                        selectedAudioTrackId: !1,
+                        playbackSpeed: !1
+                    },
+                    P = !1,
+                    M = {
+                        audio: [],
+                        subs: []
+                    };
+
+                function F(e) {
+                    switch (e) {
+                        case "stream":
+                            return C;
+                        case "loaded":
+                            return _;
+                        case "paused":
+                            if (null === C) return null;
+                            var n = !("PAUSED" !== g.getState());
+                            return !n && m && (g.setSelectTrack("AUDIO", parseInt(m.replace("EMBEDDED_", ""))), m = !1), n;
+                        case "time":
+                            var i = g.getCurrentTime();
+                            return null !== C && null !== i && isFinite(i) ? Math.floor(i) : null;
+                        case "duration":
+                            var a = g.getDuration();
+                            return null !== C && null !== a && isFinite(a) ? Math.floor(a) : null;
+                        case "buffering":
+                            return null === C ? null : t;
+                        case "subtitlesTracks":
+                            if (null === C) return [];
+                            for (var s = g.getTotalTrackInfo(), o = [], l = 0; l < s.length; l++)
+                                if ("TEXT" === s[l].type) {
+                                    var u = s[l],
+                                        h = "EMBEDDED_" + String(u.index),
+                                        f = {};
+                                    try {
+                                        f = JSON.parse(u.extra_info)
+                                    } catch (e) {}
+                                    var S = "string" == typeof f.track_lang && f.track_lang.length > 0 ? f.track_lang.trim() : null,
+                                        k = null;
+                                    if (((M || {}).subs || []).length)(x = M.subs.find((function(e) {
+                                        return (e || {}).id - 1 === u.index
+                                    }))) && (S = x.lang || "eng", k = x.label || null);
+                                    o.push({
+                                        id: h,
+                                        lang: S,
+                                        label: k,
+                                        origin: "EMBEDDED",
+                                        embedded: !0,
+                                        mode: A || h !== c ? "disabled" : "showing"
+                                    })
+                                }
+                            return o;
+                        case "selectedSubtitlesTrackId":
+                            if (null === C || A) return null;
+                            var L = g.getCurrentStreamInfo();
+                            for (l = 0; l < L.length; l++)
+                                if ("TEXT" === L[l].type) {
+                                    F = L[l].index;
+                                    break
+                                }
+                            return F ? "EMBEDDED_" + String(F) : null;
+                        case "subtitlesOffset":
+                            return D ? null : v;
+                        case "subtitlesSize":
+                            return D ? null : p;
+                        case "subtitlesTextColor":
+                            return D ? null : y;
+                        case "subtitlesBackgroundColor":
+                            return D ? null : T;
+                        case "subtitlesOutlineColor":
+                            return D ? null : b;
+                        case "subtitlesOpacity":
+                            return D ? null : E;
+                        case "audioTracks":
+                            if (null === C) return [];
+                            s = g.getTotalTrackInfo();
+                            var R = [];
+                            for (l = 0; l < s.length; l++)
+                                if ("AUDIO" === s[l].type) {
+                                    var I = s[l],
+                                        w = "EMBEDDED_" + String(I.index);
+                                    d || R.length || (d = w);
+                                    f = {};
+                                    try {
+                                        f = JSON.parse(I.extra_info)
+                                    } catch (e) {}
+                                    var x, O = "string" == typeof f.language && f.language.length > 0 ? f.language : null,
+                                        P = null;
+                                    if (((M || {}).audio || []).length)(x = M.audio.find((function(e) {
+                                        return (e || {}).id - 1 === I.index
+                                    }))) && (O = x.lang || "eng", P = x.label || null);
+                                    R.push({
+                                        id: w,
+                                        lang: O,
+                                        label: P,
+                                        origin: "EMBEDDED",
+                                        embedded: !0,
+                                        mode: w === d ? "showing" : "disabled"
+                                    })
+                                }
+                            return R;
+                        case "selectedAudioTrackId":
+                            if (null === C) return null;
+                            if (m) return m;
+                            L = g.getCurrentStreamInfo();
+                            var F = !1;
+                            for (l = 0; l < L.length; l++)
+                                if ("AUDIO" === L[l].type) {
+                                    F = L[l].index;
+                                    break
+                                }
+                            return !1 !== F ? "EMBEDDED_" + String(F) : null;
+                        case "playbackSpeed":
+                            return D || null === r || !isFinite(r) ? null : r;
+                        default:
+                            return null
+                    }
+                }
+
+                function N(e) {
+                    w.emit("error", e), e.critical && B("unload")
+                }
+
+                function U(e) {
+                    if (O[e]) {
+                        var t = F(e);
+                        w.emit("propChanged", e, t)
+                    }
+                }
+
+                function B(e, t) {
+                    switch (e) {
+                        case "load":
+                            if (t && t.stream && "string" == typeof t.stream.url) {
+                                if ((C = t.stream) !== t.stream) return;
+                                U("buffering");
+                                var r = !1,
+                                    n = navigator.userAgent.match(/Tizen (\d+\.\d+)/i);
+                                n && n[1] && (r = parseFloat(n[1])), (!r || r >= 6) && (P || null === C || (P = !0, l(C.url, (function(e) {
+                                    e && (M = e), ((M || {}).subs || []).length && U("subtitlesTracks"), ((M || {}).audio || []).length && U("audioTracks")
+                                })))), g.open(C.url), g.setDisplayRect(0, 0, window.innerWidth, window.innerHeight), g.setDisplayMethod("PLAYER_DISPLAY_MODE_LETTER_BOX"), g.seekTo(null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) : 0), g.prepareAsync((function() {
+                                    U("duration"), g.play(), _ = !0, U("loaded"), U("stream"), U("paused"), U("time"), U("duration"), U("subtitlesTracks"), U("selectedSubtitlesTrackId"), U("audioTracks"), U("selectedAudioTrackId")
+                                }), (function(e) {
+                                    if (x < 5) {
+                                        x++;
+                                        try {
+                                            g.stop()
+                                        } catch (e) {}
+                                        B("load", t)
+                                    } else N(Object.assign({}, o.STREAM_FAILED_TO_LOAD, {
+                                        critical: !0,
+                                        stream: t ? t.stream : null,
+                                        error: e
+                                    }))
+                                }))
+                            } else N(Object.assign({}, o.UNSUPPORTED_STREAM, {
+                                critical: !0,
+                                stream: t ? t.stream : null
+                            }));
+                            break;
+                        case "unload":
+                            C = null, g.stop(), _ = !1, U("loaded"), U("stream"), U("paused"), U("time"), U("duration"), U("buffering"), U("subtitlesTracks"), U("selectedSubtitlesTrackId"), U("audioTracks"), U("selectedAudioTrackId");
+                            break;
+                        case "destroy":
+                            B("unload"), D = !0, g.stop(), U("subtitlesOffset"), U("subtitlesSize"), U("subtitlesTextColor"), U("subtitlesBackgroundColor"), U("subtitlesOutlineColor"), U("subtitlesOpacity"), U("playbackSpeed"), w.removeAllListeners(), h.removeChild(S)
+                    }
+                }
+                this.on = function(e, t) {
+                    if (D) throw new Error("Video is destroyed");
+                    w.on(e, t)
+                }, this.dispatch = function(e) {
+                    if (D) throw new Error("Video is destroyed");
+                    if (e) switch ((e = a(i(e))).type) {
+                        case "observeProp":
+                            return void
+                            function(e) {
+                                if (O.hasOwnProperty(e)) {
+                                    var t = F(e);
+                                    w.emit("propValue", e, t), O[e] = !0
+                                }
+                            }(e.propName);
+                        case "setProp":
+                            return void
+                            function(e, t) {
+                                switch (e) {
+                                    case "paused":
+                                        if (null !== C) {
+                                            var n = !!t;
+                                            n ? g.pause() : g.play(), n ? R && clearTimeout(R) : k()
+                                        }
+                                        U("paused");
+                                        var i = F("paused");
+                                        setTimeout((function() {
+                                            F("paused") !== i && U("paused")
+                                        }), 1e3);
+                                        break;
+                                    case "time":
+                                        null !== C && null !== t && isFinite(t) && (g.seekTo(parseInt(t, 10)), L(1, ""), U("time"));
+                                        break;
+                                    case "selectedSubtitlesTrackId":
+                                        if (null !== C) {
+                                            if (-1 === (t || "").indexOf("EMBEDDED_") || !t) return L(1, ""), A = !0, void U("selectedSubtitlesTrackId");
+                                            var a = F("subtitlesTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            a && (A = !1, c = t, g.setSelectTrack("TEXT", parseInt(a.id.replace("EMBEDDED_", ""))), w.emit("subtitlesTrackLoaded", a), U("selectedSubtitlesTrackId"))
+                                        }
+                                        break;
+                                    case "subtitlesOffset":
+                                        null !== t && isFinite(t) && (v = Math.max(0, Math.min(100, parseInt(t, 10))), k(), U("subtitlesOffset"));
+                                        break;
+                                    case "subtitlesSize":
+                                        null !== t && isFinite(t) && (p = Math.max(0, parseInt(t, 10)), k(), U("subtitlesSize"));
+                                        break;
+                                    case "subtitlesTextColor":
+                                        if ("string" == typeof t) {
+                                            try {
+                                                y = s(t).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            k(), U("subtitlesTextColor")
+                                        }
+                                        break;
+                                    case "subtitlesBackgroundColor":
+                                        if ("string" == typeof t) {
+                                            try {
+                                                T = s(t).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            k(), U("subtitlesBackgroundColor")
+                                        }
+                                        break;
+                                    case "subtitlesOutlineColor":
+                                        if ("string" == typeof t) {
+                                            try {
+                                                b = s(t).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            k(), U("subtitlesOutlineColor")
+                                        }
+                                        break;
+                                    case "subtitlesOpacity":
+                                        if ("number" == typeof t) {
+                                            try {
+                                                E = Math.min(Math.max(t / 100, 0), 1)
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            k(), U("subtitlesOpacity")
+                                        }
+                                        break;
+                                    case "selectedAudioTrackId":
+                                        if (null !== C) {
+                                            d = t;
+                                            var o = F("audioTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            F("paused") ? (m = t, U("selectedAudioTrackId")) : g.setSelectTrack("AUDIO", parseInt(d.replace("EMBEDDED_", ""))), o && (w.emit("audioTrackLoaded", o), U("selectedAudioTrackId"))
+                                        }
+                                        break;
+                                    case "playbackSpeed":
+                                        if (null !== t && isFinite(t)) {
+                                            r = parseFloat(t);
+                                            try {
+                                                g.setSpeed(r)
+                                            } catch (e) {}
+                                            U("playbackSpeed")
+                                        }
+                                }
+                            }(e.propName, e.propValue);
+                        case "command":
+                            return void B(e.commandName, e.commandArgs)
+                    }
+                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
+                }
+            }
+            c.canPlayStream = function() {
+                return Promise.resolve(!0)
+            }, c.manifest = {
+                name: "TizenVideo",
+                external: !1,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "playbackSpeed"],
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
+            }, e.exports = c
+        },
+        1665: (e, t, r) => {
+            var n = r(1417),
+                i = r(2006);
+            e.exports = {
+                parse: function(e) {
+                    return new Promise((function(t, r) {
+                        var a = new n.WebVTT.Parser(window, n.WebVTT.StringDecoder()),
+                            s = [],
+                            o = [],
+                            l = {};
+                        a.oncue = function(e) {
+                            var t = {
+                                startTime: 1e3 * e.startTime | 0,
+                                endTime: 1e3 * e.endTime | 0,
+                                text: e.text
+                            };
+                            o.push(t), l[t.startTime] = l[t.startTime] || [], l[t.endTime] = l[t.endTime] || []
+                        }, a.onparsingerror = function(e) {
+                            0 === e.code ? (a.oncue = null, a.onparsingerror = null, a.onflush = null, r(e)) : (console.warn("Subtitles parsing error", e), s.push(e))
+                        }, a.onflush = function() {
+                            l.times = Object.keys(l).map((function(e) {
+                                return parseInt(e, 10)
+                            })).sort((function(e, t) {
+                                return e - t
+                            }));
+                            for (var e = 0; e < o.length; e++) {
+                                l[o[e].startTime].push(o[e]);
+                                for (var n = i(l.times, o[e].startTime) + 1; n < l.times.length && !(o[e].endTime <= l.times[n]); n++) l[l.times[n]].push(o[e])
+                            }
+                            for (var u = 0; u < l.times.length; u++) l[l.times[u]].sort((function(e, t) {
+                                return e.startTime - t.startTime || e.endTime - t.endTime
+                            }));
+                            a.oncue = null, a.onparsingerror = null, a.onflush = null, 0 === o.length && s.length ? r(s[0]) : 0 === l.times.length ? r(new Error("Missing subtitle track cues")) : t(l)
+                        }, a.parse(e)
+                    }))
+                }
+            }
+        },
         1880: (e, t, r) => {
-            const n = r(2165),
+            const n = r(4546),
                 i = r(985),
                 a = {};
             Object.keys(n).forEach((e => {
@@ -840,410 +1100,34 @@
                 }))
             })), e.exports = a
         },
-        2165: (e, t, r) => {
-            const n = r(4877),
-                i = {};
-            for (const e of Object.keys(n)) i[n[e]] = e;
-            const a = {
-                rgb: {
-                    channels: 3,
-                    labels: "rgb"
-                },
-                hsl: {
-                    channels: 3,
-                    labels: "hsl"
-                },
-                hsv: {
-                    channels: 3,
-                    labels: "hsv"
-                },
-                hwb: {
-                    channels: 3,
-                    labels: "hwb"
-                },
-                cmyk: {
-                    channels: 4,
-                    labels: "cmyk"
-                },
-                xyz: {
-                    channels: 3,
-                    labels: "xyz"
-                },
-                lab: {
-                    channels: 3,
-                    labels: "lab"
-                },
-                lch: {
-                    channels: 3,
-                    labels: "lch"
-                },
-                hex: {
-                    channels: 1,
-                    labels: ["hex"]
-                },
-                keyword: {
-                    channels: 1,
-                    labels: ["keyword"]
-                },
-                ansi16: {
-                    channels: 1,
-                    labels: ["ansi16"]
-                },
-                ansi256: {
-                    channels: 1,
-                    labels: ["ansi256"]
-                },
-                hcg: {
-                    channels: 3,
-                    labels: ["h", "c", "g"]
-                },
-                apple: {
-                    channels: 3,
-                    labels: ["r16", "g16", "b16"]
-                },
-                gray: {
-                    channels: 1,
-                    labels: ["gray"]
+        2006: e => {
+            e.exports = function(e, t) {
+                if (t < e[0] || e[e.length - 1] < t) return -1;
+                for (var r = 0, n = e.length - 1, i = -1; r <= n;) {
+                    var a = Math.floor((r + n) / 2);
+                    e[a] > t ? n = a - 1 : (e[a] < t || (i = a), r = a + 1)
                 }
-            };
-            e.exports = a;
-            for (const e of Object.keys(a)) {
-                if (!("channels" in a[e])) throw new Error("missing channels property: " + e);
-                if (!("labels" in a[e])) throw new Error("missing channel labels property: " + e);
-                if (a[e].labels.length !== a[e].channels) throw new Error("channel and label counts mismatch: " + e);
-                const {
-                    channels: t,
-                    labels: r
-                } = a[e];
-                delete a[e].channels, delete a[e].labels, Object.defineProperty(a[e], "channels", {
-                    value: t
-                }), Object.defineProperty(a[e], "labels", {
-                    value: r
-                })
+                return -1 !== i ? i : n
             }
-            a.rgb.hsl = function(e) {
-                const t = e[0] / 255,
-                    r = e[1] / 255,
-                    n = e[2] / 255,
-                    i = Math.min(t, r, n),
-                    a = Math.max(t, r, n),
-                    s = a - i;
-                let o, l;
-                a === i ? o = 0 : t === a ? o = (r - n) / s : r === a ? o = 2 + (n - t) / s : n === a && (o = 4 + (t - r) / s), o = Math.min(60 * o, 360), o < 0 && (o += 360);
-                const u = (i + a) / 2;
-                return l = a === i ? 0 : u <= .5 ? s / (a + i) : s / (2 - a - i), [o, 100 * l, 100 * u]
-            }, a.rgb.hsv = function(e) {
-                let t, r, n, i, a;
-                const s = e[0] / 255,
-                    o = e[1] / 255,
-                    l = e[2] / 255,
-                    u = Math.max(s, o, l),
-                    c = u - Math.min(s, o, l),
-                    d = function(e) {
-                        return (u - e) / 6 / c + .5
-                    };
-                return 0 === c ? (i = 0, a = 0) : (a = c / u, t = d(s), r = d(o), n = d(l), s === u ? i = n - r : o === u ? i = 1 / 3 + t - n : l === u && (i = 2 / 3 + r - t), i < 0 ? i += 1 : i > 1 && (i -= 1)), [360 * i, 100 * a, 100 * u]
-            }, a.rgb.hwb = function(e) {
-                const t = e[0],
-                    r = e[1];
-                let n = e[2];
-                const i = a.rgb.hsl(e)[0],
-                    s = 1 / 255 * Math.min(t, Math.min(r, n));
-                return n = 1 - 1 / 255 * Math.max(t, Math.max(r, n)), [i, 100 * s, 100 * n]
-            }, a.rgb.cmyk = function(e) {
-                const t = e[0] / 255,
-                    r = e[1] / 255,
-                    n = e[2] / 255,
-                    i = Math.min(1 - t, 1 - r, 1 - n);
-                return [100 * ((1 - t - i) / (1 - i) || 0), 100 * ((1 - r - i) / (1 - i) || 0), 100 * ((1 - n - i) / (1 - i) || 0), 100 * i]
-            }, a.rgb.keyword = function(e) {
-                const t = i[e];
-                if (t) return t;
-                let r, a = 1 / 0;
-                for (const t of Object.keys(n)) {
-                    const i = n[t],
-                        l = (o = i, ((s = e)[0] - o[0]) ** 2 + (s[1] - o[1]) ** 2 + (s[2] - o[2]) ** 2);
-                    l < a && (a = l, r = t)
-                }
-                var s, o;
-                return r
-            }, a.keyword.rgb = function(e) {
-                return n[e]
-            }, a.rgb.xyz = function(e) {
-                let t = e[0] / 255,
-                    r = e[1] / 255,
-                    n = e[2] / 255;
-                t = t > .04045 ? ((t + .055) / 1.055) ** 2.4 : t / 12.92, r = r > .04045 ? ((r + .055) / 1.055) ** 2.4 : r / 12.92, n = n > .04045 ? ((n + .055) / 1.055) ** 2.4 : n / 12.92;
-                return [100 * (.4124 * t + .3576 * r + .1805 * n), 100 * (.2126 * t + .7152 * r + .0722 * n), 100 * (.0193 * t + .1192 * r + .9505 * n)]
-            }, a.rgb.lab = function(e) {
-                const t = a.rgb.xyz(e);
-                let r = t[0],
-                    n = t[1],
-                    i = t[2];
-                r /= 95.047, n /= 100, i /= 108.883, r = r > .008856 ? r ** (1 / 3) : 7.787 * r + 16 / 116, n = n > .008856 ? n ** (1 / 3) : 7.787 * n + 16 / 116, i = i > .008856 ? i ** (1 / 3) : 7.787 * i + 16 / 116;
-                return [116 * n - 16, 500 * (r - n), 200 * (n - i)]
-            }, a.hsl.rgb = function(e) {
-                const t = e[0] / 360,
-                    r = e[1] / 100,
-                    n = e[2] / 100;
-                let i, a, s;
-                if (0 === r) return s = 255 * n, [s, s, s];
-                i = n < .5 ? n * (1 + r) : n + r - n * r;
-                const o = 2 * n - i,
-                    l = [0, 0, 0];
-                for (let e = 0; e < 3; e++) a = t + 1 / 3 * -(e - 1), a < 0 && a++, a > 1 && a--, s = 6 * a < 1 ? o + 6 * (i - o) * a : 2 * a < 1 ? i : 3 * a < 2 ? o + (i - o) * (2 / 3 - a) * 6 : o, l[e] = 255 * s;
-                return l
-            }, a.hsl.hsv = function(e) {
-                const t = e[0];
-                let r = e[1] / 100,
-                    n = e[2] / 100,
-                    i = r;
-                const a = Math.max(n, .01);
-                n *= 2, r *= n <= 1 ? n : 2 - n, i *= a <= 1 ? a : 2 - a;
-                return [t, 100 * (0 === n ? 2 * i / (a + i) : 2 * r / (n + r)), 100 * ((n + r) / 2)]
-            }, a.hsv.rgb = function(e) {
-                const t = e[0] / 60,
-                    r = e[1] / 100;
-                let n = e[2] / 100;
-                const i = Math.floor(t) % 6,
-                    a = t - Math.floor(t),
-                    s = 255 * n * (1 - r),
-                    o = 255 * n * (1 - r * a),
-                    l = 255 * n * (1 - r * (1 - a));
-                switch (n *= 255, i) {
-                    case 0:
-                        return [n, l, s];
-                    case 1:
-                        return [o, n, s];
-                    case 2:
-                        return [s, n, l];
-                    case 3:
-                        return [s, o, n];
-                    case 4:
-                        return [l, s, n];
-                    case 5:
-                        return [n, s, o]
-                }
-            }, a.hsv.hsl = function(e) {
-                const t = e[0],
-                    r = e[1] / 100,
-                    n = e[2] / 100,
-                    i = Math.max(n, .01);
-                let a, s;
-                s = (2 - r) * n;
-                const o = (2 - r) * i;
-                return a = r * i, a /= o <= 1 ? o : 2 - o, a = a || 0, s /= 2, [t, 100 * a, 100 * s]
-            }, a.hwb.rgb = function(e) {
-                const t = e[0] / 360;
-                let r = e[1] / 100,
-                    n = e[2] / 100;
-                const i = r + n;
-                let a;
-                i > 1 && (r /= i, n /= i);
-                const s = Math.floor(6 * t),
-                    o = 1 - n;
-                a = 6 * t - s, 1 & s && (a = 1 - a);
-                const l = r + a * (o - r);
-                let u, c, d;
-                switch (s) {
-                    default:
-                        case 6:
-                        case 0:
-                        u = o,
-                    c = l,
-                    d = r;
-                    break;
-                    case 1:
-                            u = l,
-                        c = o,
-                        d = r;
-                        break;
-                    case 2:
-                            u = r,
-                        c = o,
-                        d = l;
-                        break;
-                    case 3:
-                            u = r,
-                        c = l,
-                        d = o;
-                        break;
-                    case 4:
-                            u = l,
-                        c = r,
-                        d = o;
-                        break;
-                    case 5:
-                            u = o,
-                        c = r,
-                        d = l
-                }
-                return [255 * u, 255 * c, 255 * d]
-            }, a.cmyk.rgb = function(e) {
-                const t = e[0] / 100,
-                    r = e[1] / 100,
-                    n = e[2] / 100,
-                    i = e[3] / 100;
-                return [255 * (1 - Math.min(1, t * (1 - i) + i)), 255 * (1 - Math.min(1, r * (1 - i) + i)), 255 * (1 - Math.min(1, n * (1 - i) + i))]
-            }, a.xyz.rgb = function(e) {
-                const t = e[0] / 100,
-                    r = e[1] / 100,
-                    n = e[2] / 100;
-                let i, a, s;
-                return i = 3.2406 * t + -1.5372 * r + -.4986 * n, a = -.9689 * t + 1.8758 * r + .0415 * n, s = .0557 * t + -.204 * r + 1.057 * n, i = i > .0031308 ? 1.055 * i ** (1 / 2.4) - .055 : 12.92 * i, a = a > .0031308 ? 1.055 * a ** (1 / 2.4) - .055 : 12.92 * a, s = s > .0031308 ? 1.055 * s ** (1 / 2.4) - .055 : 12.92 * s, i = Math.min(Math.max(0, i), 1), a = Math.min(Math.max(0, a), 1), s = Math.min(Math.max(0, s), 1), [255 * i, 255 * a, 255 * s]
-            }, a.xyz.lab = function(e) {
-                let t = e[0],
-                    r = e[1],
-                    n = e[2];
-                t /= 95.047, r /= 100, n /= 108.883, t = t > .008856 ? t ** (1 / 3) : 7.787 * t + 16 / 116, r = r > .008856 ? r ** (1 / 3) : 7.787 * r + 16 / 116, n = n > .008856 ? n ** (1 / 3) : 7.787 * n + 16 / 116;
-                return [116 * r - 16, 500 * (t - r), 200 * (r - n)]
-            }, a.lab.xyz = function(e) {
-                let t, r, n;
-                r = (e[0] + 16) / 116, t = e[1] / 500 + r, n = r - e[2] / 200;
-                const i = r ** 3,
-                    a = t ** 3,
-                    s = n ** 3;
-                return r = i > .008856 ? i : (r - 16 / 116) / 7.787, t = a > .008856 ? a : (t - 16 / 116) / 7.787, n = s > .008856 ? s : (n - 16 / 116) / 7.787, t *= 95.047, r *= 100, n *= 108.883, [t, r, n]
-            }, a.lab.lch = function(e) {
-                const t = e[0],
-                    r = e[1],
-                    n = e[2];
-                let i;
-                i = 360 * Math.atan2(n, r) / 2 / Math.PI, i < 0 && (i += 360);
-                return [t, Math.sqrt(r * r + n * n), i]
-            }, a.lch.lab = function(e) {
-                const t = e[0],
-                    r = e[1],
-                    n = e[2] / 360 * 2 * Math.PI;
-                return [t, r * Math.cos(n), r * Math.sin(n)]
-            }, a.rgb.ansi16 = function(e, t = null) {
-                const [r, n, i] = e;
-                let s = null === t ? a.rgb.hsv(e)[2] : t;
-                if (s = Math.round(s / 50), 0 === s) return 30;
-                let o = 30 + (Math.round(i / 255) << 2 | Math.round(n / 255) << 1 | Math.round(r / 255));
-                return 2 === s && (o += 60), o
-            }, a.hsv.ansi16 = function(e) {
-                return a.rgb.ansi16(a.hsv.rgb(e), e[2])
-            }, a.rgb.ansi256 = function(e) {
-                const t = e[0],
-                    r = e[1],
-                    n = e[2];
-                if (t === r && r === n) return t < 8 ? 16 : t > 248 ? 231 : Math.round((t - 8) / 247 * 24) + 232;
-                return 16 + 36 * Math.round(t / 255 * 5) + 6 * Math.round(r / 255 * 5) + Math.round(n / 255 * 5)
-            }, a.ansi16.rgb = function(e) {
-                let t = e % 10;
-                if (0 === t || 7 === t) return e > 50 && (t += 3.5), t = t / 10.5 * 255, [t, t, t];
-                const r = .5 * (1 + ~~(e > 50));
-                return [(1 & t) * r * 255, (t >> 1 & 1) * r * 255, (t >> 2 & 1) * r * 255]
-            }, a.ansi256.rgb = function(e) {
-                if (e >= 232) {
-                    const t = 10 * (e - 232) + 8;
-                    return [t, t, t]
-                }
-                let t;
-                e -= 16;
-                return [Math.floor(e / 36) / 5 * 255, Math.floor((t = e % 36) / 6) / 5 * 255, t % 6 / 5 * 255]
-            }, a.rgb.hex = function(e) {
-                const t = (((255 & Math.round(e[0])) << 16) + ((255 & Math.round(e[1])) << 8) + (255 & Math.round(e[2]))).toString(16).toUpperCase();
-                return "000000".substring(t.length) + t
-            }, a.hex.rgb = function(e) {
-                const t = e.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
-                if (!t) return [0, 0, 0];
-                let r = t[0];
-                3 === t[0].length && (r = r.split("").map((e => e + e)).join(""));
-                const n = parseInt(r, 16);
-                return [n >> 16 & 255, n >> 8 & 255, 255 & n]
-            }, a.rgb.hcg = function(e) {
-                const t = e[0] / 255,
-                    r = e[1] / 255,
-                    n = e[2] / 255,
-                    i = Math.max(Math.max(t, r), n),
-                    a = Math.min(Math.min(t, r), n),
-                    s = i - a;
-                let o, l;
-                return o = s < 1 ? a / (1 - s) : 0, l = s <= 0 ? 0 : i === t ? (r - n) / s % 6 : i === r ? 2 + (n - t) / s : 4 + (t - r) / s, l /= 6, l %= 1, [360 * l, 100 * s, 100 * o]
-            }, a.hsl.hcg = function(e) {
-                const t = e[1] / 100,
-                    r = e[2] / 100,
-                    n = r < .5 ? 2 * t * r : 2 * t * (1 - r);
-                let i = 0;
-                return n < 1 && (i = (r - .5 * n) / (1 - n)), [e[0], 100 * n, 100 * i]
-            }, a.hsv.hcg = function(e) {
-                const t = e[1] / 100,
-                    r = e[2] / 100,
-                    n = t * r;
-                let i = 0;
-                return n < 1 && (i = (r - n) / (1 - n)), [e[0], 100 * n, 100 * i]
-            }, a.hcg.rgb = function(e) {
-                const t = e[0] / 360,
-                    r = e[1] / 100,
-                    n = e[2] / 100;
-                if (0 === r) return [255 * n, 255 * n, 255 * n];
-                const i = [0, 0, 0],
-                    a = t % 1 * 6,
-                    s = a % 1,
-                    o = 1 - s;
-                let l = 0;
-                switch (Math.floor(a)) {
-                    case 0:
-                        i[0] = 1, i[1] = s, i[2] = 0;
-                        break;
-                    case 1:
-                        i[0] = o, i[1] = 1, i[2] = 0;
-                        break;
-                    case 2:
-                        i[0] = 0, i[1] = 1, i[2] = s;
-                        break;
-                    case 3:
-                        i[0] = 0, i[1] = o, i[2] = 1;
-                        break;
-                    case 4:
-                        i[0] = s, i[1] = 0, i[2] = 1;
-                        break;
-                    default:
-                        i[0] = 1, i[1] = 0, i[2] = o
-                }
-                return l = (1 - r) * n, [255 * (r * i[0] + l), 255 * (r * i[1] + l), 255 * (r * i[2] + l)]
-            }, a.hcg.hsv = function(e) {
-                const t = e[1] / 100,
-                    r = t + e[2] / 100 * (1 - t);
-                let n = 0;
-                return r > 0 && (n = t / r), [e[0], 100 * n, 100 * r]
-            }, a.hcg.hsl = function(e) {
-                const t = e[1] / 100,
-                    r = e[2] / 100 * (1 - t) + .5 * t;
-                let n = 0;
-                return r > 0 && r < .5 ? n = t / (2 * r) : r >= .5 && r < 1 && (n = t / (2 * (1 - r))), [e[0], 100 * n, 100 * r]
-            }, a.hcg.hwb = function(e) {
-                const t = e[1] / 100,
-                    r = t + e[2] / 100 * (1 - t);
-                return [e[0], 100 * (r - t), 100 * (1 - r)]
-            }, a.hwb.hcg = function(e) {
-                const t = e[1] / 100,
-                    r = 1 - e[2] / 100,
-                    n = r - t;
-                let i = 0;
-                return n < 1 && (i = (r - n) / (1 - n)), [e[0], 100 * n, 100 * i]
-            }, a.apple.rgb = function(e) {
-                return [e[0] / 65535 * 255, e[1] / 65535 * 255, e[2] / 65535 * 255]
-            }, a.rgb.apple = function(e) {
-                return [e[0] / 255 * 65535, e[1] / 255 * 65535, e[2] / 255 * 65535]
-            }, a.gray.rgb = function(e) {
-                return [e[0] / 100 * 255, e[0] / 100 * 255, e[0] / 100 * 255]
-            }, a.gray.hsl = function(e) {
-                return [0, 0, e[0]]
-            }, a.gray.hsv = a.gray.hsl, a.gray.hwb = function(e) {
-                return [0, 100, e[0]]
-            }, a.gray.cmyk = function(e) {
-                return [0, 0, 0, e[0]]
-            }, a.gray.lab = function(e) {
-                return [e[0], 0, 0]
-            }, a.gray.hex = function(e) {
-                const t = 255 & Math.round(e[0] / 100 * 255),
-                    r = ((t << 16) + (t << 8) + t).toString(16).toUpperCase();
-                return "000000".substring(r.length) + r
-            }, a.rgb.gray = function(e) {
-                return [(e[0] + e[1] + e[2]) / 3 / 255 * 100]
+        },
+        2152: e => {
+            e.exports = function(e, t) {
+                fetch("http://127.0.0.1:11470/tracks/" + encodeURIComponent(e)).then((function(e) {
+                    return e.json()
+                })).then((function(e) {
+                    var r = e.filter((function(e) {
+                            return "audio" === (e || {}).type
+                        })),
+                        n = e.filter((function(e) {
+                            return "text" === (e || {}).type
+                        }));
+                    t({
+                        audio: r,
+                        subs: n
+                    })
+                })).catch((function(e) {
+                    console.error(e), t(!1)
+                }))
             }
         },
         2258: e => {
@@ -15847,87 +15731,88 @@
                 }()
             }(!1)
         },
-        2344: (e, t, r) => {
+        2366: (e, t, r) => {
+            var n = r(7241);
+            e.exports = n
+        },
+        2563: (e, t, r) => {
             var n = r(5852),
                 i = r(5126),
-                a = r(6435),
-                s = r(8742),
-                o = r(6205),
-                l = r(4775),
-                u = /^\{(\\an[1-8])+\}/i;
+                a = r(8816),
+                s = r(5416);
 
-            function c(e) {
-                var t = !0,
-                    r = 1,
+            function o(e) {
+                var t = (e = e || {}).containerElement;
+                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var r = document.createElement("video");
+                r.style.width = "100%", r.style.height = "100%", r.style.backgroundColor = "black", r.controls = !1, r.playsInline = !0, r.onerror = function() {
+                    ! function() {
+                        if (u) return;
+                        var e;
+                        switch (r.error.code) {
+                            case 1:
+                                e = s.HTML_VIDEO.MEDIA_ERR_ABORTED;
+                                break;
+                            case 2:
+                                e = s.HTML_VIDEO.MEDIA_ERR_NETWORK;
+                                break;
+                            case 3:
+                                e = s.HTML_VIDEO.MEDIA_ERR_DECODE;
+                                break;
+                            case 4:
+                                e = s.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
+                                break;
+                            default:
+                                e = s.UNKNOWN_ERROR
+                        }
+                        g(Object.assign({}, e, {
+                            critical: !0,
+                            error: r.error
+                        }))
+                    }()
+                }, r.onended = function() {
+                    l.emit("ended")
+                }, r.onpause = function() {
+                    m("paused")
+                }, r.onplay = function() {
+                    m("paused")
+                }, r.ontimeupdate = function() {
+                    m("time")
+                }, r.ondurationchange = function() {
+                    m("duration")
+                }, r.onwaiting = function() {
+                    m("buffering")
+                }, r.onseeking = function() {
+                    m("time"), m("buffering")
+                }, r.onseeked = function() {
+                    m("time"), m("buffering")
+                }, r.onstalled = function() {
+                    m("buffering")
+                }, r.onplaying = function() {
+                    m("time"), m("buffering")
+                }, r.oncanplay = function() {
+                    m("buffering")
+                }, r.canplaythrough = function() {
+                    m("buffering")
+                }, r.onloadedmetadata = function() {
+                    m("loaded")
+                }, r.onloadeddata = function() {
+                    m("buffering")
+                }, r.onvolumechange = function() {
+                    m("volume"), m("muted")
+                }, r.onratechange = function() {
+                    m("playbackSpeed")
+                }, r.textTracks.onchange = function() {
+                    m("subtitlesTracks"), m("selectedSubtitlesTrackId"), f(), Array.from(r.textTracks).forEach((function(e) {
+                        e.oncuechange = f
+                    }))
+                }, t.appendChild(r);
+                var o = document.createElement("div");
+                o.style.position = "absolute", o.style.right = "0", o.style.bottom = "0", o.style.left = "0", o.style.zIndex = "1", o.style.textAlign = "center", t.style.position = "relative", t.style.zIndex = "0", t.appendChild(o);
+                var l = new n,
+                    u = !1,
                     c = null,
-                    d = null,
-                    h = (e = e || {}).containerElement;
-                if (!(h instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var f, g = window.webapis.avplay,
-                    m = !1,
-                    p = 100,
-                    v = 0,
-                    y = "rgb(255, 255, 255)",
-                    T = "rgba(0, 0, 0, 0)",
-                    b = "rgb(34, 34, 34)",
-                    E = 1,
-                    S = document.createElement("object");
-                S.type = "application/avplayer", S.style.width = "100%", S.style.height = "100%", S.style.backgroundColor = "black";
-                var A = !1;
-
-                function k() {
-                    if (f) {
-                        var e = F("time"),
-                            t = f.duration - (e - f.now);
-                        t > 0 && L(t, f.text)
-                    }
-                }
-
-                function L(e, t) {
-                    if (!A) {
-                        var n = F("time"),
-                            i = t.replace(u, "");
-                        for (f = {
-                                duration: e,
-                                text: i,
-                                now: n
-                            }, R && (clearTimeout(R), R = !1); I.hasChildNodes();) I.removeChild(I.lastChild);
-                        I.style.bottom = v + "%", I.style.opacity = E;
-                        var a = document.createElement("span");
-                        a.innerHTML = i, a.style.display = "inline-block", a.style.padding = "0.2em", a.style.fontSize = Math.floor(p / 25) + "vmin", a.style.color = y, a.style.backgroundColor = T, a.style.textShadow = "1px 1px 0.1em " + b, I.appendChild(a), I.appendChild(document.createElement("br")), e && (R = setTimeout((function() {
-                            for (; I.hasChildNodes();) I.removeChild(I.lastChild)
-                        }), parseInt(e * r)))
-                    }
-                }
-                var R = !1;
-                g.setListener({
-                    onbufferingstart: function() {
-                        t = !0, U("buffering")
-                    },
-                    onbufferingprogress: function() {
-                        t = !0, U("buffering")
-                    },
-                    onbufferingcomplete: function() {
-                        t = !1, U("buffering")
-                    },
-                    oncurrentplaytime: function() {
-                        U("time")
-                    },
-                    onsubtitlechange: function(e, t) {
-                        L(e, t)
-                    },
-                    onstreamcompleted: function() {
-                        w.emit("ended")
-                    }
-                }), h.appendChild(S);
-                var I = document.createElement("div");
-                I.style.position = "absolute", I.style.right = "0", I.style.bottom = "0", I.style.left = "0", I.style.zIndex = "1", I.style.textAlign = "center", h.style.position = "relative", h.style.zIndex = "0", h.appendChild(I);
-                var w = new n,
-                    D = !1,
-                    C = null,
-                    x = 0,
-                    _ = null,
-                    O = {
+                    d = {
                         stream: !1,
                         loaded: !1,
                         paused: !1,
@@ -15936,599 +15821,205 @@
                         buffering: !1,
                         subtitlesTracks: !1,
                         selectedSubtitlesTrackId: !1,
-                        subtitlesOffset: !1,
-                        subtitlesSize: !1,
-                        subtitlesTextColor: !1,
-                        subtitlesBackgroundColor: !1,
-                        subtitlesOutlineColor: !1,
-                        subtitlesOpacity: !1,
                         audioTracks: !1,
                         selectedAudioTrackId: !1,
+                        volume: !1,
+                        muted: !1,
                         playbackSpeed: !1
-                    },
-                    P = !1,
-                    M = {
-                        audio: [],
-                        subs: []
                     };
 
-                function F(e) {
+                function h(e) {
                     switch (e) {
                         case "stream":
-                            return C;
+                            return c;
                         case "loaded":
-                            return _;
+                            return null === c ? null : r.readyState >= r.HAVE_METADATA;
                         case "paused":
-                            if (null === C) return null;
-                            var n = !("PAUSED" !== g.getState());
-                            return !n && m && (g.setSelectTrack("AUDIO", parseInt(m.replace("EMBEDDED_", ""))), m = !1), n;
+                            return null === c ? null : !!r.paused;
                         case "time":
-                            var i = g.getCurrentTime();
-                            return null !== C && null !== i && isFinite(i) ? Math.floor(i) : null;
+                            return null !== c && null !== r.currentTime && isFinite(r.currentTime) ? Math.floor(1e3 * r.currentTime) : null;
                         case "duration":
-                            var a = g.getDuration();
-                            return null !== C && null !== a && isFinite(a) ? Math.floor(a) : null;
+                            return null !== c && null !== r.duration && isFinite(r.duration) ? Math.floor(1e3 * r.duration) : null;
                         case "buffering":
-                            return null === C ? null : t;
+                            return null === c ? null : r.readyState < r.HAVE_FUTURE_DATA;
                         case "subtitlesTracks":
-                            if (null === C) return [];
-                            for (var s = g.getTotalTrackInfo(), o = [], l = 0; l < s.length; l++)
-                                if ("TEXT" === s[l].type) {
-                                    var u = s[l],
-                                        h = "EMBEDDED_" + String(u.index);
-                                    c || o.length || (c = h);
-                                    var f = {};
-                                    try {
-                                        f = JSON.parse(u.extra_info)
-                                    } catch (e) {}
-                                    var S = "string" == typeof f.track_lang && f.track_lang.length > 0 ? f.track_lang.trim() : null,
-                                        k = null;
-                                    if (((M || {}).subs || []).length)(x = M.subs.find((function(e) {
-                                        return (e || {}).id - 1 === u.index
-                                    }))) && (S = x.lang || "eng", k = x.label || null);
-                                    o.push({
-                                        id: h,
-                                        lang: S,
-                                        label: k,
-                                        origin: "EMBEDDED",
-                                        embedded: !0,
-                                        mode: A || h !== c ? "disabled" : "showing"
-                                    })
-                                }
-                            return o;
+                            return null === c ? [] : Array.from(r.textTracks).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.language,
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            }));
                         case "selectedSubtitlesTrackId":
-                            if (null === C || A) return null;
-                            var L = g.getCurrentStreamInfo();
-                            for (l = 0; l < L.length; l++)
-                                if ("TEXT" === L[l].type) {
-                                    F = L[l].index;
-                                    break
-                                }
-                            return F ? "EMBEDDED_" + String(F) : null;
-                        case "subtitlesOffset":
-                            return D ? null : v;
-                        case "subtitlesSize":
-                            return D ? null : p;
-                        case "subtitlesTextColor":
-                            return D ? null : y;
-                        case "subtitlesBackgroundColor":
-                            return D ? null : T;
-                        case "subtitlesOutlineColor":
-                            return D ? null : b;
-                        case "subtitlesOpacity":
-                            return D ? null : E;
+                            return null === c ? null : Array.from(r.textTracks).reduce((function(e, t, r) {
+                                return null === e && "showing" === t.mode ? "EMBEDDED_" + String(r) : e
+                            }), null);
                         case "audioTracks":
-                            if (null === C) return [];
-                            s = g.getTotalTrackInfo();
-                            var R = [];
-                            for (l = 0; l < s.length; l++)
-                                if ("AUDIO" === s[l].type) {
-                                    var I = s[l],
-                                        w = "EMBEDDED_" + String(I.index);
-                                    d || R.length || (d = w);
-                                    f = {};
-                                    try {
-                                        f = JSON.parse(I.extra_info)
-                                    } catch (e) {}
-                                    var x, O = "string" == typeof f.language && f.language.length > 0 ? f.language : null,
-                                        P = null;
-                                    if (((M || {}).audio || []).length)(x = M.audio.find((function(e) {
-                                        return (e || {}).id - 1 === I.index
-                                    }))) && (O = x.lang || "eng", P = x.label || null);
-                                    R.push({
-                                        id: w,
-                                        lang: O,
-                                        label: P,
-                                        origin: "EMBEDDED",
-                                        embedded: !0,
-                                        mode: w === d ? "showing" : "disabled"
-                                    })
-                                }
-                            return R;
+                            return null === c ? [] : r.audioTracks && Array.from(r.audioTracks).length ? Array.from(r.audioTracks).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.language,
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            })) : [];
                         case "selectedAudioTrackId":
-                            if (null === C) return null;
-                            if (m) return m;
-                            L = g.getCurrentStreamInfo();
-                            var F = !1;
-                            for (l = 0; l < L.length; l++)
-                                if ("AUDIO" === L[l].type) {
-                                    F = L[l].index;
-                                    break
-                                }
-                            return !1 !== F ? "EMBEDDED_" + String(F) : null;
+                            return null === c ? null : r.audioTracks && Array.from(r.audioTracks).length ? Array.from(r.audioTracks).reduce((function(e, t, r) {
+                                return null === e && t.enabled ? "EMBEDDED_" + String(r) : e
+                            }), null) : null;
+                        case "volume":
+                            return u || null === r.volume || !isFinite(r.volume) ? null : Math.floor(100 * r.volume);
+                        case "muted":
+                            return u ? null : !!r.muted;
                         case "playbackSpeed":
-                            return D || null === r || !isFinite(r) ? null : r;
+                            return u || null === r.playbackRate || !isFinite(r.playbackRate) ? null : r.playbackRate;
                         default:
                             return null
                     }
                 }
 
-                function N(e) {
-                    w.emit("error", e), e.critical && B("unload")
+                function f() {
+                    Array.from(r.textTracks).forEach((function(e) {
+                        Array.from(e.cues || []).forEach((function(e) {
+                            e.snapToLines = !1, e.line = 100
+                        }))
+                    }))
                 }
 
-                function U(e) {
-                    if (O[e]) {
-                        var t = F(e);
-                        w.emit("propChanged", e, t)
-                    }
+                function g(e) {
+                    l.emit("error", e), e.critical && p("unload")
                 }
 
-                function B(e, t) {
+                function m(e) {
+                    d[e] && l.emit("propChanged", e, h(e))
+                }
+
+                function p(e, n) {
                     switch (e) {
                         case "load":
-                            if (t && t.stream && "string" == typeof t.stream.url) {
-                                if ((C = t.stream) !== t.stream) return;
-                                U("buffering");
-                                var r = !1,
-                                    n = navigator.userAgent.match(/Tizen (\d+\.\d+)/i);
-                                n && n[1] && (r = parseFloat(n[1])), (!r || r >= 6) && (P || null === C || (P = !0, l(C.url, (function(e) {
-                                    e && (M = e), ((M || {}).subs || []).length && U("subtitlesTracks"), ((M || {}).audio || []).length && U("audioTracks")
-                                })))), g.open(C.url), g.setDisplayRect(0, 0, window.innerWidth, window.innerHeight), g.setDisplayMethod("PLAYER_DISPLAY_MODE_LETTER_BOX"), g.seekTo(null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) : 0), g.prepareAsync((function() {
-                                    U("duration"), g.play(), _ = !0, U("loaded"), U("stream"), U("paused"), U("time"), U("duration"), U("subtitlesTracks"), U("selectedSubtitlesTrackId"), U("audioTracks"), U("selectedAudioTrackId")
-                                }), (function(e) {
-                                    if (x < 5) {
-                                        x++;
-                                        try {
-                                            g.stop()
-                                        } catch (e) {}
-                                        B("load", t)
-                                    } else N(Object.assign({}, o.STREAM_FAILED_TO_LOAD, {
-                                        critical: !0,
-                                        stream: t ? t.stream : null,
-                                        error: e
+                            p("unload"), n && n.stream && "string" == typeof n.stream.url ? (c = n.stream, m("stream"), m("loaded"), r.autoplay = "boolean" != typeof n.autoplay || n.autoplay, r.currentTime = null !== n.time && isFinite(n.time) ? parseInt(n.time, 10) / 1e3 : 0, m("paused"), m("time"), m("duration"), m("buffering"), r.textTracks && (r.textTracks.onaddtrack = function() {
+                                setTimeout((function() {
+                                    Array.from(r.textTracks).forEach((function(e, t) {
+                                        t || (e.mode = "showing")
+                                    })), setTimeout((function() {
+                                        Array.from(r.textTracks).forEach((function(e) {
+                                            e.mode = "disabled"
+                                        })), setTimeout((function() {
+                                            m("subtitlesTracks"), m("selectedSubtitlesTrackId")
+                                        }))
                                     }))
                                 }))
-                            } else N(Object.assign({}, o.UNSUPPORTED_STREAM, {
+                            }), r.audioTracks && (r.audioTracks.onaddtrack = function() {
+                                setTimeout((function() {
+                                    m("audioTracks"), m("selectedAudioTrackId")
+                                }))
+                            }), r.src = c.url) : g(Object.assign({}, s.UNSUPPORTED_STREAM, {
                                 critical: !0,
-                                stream: t ? t.stream : null
+                                stream: n ? n.stream : null
                             }));
                             break;
                         case "unload":
-                            C = null, g.stop(), _ = !1, U("loaded"), U("stream"), U("paused"), U("time"), U("duration"), U("buffering"), U("subtitlesTracks"), U("selectedSubtitlesTrackId"), U("audioTracks"), U("selectedAudioTrackId");
+                            r.textTracks.onaddtrack = null, r.audioTracks.onaddtrack = null, c = null, Array.from(r.textTracks).forEach((function(e) {
+                                e.oncuechange = null
+                            })), r.removeAttribute("src"), r.load(), r.currentTime = 0, m("stream"), m("loaded"), m("paused"), m("time"), m("duration"), m("buffering"), m("subtitlesTracks"), m("selectedSubtitlesTrackId"), m("audioTracks"), m("selectedAudioTrackId");
                             break;
                         case "destroy":
-                            B("unload"), D = !0, g.stop(), U("subtitlesOffset"), U("subtitlesSize"), U("subtitlesTextColor"), U("subtitlesBackgroundColor"), U("subtitlesOutlineColor"), U("subtitlesOpacity"), U("playbackSpeed"), w.removeAllListeners(), h.removeChild(S)
+                            p("unload"), u = !0, m("volume"), m("muted"), m("playbackSpeed"), l.removeAllListeners(), r.onerror = null, r.onended = null, r.onpause = null, r.onplay = null, r.ontimeupdate = null, r.ondurationchange = null, r.onwaiting = null, r.onseeking = null, r.onseeked = null, r.onstalled = null, r.onplaying = null, r.oncanplay = null, r.canplaythrough = null, r.onloadeddata = null, r.onvolumechange = null, r.onratechange = null, r.textTracks.onchange = null, t.removeChild(r)
                     }
                 }
                 this.on = function(e, t) {
-                    if (D) throw new Error("Video is destroyed");
-                    w.on(e, t)
+                    if (u) throw new Error("Video is destroyed");
+                    l.on(e, t)
                 }, this.dispatch = function(e) {
-                    if (D) throw new Error("Video is destroyed");
+                    if (u) throw new Error("Video is destroyed");
                     if (e) switch ((e = a(i(e))).type) {
                         case "observeProp":
-                            return void
-                            function(e) {
-                                if (O.hasOwnProperty(e)) {
-                                    var t = F(e);
-                                    w.emit("propValue", e, t), O[e] = !0
-                                }
-                            }(e.propName);
+                            return t = e.propName, void(d.hasOwnProperty(t) && (l.emit("propValue", t, h(t)), d[t] = !0));
                         case "setProp":
                             return void
                             function(e, t) {
                                 switch (e) {
                                     case "paused":
-                                        if (null !== C) {
-                                            var n = !!t;
-                                            n ? g.pause() : g.play(), n ? R && clearTimeout(R) : k()
-                                        }
-                                        U("paused");
-                                        var i = F("paused");
-                                        setTimeout((function() {
-                                            F("paused") !== i && U("paused")
-                                        }), 1e3);
+                                        null !== c && (t ? r.pause() : r.play(), m("paused"));
                                         break;
                                     case "time":
-                                        null !== C && null !== t && isFinite(t) && (g.seekTo(parseInt(t, 10)), L(1, ""), U("time"));
+                                        null !== c && null !== t && isFinite(t) && (r.currentTime = parseInt(t, 10) / 1e3, m("time"));
                                         break;
                                     case "selectedSubtitlesTrackId":
-                                        if (null !== C)
-                                            if (0 === (c || "").indexOf("EMBEDDED_")) {
-                                                if (-1 === (t || "").indexOf("EMBEDDED_")) return L(1, ""), A = !0, void U("selectedSubtitlesTrackId");
-                                                A = !1, c = t;
-                                                var a = F("subtitlesTracks").find((function(e) {
-                                                    return e.id === t
-                                                }));
-                                                g.setSelectTrack("TEXT", parseInt(c.replace("EMBEDDED_", ""))), a && (w.emit("subtitlesTrackLoaded", a), U("selectedSubtitlesTrackId"))
-                                            } else t || (L(1, ""), A = !0, U("selectedSubtitlesTrackId"));
-                                        break;
-                                    case "subtitlesOffset":
-                                        null !== t && isFinite(t) && (v = Math.max(0, Math.min(100, parseInt(t, 10))), k(), U("subtitlesOffset"));
-                                        break;
-                                    case "subtitlesSize":
-                                        null !== t && isFinite(t) && (p = Math.max(0, parseInt(t, 10)), k(), U("subtitlesSize"));
-                                        break;
-                                    case "subtitlesTextColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                y = s(t).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            k(), U("subtitlesTextColor")
-                                        }
-                                        break;
-                                    case "subtitlesBackgroundColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                T = s(t).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            k(), U("subtitlesBackgroundColor")
-                                        }
-                                        break;
-                                    case "subtitlesOutlineColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                b = s(t).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            k(), U("subtitlesOutlineColor")
-                                        }
-                                        break;
-                                    case "subtitlesOpacity":
-                                        if ("number" == typeof t) {
-                                            try {
-                                                E = Math.min(Math.max(t / 100, 0), 1)
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            k(), U("subtitlesOpacity")
+                                        if (null !== c) {
+                                            Array.from(r.textTracks).forEach((function(e) {
+                                                e.mode = "disabled"
+                                            })), Array.from(r.textTracks).forEach((function(e, r) {
+                                                "EMBEDDED_" + String(r) === t && (e.mode = "showing")
+                                            }));
+                                            var n = h("subtitlesTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            n && (m("selectedSubtitlesTrackId"), l.emit("subtitlesTrackLoaded", n))
                                         }
                                         break;
                                     case "selectedAudioTrackId":
-                                        if (null !== C) {
-                                            d = t;
-                                            var o = F("audioTracks").find((function(e) {
-                                                return e.id === t
-                                            }));
-                                            F("paused") ? (m = t, U("selectedAudioTrackId")) : g.setSelectTrack("AUDIO", parseInt(d.replace("EMBEDDED_", ""))), o && (w.emit("audioTrackLoaded", o), U("selectedAudioTrackId"))
-                                        }
+                                        if (null !== c)
+                                            for (var i = 0; i < r.audioTracks.length; i++) r.audioTracks[i].enabled = !("EMBEDDED_" + String(i) !== t);
+                                        var a = h("audioTracks").find((function(e) {
+                                            return e.id === t
+                                        }));
+                                        a && (m("selectedAudioTrackId"), l.emit("audioTrackLoaded", a));
+                                        break;
+                                    case "volume":
+                                        null !== t && isFinite(t) && (r.muted = !1, r.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100, m("muted"), m("volume"));
+                                        break;
+                                    case "muted":
+                                        r.muted = !!t, m("muted");
                                         break;
                                     case "playbackSpeed":
-                                        if (null !== t && isFinite(t)) {
-                                            r = parseFloat(t);
-                                            try {
-                                                g.setSpeed(r)
-                                            } catch (e) {}
-                                            U("playbackSpeed")
-                                        }
+                                        null !== t && isFinite(t) && (r.playbackRate = parseFloat(t), m("playbackSpeed"))
                                 }
                             }(e.propName, e.propValue);
                         case "command":
-                            return void B(e.commandName, e.commandArgs)
+                            return void p(e.commandName, e.commandArgs)
                     }
+                    var t;
                     throw new Error("Invalid action dispatched: " + JSON.stringify(e))
                 }
             }
-            c.canPlayStream = function() {
-                return Promise.resolve(!0)
-            }, c.manifest = {
-                name: "TizenVideo",
+            o.canPlayStream = function(e) {
+                return e ? Promise.resolve(!0) : Promise.resolve(!1)
+            }, o.manifest = {
+                name: "VidaaVideo",
                 external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "playbackSpeed"],
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "volume", "muted", "playbackSpeed"],
                 commands: ["load", "unload", "destroy"],
                 events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
-            }, e.exports = c
+            }, e.exports = o
         },
-        2556: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(8742),
-                o = r(6205),
-                l = r(9260),
-                u = r(3308),
-                c = r(6675);
-            e.exports = function(e) {
-                function t(t) {
-                    var r = new e(t = t || {});
-                    r.on("error", (function(e) {
-                        m.emit("error", e), e.critical && _("unload")
-                    })), r.on("propValue", w.bind(null, "propValue")), r.on("propChanged", w.bind(null, "propChanged")), e.manifest.events.filter((function(e) {
-                        return !["error", "propValue", "propChanged"].includes(e)
-                    })).forEach((function(e) {
-                        r.on(e, function(e) {
-                            return function() {
-                                m.emit.apply(m, [e].concat(Array.from(arguments)))
-                            }
-                        }(e))
-                    }));
-                    var d = t.containerElement;
-                    if (!(d instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                    var h = document.createElement("div");
-                    h.style.position = "absolute", h.style.right = "0", h.style.bottom = "0", h.style.left = "0", h.style.zIndex = "1", h.style.textAlign = "center", d.style.position = "relative", d.style.zIndex = "0", d.appendChild(h);
-                    var f = {
-                            time: null
-                        },
-                        g = null,
-                        m = new n,
-                        p = !1,
-                        v = [],
-                        y = null,
-                        T = null,
-                        b = 100,
-                        E = 0,
-                        S = "rgb(255, 255, 255)",
-                        A = "rgba(0, 0, 0, 0)",
-                        k = "rgb(34, 34, 34)",
-                        L = 1,
-                        R = {
-                            extraSubtitlesTracks: !1,
-                            selectedExtraSubtitlesTrackId: !1,
-                            extraSubtitlesDelay: !1,
-                            extraSubtitlesSize: !1,
-                            extraSubtitlesOffset: !1,
-                            extraSubtitlesTextColor: !1,
-                            extraSubtitlesBackgroundColor: !1,
-                            extraSubtitlesOutlineColor: !1,
-                            extraSubtitlesOpacity: !1
-                        };
-
-                    function I() {
-                        for (; h.hasChildNodes();) h.removeChild(h.lastChild);
-                        null !== g && null !== f.time && isFinite(f.time) && (h.style.bottom = E + "%", h.style.opacity = L, u.render(g, f.time - T).forEach((function(e) {
-                            e.style.display = "inline-block", e.style.padding = "0.2em", e.style.whiteSpace = "pre-wrap";
-                            var t = window.screen720p ? 1.538 : 1;
-                            e.style.fontSize = Math.floor(b / 25 * t) + "vmin", e.style.color = S, e.style.backgroundColor = A, e.style.textShadow = "-0.15rem -0.15rem 0.15rem " + k + ", 0px -0.15rem 0.15rem " + k + ", 0.15rem -0.15rem 0.15rem " + k + ", -0.15rem 0px 0.15rem " + k + ", 0.15rem 0px 0.15rem " + k + ", -0.15rem 0.15rem 0.15rem " + k + ", 0px 0.15rem 0.15rem " + k + ", 0.15rem 0.15rem 0.15rem " + k, h.appendChild(e), h.appendChild(document.createElement("br"))
-                        })))
-                    }
-
-                    function w(e, t, r) {
-                        if ("time" === t) f.time = r, I();
-                        m.emit(e, t, C(t, r))
-                    }
-
-                    function D(e) {
-                        R[e] && m.emit("propChanged", e, C(e, null))
-                    }
-
-                    function C(e, t) {
-                        switch (e) {
-                            case "extraSubtitlesTracks":
-                                return p ? [] : v.slice();
-                            case "selectedExtraSubtitlesTrackId":
-                                return p ? null : y;
-                            case "extraSubtitlesDelay":
-                                return p ? null : T;
-                            case "extraSubtitlesSize":
-                                return p ? null : b;
-                            case "extraSubtitlesOffset":
-                                return p ? null : E;
-                            case "extraSubtitlesTextColor":
-                                return p ? null : S;
-                            case "extraSubtitlesBackgroundColor":
-                                return p ? null : A;
-                            case "extraSubtitlesOutlineColor":
-                                return p ? null : k;
-                            case "extraSubtitlesOpacity":
-                                return p ? null : L;
-                            default:
-                                return t
+        2715: (e, t, r) => {
+            var n = r(531);
+            e.exports = n
+        },
+        3133: (e, t, r) => {
+            var n = r(1417),
+                i = r(2006);
+            e.exports = {
+                render: function(e, t) {
+                    var r = [],
+                        a = i(e.times, t);
+                    if (-1 !== a)
+                        for (var s = e[e.times[a]], o = 0; o < s.length; o++) {
+                            var l = n.WebVTT.convertCueToDOMTree(window, s[o].text);
+                            r.push(l)
                         }
-                    }
-
-                    function x(e, t) {
-                        switch (e) {
-                            case "selectedExtraSubtitlesTrackId":
-                                g = null, y = null, T = null;
-                                var n = v.find((function(e) {
-                                    return e.id === t
-                                }));
-                                if (n) {
-                                    y = n.id, T = 0,
-                                        function e(t, i) {
-                                            (function(e, t) {
-                                                var r = t ? e.fallbackUrl : e.url;
-                                                if ("string" == typeof r) return fetch(r).then((function(e) {
-                                                    if (e.ok) return e.text();
-                                                    throw new Error(e.status + " (" + e.statusText + ")")
-                                                }));
-                                                if (e.buffer instanceof ArrayBuffer) try {
-                                                    const t = new Uint8Array(e.buffer),
-                                                        r = (new TextDecoder).decode(t);
-                                                    return Promise.resolve(r)
-                                                } catch (e) {
-                                                    return Promise.reject(e)
-                                                }
-                                                return Promise.reject("No `url` or `buffer` field available for this track")
-                                            })(t, i).then((function(e) {
-                                                return c.convert(e)
-                                            })).then((function(e) {
-                                                return l.parse(e)
-                                            })).then((function(e) {
-                                                y === n.id && (g = e, I(), m.emit("extraSubtitlesTrackLoaded", n))
-                                            })).catch((function(t) {
-                                                y === n.id && (i || "string" != typeof n.fallbackUrl ? function(e) {
-                                                    m.emit("error", e), e.critical && (_("unload"), r.dispatch({
-                                                        type: "command",
-                                                        commandName: "unload"
-                                                    }))
-                                                }(Object.assign({}, o.WITH_HTML_SUBTITLES.LOAD_FAILED, {
-                                                    error: t,
-                                                    track: n,
-                                                    critical: !1
-                                                })) : e(n, !0))
-                                            }))
-                                        }(n)
-                                }
-                                return I(), D("selectedExtraSubtitlesTrackId"), D("extraSubtitlesDelay"), !0;
-                            case "extraSubtitlesDelay":
-                                return null !== y && null !== t && isFinite(t) && (T = parseInt(t, 10), I(), D("extraSubtitlesDelay")), !0;
-                            case "extraSubtitlesSize":
-                                return null !== t && isFinite(t) && (b = Math.max(0, parseInt(t, 10)), I(), D("extraSubtitlesSize")), !0;
-                            case "extraSubtitlesOffset":
-                                return null !== t && isFinite(t) && (E = Math.max(0, Math.min(100, parseInt(t, 10))), I(), D("extraSubtitlesOffset")), !0;
-                            case "extraSubtitlesTextColor":
-                                if ("string" == typeof t) {
-                                    try {
-                                        S = s(t).rgb().string()
-                                    } catch (e) {
-                                        console.error("withHTMLSubtitles", e)
-                                    }
-                                    I(), D("extraSubtitlesTextColor")
-                                }
-                                return !0;
-                            case "extraSubtitlesBackgroundColor":
-                                if ("string" == typeof t) {
-                                    try {
-                                        A = s(t).rgb().string()
-                                    } catch (e) {
-                                        console.error("withHTMLSubtitles", e)
-                                    }
-                                    I(), D("extraSubtitlesBackgroundColor")
-                                }
-                                return !0;
-                            case "extraSubtitlesOutlineColor":
-                                if ("string" == typeof t) {
-                                    try {
-                                        k = s(t).rgb().string()
-                                    } catch (e) {
-                                        console.error("withHTMLSubtitles", e)
-                                    }
-                                    I(), D("extraSubtitlesOutlineColor")
-                                }
-                                return !0;
-                            case "extraSubtitlesOpacity":
-                                if ("number" == typeof t) {
-                                    try {
-                                        L = Math.min(Math.max(t / 100, 0), 1)
-                                    } catch (e) {
-                                        console.error("withHTMLSubtitles", e)
-                                    }
-                                    I(), D("extraSubtitlesOpacity")
-                                }
-                                return !0;
-                            default:
-                                return !1
-                        }
-                    }
-
-                    function _(e, t) {
-                        switch (e) {
-                            case "addExtraSubtitlesTracks":
-                                return t && Array.isArray(t.tracks) && (v = v.concat(t.tracks).filter((function(e, t, r) {
-                                    return e && "string" == typeof e.id && "string" == typeof e.lang && "string" == typeof e.label && "string" == typeof e.origin && !e.embedded && t === r.findIndex((function(t) {
-                                        return t.id === e.id
-                                    }))
-                                })), D("extraSubtitlesTracks")), !0;
-                            case "addLocalSubtitles":
-                                if (t && "string" == typeof t.filename && t.buffer instanceof ArrayBuffer) {
-                                    var n = "LOCAL_" + v.filter((function(e) {
-                                            return e.local
-                                        })).length,
-                                        i = {
-                                            id: n,
-                                            url: null,
-                                            buffer: t.buffer,
-                                            lang: "local",
-                                            label: t.filename,
-                                            origin: "LOCAL",
-                                            local: !0,
-                                            embedded: !1
-                                        };
-                                    v.push(i), D("extraSubtitlesTracks"), m.emit("extraSubtitlesTrackAdded", i)
-                                }
-                                return !0;
-                            case "load":
-                                return _("unload"), t.stream && Array.isArray(t.stream.subtitles) && _("addExtraSubtitlesTracks", {
-                                    tracks: t.stream.subtitles.map((function(e) {
-                                        return Object.assign({}, e, {
-                                            origin: "EXCLUSIVE",
-                                            exclusive: !0,
-                                            embedded: !1
-                                        })
-                                    }))
-                                }), !1;
-                            case "unload":
-                                return g = null, v = [], y = null, T = null, I(), D("extraSubtitlesTracks"), D("selectedExtraSubtitlesTrackId"), D("extraSubtitlesDelay"), !1;
-                            case "destroy":
-                                return _("unload"), p = !0, D("extraSubtitlesSize"), D("extraSubtitlesOffset"), D("extraSubtitlesTextColor"), D("extraSubtitlesBackgroundColor"), D("extraSubtitlesOutlineColor"), D("extraSubtitlesOpacity"), r.dispatch({
-                                    type: "command",
-                                    commandName: "destroy"
-                                }), m.removeAllListeners(), d.removeChild(h), !0;
-                            default:
-                                return !1
-                        }
-                    }
-                    this.on = function(e, t) {
-                        if (p) throw new Error("Video is destroyed");
-                        m.on(e, t)
-                    }, this.dispatch = function(e) {
-                        if (p) throw new Error("Video is destroyed");
-                        if (e) switch ((e = a(i(e))).type) {
-                            case "observeProp":
-                                if (function(e) {
-                                        switch (e) {
-                                            case "extraSubtitlesTracks":
-                                            case "selectedExtraSubtitlesTrackId":
-                                            case "extraSubtitlesDelay":
-                                            case "extraSubtitlesSize":
-                                            case "extraSubtitlesOffset":
-                                            case "extraSubtitlesTextColor":
-                                            case "extraSubtitlesBackgroundColor":
-                                            case "extraSubtitlesOutlineColor":
-                                            case "extraSubtitlesOpacity":
-                                                return m.emit("propValue", e, C(e, null)), R[e] = !0, !0;
-                                            default:
-                                                return !1
-                                        }
-                                    }(e.propName)) return;
-                                break;
-                            case "setProp":
-                                if (x(e.propName, e.propValue)) return;
-                                break;
-                            case "command":
-                                if (_(e.commandName, e.commandArgs)) return
-                        }
-                        r.dispatch(e)
-                    }
+                    return r
                 }
-                return t.canPlayStream = function(t) {
-                    return e.canPlayStream(t)
-                }, t.manifest = {
-                    name: e.manifest.name + "WithHTMLSubtitles",
-                    external: e.manifest.external,
-                    props: e.manifest.props.concat(["extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor", "extraSubtitlesOpacity"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    })),
-                    commands: e.manifest.commands.concat(["load", "unload", "destroy", "addExtraSubtitlesTracks", "addLocalSubtitles"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    })),
-                    events: e.manifest.events.concat(["propValue", "propChanged", "error", "extraSubtitlesTrackLoaded", "extraSubtitlesTrackAdded"]).filter((function(e, t, r) {
-                        return r.indexOf(e) === t
-                    }))
-                }, t
             }
         },
-        2900: (e, t, r) => {
+        3301: (e, t, r) => {
             var n = r(5852),
                 i = r(5126),
-                a = r(6435);
+                a = r(8816);
             e.exports = function(e) {
                 function t(t) {
                     var r = new e(t = t || {});
@@ -16597,76 +16088,289 @@
                 }, t
             }
         },
-        2949: (e, t, r) => {
-            var n = r(8203);
-            e.exports = n
-        },
-        3020: e => {
-            var t = null;
-            e.exports = {
-                set: function(e) {
-                    t = e
-                },
-                get: function() {
-                    return t
-                }
-            }
-        },
-        3308: (e, t, r) => {
-            var n = r(1417),
-                i = r(7081);
-            e.exports = {
-                render: function(e, t) {
-                    var r = [],
-                        a = i(e.times, t);
-                    if (-1 !== a)
-                        for (var s = e[e.times[a]], o = 0; o < s.length; o++) {
-                            var l = n.WebVTT.convertCueToDOMTree(window, s[o].text);
-                            r.push(l)
-                        }
-                    return r
-                }
-            }
-        },
-        3597: (e, t, r) => {
-            var n = r(8868);
+        3657: (e, t, r) => {
+            var n = r(5852),
+                i = r(8868),
+                a = r(7444),
+                s = r(5126),
+                o = r(8816),
+                l = r(5399),
+                u = r(7037),
+                c = r(6089),
+                d = r(1464),
+                h = r(7462),
+                f = r(5416);
+            e.exports = function(e) {
+                function t(r) {
+                    var h = new e(r = r || {});
+                    h.on("error", (function(e) {
+                        T.emit("error", e), e.critical && R("unload")
+                    })), h.on("propValue", S.bind(null, "propValue")), h.on("propChanged", S.bind(null, "propChanged")), e.manifest.events.filter((function(e) {
+                        return !["error", "propValue", "propChanged"].includes(e)
+                    })).forEach((function(e) {
+                        h.on(e, function(e) {
+                            return function() {
+                                T.emit.apply(T, [e].concat(Array.from(arguments)))
+                            }
+                        }(e))
+                    }));
+                    var g = this,
+                        m = null,
+                        p = !1,
+                        v = [],
+                        y = null,
+                        T = new n,
+                        b = !1,
+                        E = {
+                            stream: !1,
+                            videoParams: !1
+                        };
 
-            function i(e, t, r, i) {
-                var a = Array.isArray(i) && i.length > 0 ? "?" + new URLSearchParams(i.map((function(e) {
-                    return ["tr", e]
-                }))) : "";
-                return {
-                    url: n.resolve(e, "/" + encodeURIComponent(t) + "/" + encodeURIComponent(r)) + a,
-                    infoHash: t,
-                    fileIdx: r,
-                    sources: i
-                }
-            }
-            e.exports = function(e, t, r, a, s) {
-                if ((!Array.isArray(a) || 0 === a.length) && null !== r && isFinite(r)) return Promise.resolve(i(e, t, r, a));
-                var o = {
-                    torrent: {
-                        infoHash: t
+                    function S(e, t, r) {
+                        T.emit(e, t, L(t, r))
                     }
-                };
-                return Array.isArray(a) && a.length > 0 && (o.peerSearch = {
-                    sources: ["dht:" + t].concat(a).filter((function(e, t, r) {
+
+                    function A(e) {
+                        E[e] && T.emit("propChanged", e, L(e, null))
+                    }
+
+                    function k(e) {
+                        T.emit("error", e), e.critical && (R("unload"), h.dispatch({
+                            type: "command",
+                            commandName: "unload"
+                        }))
+                    }
+
+                    function L(e, t) {
+                        switch (e) {
+                            case "stream":
+                                return null !== m ? m.stream : null;
+                            case "videoParams":
+                                return y;
+                            default:
+                                return t
+                        }
+                    }
+
+                    function R(r, n) {
+                        switch (r) {
+                            case "load":
+                                return n && n.stream && "string" == typeof n.streamingServerURL ? (R("unload"), h.dispatch({
+                                    type: "command",
+                                    commandName: "unload"
+                                }), m = n, A("stream"), u(n.streamingServerURL, n.stream, n.seriesInfo, n.streamingServerSettings).then((function(e) {
+                                    var r = e.url,
+                                        s = e.infoHash,
+                                        o = e.fileIdx,
+                                        u = Array.isArray(n.formats) ? n.formats : l.formats,
+                                        c = Array.isArray(n.videoCodecs) ? n.videoCodecs : l.videoCodecs,
+                                        d = Array.isArray(n.audioCodecs) ? n.audioCodecs : l.audioCodecs,
+                                        h = null !== n.maxAudioChannels && isFinite(n.maxAudioChannels) ? n.maxAudioChannels : l.maxAudioChannels,
+                                        f = Object.assign({}, n, {
+                                            formats: u,
+                                            videoCodecs: c,
+                                            audioCodecs: d,
+                                            maxAudioChannels: h
+                                        });
+                                    return (n.forceTranscoding ? Promise.resolve(!1) : t.canPlayStream({
+                                        url: r
+                                    }, f)).catch((function(e) {
+                                        return console.warn("Media probe error", e), !1
+                                    })).then((function(e) {
+                                        if (e) return {
+                                            mediaURL: r,
+                                            infoHash: s,
+                                            fileIdx: o,
+                                            stream: {
+                                                url: r
+                                            }
+                                        };
+                                        var t = a(),
+                                            l = new URLSearchParams([
+                                                ["mediaURL", r]
+                                            ]);
+                                        return n.forceTranscoding && l.set("forceTranscoding", "1"), c.forEach((function(e) {
+                                            l.append("videoCodecs", e)
+                                        })), d.forEach((function(e) {
+                                            l.append("audioCodecs", e)
+                                        })), l.set("maxAudioChannels", h), {
+                                            mediaURL: r,
+                                            infoHash: s,
+                                            fileIdx: o,
+                                            stream: {
+                                                url: i.resolve(n.streamingServerURL, "/hlsv2/" + t + "/master.m3u8?" + l.toString()),
+                                                subtitles: Array.isArray(n.stream.subtitles) ? n.stream.subtitles.map((function(e) {
+                                                    return Object.assign({}, e, {
+                                                        url: "string" == typeof e.url ? i.resolve(n.streamingServerURL, "/subtitles.vtt?" + new URLSearchParams([
+                                                            ["from", e.url]
+                                                        ]).toString()) : e.url
+                                                    })
+                                                })) : [],
+                                                behaviorHints: {
+                                                    headers: {
+                                                        "content-type": "application/vnd.apple.mpegurl"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }))
+                                })).then((function(t) {
+                                    n === m && (h.dispatch({
+                                        type: "command",
+                                        commandName: "load",
+                                        commandArgs: Object.assign({}, n, {
+                                            stream: t.stream
+                                        })
+                                    }), p = !0, function() {
+                                        for (; v.length > 0;) {
+                                            var e = v.shift();
+                                            g.dispatch.call(g, e)
+                                        }
+                                    }(), d(h, e.manifest.props).then((function() {
+                                        return c(n.streamingServerURL, t.mediaURL, t.infoHash, t.fileIdx, n.stream.behaviorHints)
+                                    })).then((function(e) {
+                                        n === m && (y = e, A("videoParams"))
+                                    })).catch((function(e) {
+                                        n === m && (console.error(e), y = {
+                                            hash: null,
+                                            size: null,
+                                            filename: null
+                                        }, A("videoParams"))
+                                    })))
+                                })).catch((function(e) {
+                                    n === m && k(Object.assign({}, f.WITH_STREAMING_SERVER.CONVERT_FAILED, {
+                                        error: e,
+                                        critical: !0,
+                                        stream: n.stream,
+                                        streamingServerURL: n.streamingServerURL
+                                    }))
+                                }))) : k(Object.assign({}, f.UNSUPPORTED_STREAM, {
+                                    critical: !0,
+                                    stream: n ? n.stream : null,
+                                    streamingServerURL: n && "string" == typeof n.streamingServerURL ? n.streamingServerURL : null
+                                })), !0;
+                            case "addExtraSubtitlesTracks":
+                                return m && n && Array.isArray(n.tracks) && (p ? h.dispatch({
+                                    type: "command",
+                                    commandName: "addExtraSubtitlesTracks",
+                                    commandArgs: Object.assign({}, n, {
+                                        tracks: n.tracks.map((function(e) {
+                                            return Object.assign({}, e, {
+                                                fallbackUrl: e.url,
+                                                url: "string" == typeof e.url ? i.resolve(m.streamingServerURL, "/subtitles.vtt?" + new URLSearchParams([
+                                                    ["from", e.url]
+                                                ]).toString()) : e.url
+                                            })
+                                        }))
+                                    })
+                                }) : v.push({
+                                    type: "command",
+                                    commandName: "addExtraSubtitlesTracks",
+                                    commandArgs: n
+                                })), !0;
+                            case "unload":
+                                return m = null, p = !1, v = [], y = null, A("stream"), A("videoParams"), !1;
+                            case "destroy":
+                                return R("unload"), b = !0, h.dispatch({
+                                    type: "command",
+                                    commandName: "destroy"
+                                }), T.removeAllListeners(), !0;
+                            default:
+                                return !p && (v.push({
+                                    type: "command",
+                                    commandName: r,
+                                    commandArgs: n
+                                }), !0)
+                        }
+                    }
+                    this.on = function(e, t) {
+                        if (b) throw new Error("Video is destroyed");
+                        T.on(e, t)
+                    }, this.dispatch = function(e) {
+                        if (b) throw new Error("Video is destroyed");
+                        if (e) switch ((e = o(s(e))).type) {
+                            case "observeProp":
+                                if (function(e) {
+                                        switch (e) {
+                                            case "stream":
+                                            case "videoParams":
+                                                return T.emit("propValue", e, L(e, null)), E[e] = !0, !0;
+                                            default:
+                                                return !1
+                                        }
+                                    }(e.propName)) return;
+                                break;
+                            case "command":
+                                if (R(e.commandName, e.commandArgs)) return
+                        }
+                        h.dispatch(e)
+                    }
+                }
+                return t.canPlayStream = function(t, r) {
+                    return h().then((function(n) {
+                        if (!n) return e.canPlayStream(t);
+                        var a = new URLSearchParams([
+                            ["mediaURL", t.url]
+                        ]);
+                        return fetch(i.resolve(r.streamingServerURL, "/hlsv2/probe?" + a.toString())).then((function(e) {
+                            return e.json()
+                        })).then((function(e) {
+                            var t = r.formats.some((function(t) {
+                                    return -1 !== e.format.name.indexOf(t)
+                                })),
+                                n = e.streams.every((function(e) {
+                                    return "audio" === e.track ? e.channels <= r.maxAudioChannels && -1 !== r.audioCodecs.indexOf(e.codec) : "video" !== e.track || -1 !== r.videoCodecs.indexOf(e.codec)
+                                }));
+                            return t && n
+                        })).catch((function() {
+                            return e.canPlayStream(t)
+                        }))
+                    }))
+                }, t.manifest = {
+                    name: e.manifest.name + "WithStreamingServer",
+                    external: e.manifest.external,
+                    props: e.manifest.props.concat(["stream", "videoParams"]).filter((function(e, t, r) {
                         return r.indexOf(e) === t
                     })),
-                    min: 40,
-                    max: 200
-                }), null !== r && isFinite(r) ? o.guessFileIdx = !1 : (o.guessFileIdx = {}, s && (null !== s.season && isFinite(s.season) && (o.guessFileIdx.season = s.season), null !== s.episode && isFinite(s.episode) && (o.guessFileIdx.episode = s.episode))), fetch(n.resolve(e, "/" + encodeURIComponent(t) + "/create"), {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(o)
-                }).then((function(e) {
-                    if (e.ok) return e.json();
-                    throw new Error(e.status + " (" + e.statusText + ")")
-                })).then((function(n) {
-                    return i(e, t, o.guessFileIdx ? n.guessedFileIdx : r, o.peerSearch ? o.peerSearch.sources : [])
-                }))
+                    commands: e.manifest.commands.concat(["load", "unload", "destroy", "addExtraSubtitlesTracks"]).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    events: e.manifest.events.concat(["propValue", "propChanged", "error"]).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    }))
+                }, t
+            }
+        },
+        3722: e => {
+            e.exports = {
+                debug: !1,
+                enableWorker: !0,
+                lowLatencyMode: !1,
+                backBufferLength: 30,
+                maxBufferLength: 50,
+                maxMaxBufferLength: 80,
+                maxFragLookUpTolerance: 0,
+                maxBufferHole: 0,
+                appendErrorMaxRetry: 20,
+                nudgeMaxRetry: 20,
+                manifestLoadingTimeOut: 3e4,
+                manifestLoadingMaxRetry: 10,
+                fragLoadPolicy: {
+                    default: {
+                        maxTimeToFirstByteMs: 1e4,
+                        maxLoadTimeMs: 12e4,
+                        timeoutRetry: {
+                            maxNumRetry: 20,
+                            retryDelayMs: 0,
+                            maxRetryDelayMs: 15
+                        },
+                        errorRetry: {
+                            maxNumRetry: 6,
+                            retryDelayMs: 1e3,
+                            maxRetryDelayMs: 15
+                        }
+                    }
+                }
             }
         },
         3845: e => {
@@ -16748,308 +16452,749 @@
             "use strict";
             t.decode = t.parse = r(875), t.encode = t.stringify = r(5223)
         },
-        4376: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(6205),
-                o = .0066,
-                l = {
-                    loaded: "loaded",
-                    stream: null,
-                    paused: "pause",
-                    time: "time-pos",
-                    duration: "duration",
-                    buffering: "buffering",
-                    volume: "volume",
-                    muted: "mute",
-                    playbackSpeed: "speed",
-                    audioTracks: "audioTracks",
-                    selectedAudioTrackId: "aid",
-                    subtitlesTracks: "subtitlesTracks",
-                    selectedSubtitlesTrackId: "sid",
-                    subtitlesSize: "sub-scale",
-                    subtitlesOffset: "sub-pos",
-                    subtitlesDelay: "sub-delay",
-                    subtitlesTextColor: "sub-color",
-                    subtitlesBackgroundColor: "sub-back-color",
-                    subtitlesOutlineColor: "sub-border-color"
-                };
-
-            function u(e) {
-                return e.split(".").slice(0, 2).map((function(e) {
-                    return parseInt(e)
-                }))
+        4333: (e, t, r) => {
+            var n = r(4625);
+            e.exports = n
+        },
+        4546: (e, t, r) => {
+            const n = r(4877),
+                i = {};
+            for (const e of Object.keys(n)) i[n[e]] = e;
+            const a = {
+                rgb: {
+                    channels: 3,
+                    labels: "rgb"
+                },
+                hsl: {
+                    channels: 3,
+                    labels: "hsl"
+                },
+                hsv: {
+                    channels: 3,
+                    labels: "hsv"
+                },
+                hwb: {
+                    channels: 3,
+                    labels: "hwb"
+                },
+                cmyk: {
+                    channels: 4,
+                    labels: "cmyk"
+                },
+                xyz: {
+                    channels: 3,
+                    labels: "xyz"
+                },
+                lab: {
+                    channels: 3,
+                    labels: "lab"
+                },
+                lch: {
+                    channels: 3,
+                    labels: "lch"
+                },
+                hex: {
+                    channels: 1,
+                    labels: ["hex"]
+                },
+                keyword: {
+                    channels: 1,
+                    labels: ["keyword"]
+                },
+                ansi16: {
+                    channels: 1,
+                    labels: ["ansi16"]
+                },
+                ansi256: {
+                    channels: 1,
+                    labels: ["ansi256"]
+                },
+                hcg: {
+                    channels: 3,
+                    labels: ["h", "c", "g"]
+                },
+                apple: {
+                    channels: 3,
+                    labels: ["r16", "g16", "b16"]
+                },
+                gray: {
+                    channels: 1,
+                    labels: ["gray"]
+                }
+            };
+            e.exports = a;
+            for (const e of Object.keys(a)) {
+                if (!("channels" in a[e])) throw new Error("missing channels property: " + e);
+                if (!("labels" in a[e])) throw new Error("missing channel labels property: " + e);
+                if (a[e].labels.length !== a[e].channels) throw new Error("channel and label counts mismatch: " + e);
+                const {
+                    channels: t,
+                    labels: r
+                } = a[e];
+                delete a[e].channels, delete a[e].labels, Object.defineProperty(a[e], "channels", {
+                    value: t
+                }), Object.defineProperty(a[e], "labels", {
+                    value: r
+                })
             }
+            a.rgb.hsl = function(e) {
+                const t = e[0] / 255,
+                    r = e[1] / 255,
+                    n = e[2] / 255,
+                    i = Math.min(t, r, n),
+                    a = Math.max(t, r, n),
+                    s = a - i;
+                let o, l;
+                a === i ? o = 0 : t === a ? o = (r - n) / s : r === a ? o = 2 + (n - t) / s : n === a && (o = 4 + (t - r) / s), o = Math.min(60 * o, 360), o < 0 && (o += 360);
+                const u = (i + a) / 2;
+                return l = a === i ? 0 : u <= .5 ? s / (a + i) : s / (2 - a - i), [o, 100 * l, 100 * u]
+            }, a.rgb.hsv = function(e) {
+                let t, r, n, i, a;
+                const s = e[0] / 255,
+                    o = e[1] / 255,
+                    l = e[2] / 255,
+                    u = Math.max(s, o, l),
+                    c = u - Math.min(s, o, l),
+                    d = function(e) {
+                        return (u - e) / 6 / c + .5
+                    };
+                return 0 === c ? (i = 0, a = 0) : (a = c / u, t = d(s), r = d(o), n = d(l), s === u ? i = n - r : o === u ? i = 1 / 3 + t - n : l === u && (i = 2 / 3 + r - t), i < 0 ? i += 1 : i > 1 && (i -= 1)), [360 * i, 100 * a, 100 * u]
+            }, a.rgb.hwb = function(e) {
+                const t = e[0],
+                    r = e[1];
+                let n = e[2];
+                const i = a.rgb.hsl(e)[0],
+                    s = 1 / 255 * Math.min(t, Math.min(r, n));
+                return n = 1 - 1 / 255 * Math.max(t, Math.max(r, n)), [i, 100 * s, 100 * n]
+            }, a.rgb.cmyk = function(e) {
+                const t = e[0] / 255,
+                    r = e[1] / 255,
+                    n = e[2] / 255,
+                    i = Math.min(1 - t, 1 - r, 1 - n);
+                return [100 * ((1 - t - i) / (1 - i) || 0), 100 * ((1 - r - i) / (1 - i) || 0), 100 * ((1 - n - i) / (1 - i) || 0), 100 * i]
+            }, a.rgb.keyword = function(e) {
+                const t = i[e];
+                if (t) return t;
+                let r, a = 1 / 0;
+                for (const t of Object.keys(n)) {
+                    const i = n[t],
+                        l = (o = i, ((s = e)[0] - o[0]) ** 2 + (s[1] - o[1]) ** 2 + (s[2] - o[2]) ** 2);
+                    l < a && (a = l, r = t)
+                }
+                var s, o;
+                return r
+            }, a.keyword.rgb = function(e) {
+                return n[e]
+            }, a.rgb.xyz = function(e) {
+                let t = e[0] / 255,
+                    r = e[1] / 255,
+                    n = e[2] / 255;
+                t = t > .04045 ? ((t + .055) / 1.055) ** 2.4 : t / 12.92, r = r > .04045 ? ((r + .055) / 1.055) ** 2.4 : r / 12.92, n = n > .04045 ? ((n + .055) / 1.055) ** 2.4 : n / 12.92;
+                return [100 * (.4124 * t + .3576 * r + .1805 * n), 100 * (.2126 * t + .7152 * r + .0722 * n), 100 * (.0193 * t + .1192 * r + .9505 * n)]
+            }, a.rgb.lab = function(e) {
+                const t = a.rgb.xyz(e);
+                let r = t[0],
+                    n = t[1],
+                    i = t[2];
+                r /= 95.047, n /= 100, i /= 108.883, r = r > .008856 ? r ** (1 / 3) : 7.787 * r + 16 / 116, n = n > .008856 ? n ** (1 / 3) : 7.787 * n + 16 / 116, i = i > .008856 ? i ** (1 / 3) : 7.787 * i + 16 / 116;
+                return [116 * n - 16, 500 * (r - n), 200 * (n - i)]
+            }, a.hsl.rgb = function(e) {
+                const t = e[0] / 360,
+                    r = e[1] / 100,
+                    n = e[2] / 100;
+                let i, a, s;
+                if (0 === r) return s = 255 * n, [s, s, s];
+                i = n < .5 ? n * (1 + r) : n + r - n * r;
+                const o = 2 * n - i,
+                    l = [0, 0, 0];
+                for (let e = 0; e < 3; e++) a = t + 1 / 3 * -(e - 1), a < 0 && a++, a > 1 && a--, s = 6 * a < 1 ? o + 6 * (i - o) * a : 2 * a < 1 ? i : 3 * a < 2 ? o + (i - o) * (2 / 3 - a) * 6 : o, l[e] = 255 * s;
+                return l
+            }, a.hsl.hsv = function(e) {
+                const t = e[0];
+                let r = e[1] / 100,
+                    n = e[2] / 100,
+                    i = r;
+                const a = Math.max(n, .01);
+                n *= 2, r *= n <= 1 ? n : 2 - n, i *= a <= 1 ? a : 2 - a;
+                return [t, 100 * (0 === n ? 2 * i / (a + i) : 2 * r / (n + r)), 100 * ((n + r) / 2)]
+            }, a.hsv.rgb = function(e) {
+                const t = e[0] / 60,
+                    r = e[1] / 100;
+                let n = e[2] / 100;
+                const i = Math.floor(t) % 6,
+                    a = t - Math.floor(t),
+                    s = 255 * n * (1 - r),
+                    o = 255 * n * (1 - r * a),
+                    l = 255 * n * (1 - r * (1 - a));
+                switch (n *= 255, i) {
+                    case 0:
+                        return [n, l, s];
+                    case 1:
+                        return [o, n, s];
+                    case 2:
+                        return [s, n, l];
+                    case 3:
+                        return [s, o, n];
+                    case 4:
+                        return [l, s, n];
+                    case 5:
+                        return [n, s, o]
+                }
+            }, a.hsv.hsl = function(e) {
+                const t = e[0],
+                    r = e[1] / 100,
+                    n = e[2] / 100,
+                    i = Math.max(n, .01);
+                let a, s;
+                s = (2 - r) * n;
+                const o = (2 - r) * i;
+                return a = r * i, a /= o <= 1 ? o : 2 - o, a = a || 0, s /= 2, [t, 100 * a, 100 * s]
+            }, a.hwb.rgb = function(e) {
+                const t = e[0] / 360;
+                let r = e[1] / 100,
+                    n = e[2] / 100;
+                const i = r + n;
+                let a;
+                i > 1 && (r /= i, n /= i);
+                const s = Math.floor(6 * t),
+                    o = 1 - n;
+                a = 6 * t - s, 1 & s && (a = 1 - a);
+                const l = r + a * (o - r);
+                let u, c, d;
+                switch (s) {
+                    default:
+                        case 6:
+                        case 0:
+                        u = o,
+                    c = l,
+                    d = r;
+                    break;
+                    case 1:
+                            u = l,
+                        c = o,
+                        d = r;
+                        break;
+                    case 2:
+                            u = r,
+                        c = o,
+                        d = l;
+                        break;
+                    case 3:
+                            u = r,
+                        c = l,
+                        d = o;
+                        break;
+                    case 4:
+                            u = l,
+                        c = r,
+                        d = o;
+                        break;
+                    case 5:
+                            u = o,
+                        c = r,
+                        d = l
+                }
+                return [255 * u, 255 * c, 255 * d]
+            }, a.cmyk.rgb = function(e) {
+                const t = e[0] / 100,
+                    r = e[1] / 100,
+                    n = e[2] / 100,
+                    i = e[3] / 100;
+                return [255 * (1 - Math.min(1, t * (1 - i) + i)), 255 * (1 - Math.min(1, r * (1 - i) + i)), 255 * (1 - Math.min(1, n * (1 - i) + i))]
+            }, a.xyz.rgb = function(e) {
+                const t = e[0] / 100,
+                    r = e[1] / 100,
+                    n = e[2] / 100;
+                let i, a, s;
+                return i = 3.2406 * t + -1.5372 * r + -.4986 * n, a = -.9689 * t + 1.8758 * r + .0415 * n, s = .0557 * t + -.204 * r + 1.057 * n, i = i > .0031308 ? 1.055 * i ** (1 / 2.4) - .055 : 12.92 * i, a = a > .0031308 ? 1.055 * a ** (1 / 2.4) - .055 : 12.92 * a, s = s > .0031308 ? 1.055 * s ** (1 / 2.4) - .055 : 12.92 * s, i = Math.min(Math.max(0, i), 1), a = Math.min(Math.max(0, a), 1), s = Math.min(Math.max(0, s), 1), [255 * i, 255 * a, 255 * s]
+            }, a.xyz.lab = function(e) {
+                let t = e[0],
+                    r = e[1],
+                    n = e[2];
+                t /= 95.047, r /= 100, n /= 108.883, t = t > .008856 ? t ** (1 / 3) : 7.787 * t + 16 / 116, r = r > .008856 ? r ** (1 / 3) : 7.787 * r + 16 / 116, n = n > .008856 ? n ** (1 / 3) : 7.787 * n + 16 / 116;
+                return [116 * r - 16, 500 * (t - r), 200 * (r - n)]
+            }, a.lab.xyz = function(e) {
+                let t, r, n;
+                r = (e[0] + 16) / 116, t = e[1] / 500 + r, n = r - e[2] / 200;
+                const i = r ** 3,
+                    a = t ** 3,
+                    s = n ** 3;
+                return r = i > .008856 ? i : (r - 16 / 116) / 7.787, t = a > .008856 ? a : (t - 16 / 116) / 7.787, n = s > .008856 ? s : (n - 16 / 116) / 7.787, t *= 95.047, r *= 100, n *= 108.883, [t, r, n]
+            }, a.lab.lch = function(e) {
+                const t = e[0],
+                    r = e[1],
+                    n = e[2];
+                let i;
+                i = 360 * Math.atan2(n, r) / 2 / Math.PI, i < 0 && (i += 360);
+                return [t, Math.sqrt(r * r + n * n), i]
+            }, a.lch.lab = function(e) {
+                const t = e[0],
+                    r = e[1],
+                    n = e[2] / 360 * 2 * Math.PI;
+                return [t, r * Math.cos(n), r * Math.sin(n)]
+            }, a.rgb.ansi16 = function(e, t = null) {
+                const [r, n, i] = e;
+                let s = null === t ? a.rgb.hsv(e)[2] : t;
+                if (s = Math.round(s / 50), 0 === s) return 30;
+                let o = 30 + (Math.round(i / 255) << 2 | Math.round(n / 255) << 1 | Math.round(r / 255));
+                return 2 === s && (o += 60), o
+            }, a.hsv.ansi16 = function(e) {
+                return a.rgb.ansi16(a.hsv.rgb(e), e[2])
+            }, a.rgb.ansi256 = function(e) {
+                const t = e[0],
+                    r = e[1],
+                    n = e[2];
+                if (t === r && r === n) return t < 8 ? 16 : t > 248 ? 231 : Math.round((t - 8) / 247 * 24) + 232;
+                return 16 + 36 * Math.round(t / 255 * 5) + 6 * Math.round(r / 255 * 5) + Math.round(n / 255 * 5)
+            }, a.ansi16.rgb = function(e) {
+                let t = e % 10;
+                if (0 === t || 7 === t) return e > 50 && (t += 3.5), t = t / 10.5 * 255, [t, t, t];
+                const r = .5 * (1 + ~~(e > 50));
+                return [(1 & t) * r * 255, (t >> 1 & 1) * r * 255, (t >> 2 & 1) * r * 255]
+            }, a.ansi256.rgb = function(e) {
+                if (e >= 232) {
+                    const t = 10 * (e - 232) + 8;
+                    return [t, t, t]
+                }
+                let t;
+                e -= 16;
+                return [Math.floor(e / 36) / 5 * 255, Math.floor((t = e % 36) / 6) / 5 * 255, t % 6 / 5 * 255]
+            }, a.rgb.hex = function(e) {
+                const t = (((255 & Math.round(e[0])) << 16) + ((255 & Math.round(e[1])) << 8) + (255 & Math.round(e[2]))).toString(16).toUpperCase();
+                return "000000".substring(t.length) + t
+            }, a.hex.rgb = function(e) {
+                const t = e.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
+                if (!t) return [0, 0, 0];
+                let r = t[0];
+                3 === t[0].length && (r = r.split("").map((e => e + e)).join(""));
+                const n = parseInt(r, 16);
+                return [n >> 16 & 255, n >> 8 & 255, 255 & n]
+            }, a.rgb.hcg = function(e) {
+                const t = e[0] / 255,
+                    r = e[1] / 255,
+                    n = e[2] / 255,
+                    i = Math.max(Math.max(t, r), n),
+                    a = Math.min(Math.min(t, r), n),
+                    s = i - a;
+                let o, l;
+                return o = s < 1 ? a / (1 - s) : 0, l = s <= 0 ? 0 : i === t ? (r - n) / s % 6 : i === r ? 2 + (n - t) / s : 4 + (t - r) / s, l /= 6, l %= 1, [360 * l, 100 * s, 100 * o]
+            }, a.hsl.hcg = function(e) {
+                const t = e[1] / 100,
+                    r = e[2] / 100,
+                    n = r < .5 ? 2 * t * r : 2 * t * (1 - r);
+                let i = 0;
+                return n < 1 && (i = (r - .5 * n) / (1 - n)), [e[0], 100 * n, 100 * i]
+            }, a.hsv.hcg = function(e) {
+                const t = e[1] / 100,
+                    r = e[2] / 100,
+                    n = t * r;
+                let i = 0;
+                return n < 1 && (i = (r - n) / (1 - n)), [e[0], 100 * n, 100 * i]
+            }, a.hcg.rgb = function(e) {
+                const t = e[0] / 360,
+                    r = e[1] / 100,
+                    n = e[2] / 100;
+                if (0 === r) return [255 * n, 255 * n, 255 * n];
+                const i = [0, 0, 0],
+                    a = t % 1 * 6,
+                    s = a % 1,
+                    o = 1 - s;
+                let l = 0;
+                switch (Math.floor(a)) {
+                    case 0:
+                        i[0] = 1, i[1] = s, i[2] = 0;
+                        break;
+                    case 1:
+                        i[0] = o, i[1] = 1, i[2] = 0;
+                        break;
+                    case 2:
+                        i[0] = 0, i[1] = 1, i[2] = s;
+                        break;
+                    case 3:
+                        i[0] = 0, i[1] = o, i[2] = 1;
+                        break;
+                    case 4:
+                        i[0] = s, i[1] = 0, i[2] = 1;
+                        break;
+                    default:
+                        i[0] = 1, i[1] = 0, i[2] = o
+                }
+                return l = (1 - r) * n, [255 * (r * i[0] + l), 255 * (r * i[1] + l), 255 * (r * i[2] + l)]
+            }, a.hcg.hsv = function(e) {
+                const t = e[1] / 100,
+                    r = t + e[2] / 100 * (1 - t);
+                let n = 0;
+                return r > 0 && (n = t / r), [e[0], 100 * n, 100 * r]
+            }, a.hcg.hsl = function(e) {
+                const t = e[1] / 100,
+                    r = e[2] / 100 * (1 - t) + .5 * t;
+                let n = 0;
+                return r > 0 && r < .5 ? n = t / (2 * r) : r >= .5 && r < 1 && (n = t / (2 * (1 - r))), [e[0], 100 * n, 100 * r]
+            }, a.hcg.hwb = function(e) {
+                const t = e[1] / 100,
+                    r = t + e[2] / 100 * (1 - t);
+                return [e[0], 100 * (r - t), 100 * (1 - r)]
+            }, a.hwb.hcg = function(e) {
+                const t = e[1] / 100,
+                    r = 1 - e[2] / 100,
+                    n = r - t;
+                let i = 0;
+                return n < 1 && (i = (r - n) / (1 - n)), [e[0], 100 * n, 100 * i]
+            }, a.apple.rgb = function(e) {
+                return [e[0] / 65535 * 255, e[1] / 65535 * 255, e[2] / 65535 * 255]
+            }, a.rgb.apple = function(e) {
+                return [e[0] / 255 * 65535, e[1] / 255 * 65535, e[2] / 255 * 65535]
+            }, a.gray.rgb = function(e) {
+                return [e[0] / 100 * 255, e[0] / 100 * 255, e[0] / 100 * 255]
+            }, a.gray.hsl = function(e) {
+                return [0, 0, e[0]]
+            }, a.gray.hsv = a.gray.hsl, a.gray.hwb = function(e) {
+                return [0, 100, e[0]]
+            }, a.gray.cmyk = function(e) {
+                return [0, 0, 0, e[0]]
+            }, a.gray.lab = function(e) {
+                return [e[0], 0, 0]
+            }, a.gray.hex = function(e) {
+                const t = 255 & Math.round(e[0] / 100 * 255),
+                    r = ((t << 16) + (t << 8) + t).toString(16).toUpperCase();
+                return "000000".substring(r.length) + r
+            }, a.rgb.gray = function(e) {
+                return [(e[0] + e[1] + e[2]) / 3 / 255 * 100]
+            }
+        },
+        4625: (e, t, r) => {
+            var n = r(5852),
+                i = r(2258),
+                a = r(5126),
+                s = r(8816),
+                o = r(8742),
+                l = r(5416),
+                u = r(6224),
+                c = r(3722);
 
-            function c(e) {
-                var t, r = (e = e || {}).shellTransport,
-                    c = {},
-                    d = {},
-                    h = {};
-                Object.keys(l).forEach((function(e) {
-                    l[e] && (h[l[e]] = e)
-                }));
-                var f = new Promise((function(e) {
-                    t = e
-                }));
-                k("unload"), r.send("mpv-command", ["stop"]), r.send("mpv-observe-prop", "path"), r.send("mpv-observe-prop", "time-pos"), r.send("mpv-observe-prop", "volume"), r.send("mpv-observe-prop", "pause"), r.send("mpv-observe-prop", "seeking"), r.send("mpv-observe-prop", "eof-reached"), r.send("mpv-observe-prop", "duration"), r.send("mpv-observe-prop", "metadata"), r.send("mpv-observe-prop", "video-params"), r.send("mpv-observe-prop", "track-list"), r.send("mpv-observe-prop", "paused-for-cache"), r.send("mpv-observe-prop", "cache-buffering-state"), r.send("mpv-observe-prop", "aid"), r.send("mpv-observe-prop", "vid"), r.send("mpv-observe-prop", "sid"), r.send("mpv-observe-prop", "sub-scale"), r.send("mpv-observe-prop", "sub-pos"), r.send("mpv-observe-prop", "sub-delay"), r.send("mpv-observe-prop", "speed"), r.send("mpv-observe-prop", "mpv-version"), r.send("mpv-observe-prop", "ffmpeg-version");
-                var g = new n,
-                    m = !1,
-                    p = null,
-                    v = 0;
+            function d(e) {
+                var t = (e = e || {}).containerElement;
+                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var r = document.createElement("style");
+                t.appendChild(r), r.sheet.insertRule("video::cue { font-size: 4vmin; color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); text-shadow: -0.15rem -0.15rem 0.15rem rgb(34, 34, 34), 0px -0.15rem 0.15rem rgb(34, 34, 34), 0.15rem -0.15rem 0.15rem rgb(34, 34, 34), -0.15rem 0px 0.15rem rgb(34, 34, 34), 0.15rem 0px 0.15rem rgb(34, 34, 34), -0.15rem 0.15rem 0.15rem rgb(34, 34, 34), 0px 0.15rem 0.15rem rgb(34, 34, 34), 0.15rem 0.15rem 0.15rem rgb(34, 34, 34); }");
+                var d = document.createElement("video");
+                d.style.width = "100%", d.style.height = "100%", d.style.backgroundColor = "black", d.controls = !1, d.playsInline = !0, d.onerror = function() {
+                    ! function() {
+                        if (g) return;
+                        var e;
+                        switch (d.error.code) {
+                            case 1:
+                                e = l.HTML_VIDEO.MEDIA_ERR_ABORTED;
+                                break;
+                            case 2:
+                                e = l.HTML_VIDEO.MEDIA_ERR_NETWORK;
+                                break;
+                            case 3:
+                                e = l.HTML_VIDEO.MEDIA_ERR_DECODE;
+                                break;
+                            case 4:
+                                e = l.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
+                                break;
+                            default:
+                                e = l.UNKNOWN_ERROR
+                        }
+                        E(Object.assign({}, e, {
+                            critical: !0,
+                            error: d.error
+                        }))
+                    }()
+                }, d.onended = function() {
+                    f.emit("ended")
+                }, d.onpause = function() {
+                    S("paused")
+                }, d.onplay = function() {
+                    S("paused")
+                }, d.ontimeupdate = function() {
+                    S("time"), S("buffered")
+                }, d.ondurationchange = function() {
+                    S("duration")
+                }, d.onwaiting = function() {
+                    S("buffering"), S("buffered")
+                }, d.onseeking = function() {
+                    S("time"), S("buffering"), S("buffered")
+                }, d.onseeked = function() {
+                    S("time"), S("buffering"), S("buffered")
+                }, d.onstalled = function() {
+                    S("buffering"), S("buffered")
+                }, d.onplaying = function() {
+                    S("time"), S("buffering"), S("buffered")
+                }, d.oncanplay = function() {
+                    S("buffering"), S("buffered")
+                }, d.canplaythrough = function() {
+                    S("buffering"), S("buffered")
+                }, d.onloadedmetadata = function() {
+                    S("loaded")
+                }, d.onloadeddata = function() {
+                    S("buffering"), S("buffered")
+                }, d.onvolumechange = function() {
+                    S("volume"), S("muted")
+                }, d.onratechange = function() {
+                    S("playbackSpeed")
+                }, d.textTracks.onchange = function() {
+                    S("subtitlesTracks"), S("selectedSubtitlesTrackId"), b(), Array.from(d.textTracks).forEach((function(e) {
+                        e.oncuechange = b
+                    }))
+                }, t.appendChild(d);
+                var h = null,
+                    f = new n,
+                    g = !1,
+                    m = null,
+                    p = 0,
+                    v = 1,
+                    y = {
+                        stream: !1,
+                        loaded: !1,
+                        paused: !1,
+                        time: !1,
+                        duration: !1,
+                        buffering: !1,
+                        buffered: !1,
+                        subtitlesTracks: !1,
+                        selectedSubtitlesTrackId: !1,
+                        subtitlesOffset: !1,
+                        subtitlesSize: !1,
+                        subtitlesTextColor: !1,
+                        subtitlesBackgroundColor: !1,
+                        subtitlesOutlineColor: !1,
+                        audioTracks: !1,
+                        selectedAudioTrackId: !1,
+                        volume: !1,
+                        muted: !1,
+                        playbackSpeed: !1
+                    };
 
-                function y(t) {
-                    for (var r = t ? "" : "transparent", n = e.containerElement; n; n = n.parentElement) n.style.background = r;
-                    if (((window || {}).document || {}).getElementsByTagName) {
-                        var i = window.document.getElementsByTagName("body");
-                        (i || [])[0] && (i[0].style.background = r)
+                function T(e) {
+                    switch (e) {
+                        case "stream":
+                            return m;
+                        case "loaded":
+                            return null === m ? null : d.readyState >= d.HAVE_METADATA;
+                        case "paused":
+                            return null === m ? null : !!d.paused;
+                        case "time":
+                            return null !== m && null !== d.currentTime && isFinite(d.currentTime) ? Math.floor(1e3 * d.currentTime) : null;
+                        case "duration":
+                            return null !== m && null !== d.duration && isFinite(d.duration) ? Math.floor(1e3 * d.duration) : null;
+                        case "buffering":
+                            return null === m ? null : d.readyState < d.HAVE_FUTURE_DATA;
+                        case "buffered":
+                            if (null === m) return null;
+                            for (var t = null !== d.currentTime && isFinite(d.currentTime) ? d.currentTime : 0, n = 0; n < d.buffered.length; n++)
+                                if (d.buffered.start(n) <= t && t <= d.buffered.end(n)) return Math.floor(1e3 * d.buffered.end(n));
+                            return Math.floor(1e3 * t);
+                        case "subtitlesTracks":
+                            return null === m ? [] : Array.from(d.textTracks).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.language,
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            }));
+                        case "selectedSubtitlesTrackId":
+                            return null === m ? null : Array.from(d.textTracks).reduce((function(e, t, r) {
+                                return null === e && "showing" === t.mode ? "EMBEDDED_" + String(r) : e
+                            }), null);
+                        case "subtitlesOffset":
+                            return g ? null : p;
+                        case "subtitlesSize":
+                            return g ? null : 25 * parseInt(r.sheet.cssRules[0].style.fontSize, 10);
+                        case "subtitlesTextColor":
+                            return g ? null : r.sheet.cssRules[0].style.color;
+                        case "subtitlesBackgroundColor":
+                            return g ? null : r.sheet.cssRules[0].style.backgroundColor;
+                        case "subtitlesOutlineColor":
+                            return g ? null : r.sheet.cssRules[0].style.textShadow.slice(0, r.sheet.cssRules[0].style.textShadow.indexOf(")") + 1);
+                        case "subtitlesOpacity":
+                            return g ? null : Math.round(100 * v);
+                        case "audioTracks":
+                            return null !== h && Array.isArray(h.audioTracks) ? h.audioTracks.map((function(e) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(e.id),
+                                    lang: "string" == typeof e.lang && e.lang.length > 0 ? e.lang : "string" == typeof e.name && e.name.length > 0 ? e.name : String(e.id),
+                                    label: "string" == typeof e.name && e.name.length > 0 ? e.name : "string" == typeof e.lang && e.lang.length > 0 ? e.lang : String(e.id),
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            })) : [];
+                        case "selectedAudioTrackId":
+                            return null !== h && null !== h.audioTrack && isFinite(h.audioTrack) && -1 !== h.audioTrack ? "EMBEDDED_" + String(h.audioTrack) : null;
+                        case "volume":
+                            return g || null === d.volume || !isFinite(d.volume) ? null : Math.floor(100 * d.volume);
+                        case "muted":
+                            return g ? null : !!d.muted;
+                        case "playbackSpeed":
+                            return g || null === d.playbackRate || !isFinite(d.playbackRate) ? null : d.playbackRate;
+                        default:
+                            return null
                     }
                 }
 
-                function T(e) {
-                    console.log(e.name + ": " + e.data)
+                function b() {
+                    Array.from(d.textTracks).forEach((function(e) {
+                        Array.from(e.cues || []).forEach((function(e) {
+                            e.snapToLines = !1, e.line = 100 - p
+                        }))
+                    }))
                 }
-                var b = 0;
 
                 function E(e) {
-                    return l[e] ? d[l[e]] : (console.log("Unsupported prop requested", e), null)
+                    f.emit("error", e), e.critical && A("unload")
                 }
 
                 function S(e) {
-                    g.emit("error", e), e.critical && k("unload")
+                    y[e] && f.emit("propChanged", e, T(e))
                 }
 
-                function A(e) {
-                    c[e] && g.emit("propChanged", e, E(e))
-                }
-
-                function k(t, n) {
-                    switch (t) {
+                function A(e, n) {
+                    switch (e) {
                         case "load":
-                            k("unload"), n && n.stream && "string" == typeof n.stream.url ? f.then((function(t) {
-                                p = n.stream, A("stream"), r.send("mpv-set-prop", ["sub-ass-override", "strip"]);
-                                var i = n.hardwareDecoding ? "auto-copy" : "no";
-                                r.send("mpv-set-prop", ["hwdec", i]);
-                                var a = "Win32" === navigator.platform ? "direct3d" : "opengl",
-                                    s = e.mpvSeparateWindow ? a : "opengl-cb",
-                                    o = e.mpvSeparateWindow ? "yes" : "no";
-                                r.send("mpv-set-prop", ["vo", s]), r.send("mpv-set-prop", ["osc", o]), r.send("mpv-set-prop", ["input-default-bindings", o]), r.send("mpv-set-prop", ["input-vo-keyboard", o]);
-                                var l, c, h, f = Math.floor(parseInt(n.time, 10) / 1e3) || 0;
-                                0 !== f ? (l = "0.39", c = u(t), h = u(l), c[0] > h[0] || !(c[0] < h[0]) && c[1] >= h[1] ? r.send("mpv-command", ["loadfile", p.url, "replace", "-1", "start=+" + f]) : r.send("mpv-command", ["loadfile", p.url, "replace", "start=+" + f])) : r.send("mpv-command", ["loadfile", p.url]), r.send("mpv-set-prop", ["pause", !1]), r.send("mpv-set-prop", ["speed", d.speed]), d.aid && ("string" == typeof d.aid && d.aid.startsWith("EMBEDDED_") ? r.send("mpv-set-prop", ["aid", d.aid.slice(9)]) : r.send("mpv-set-prop", ["aid", d.aid])), r.send("mpv-set-prop", ["mute", "no"]), A("paused"), A("time"), A("duration"), A("buffering"), A("muted"), A("subtitlesTracks"), A("selectedSubtitlesTrackId")
-                            })) : S(Object.assign({}, s.UNSUPPORTED_STREAM, {
+                            A("unload"), n && n.stream && "string" == typeof n.stream.url ? (m = n.stream, S("stream"), S("loaded"), d.autoplay = "boolean" != typeof n.autoplay || n.autoplay, d.currentTime = null !== n.time && isFinite(n.time) ? parseInt(n.time, 10) / 1e3 : 0, S("paused"), S("time"), S("duration"), S("buffering"), S("buffered"), S("subtitlesTracks"), S("selectedSubtitlesTrackId"), S("audioTracks"), S("selectedAudioTrackId"), u(m).then((function(e) {
+                                m === n.stream && ("application/vnd.apple.mpegurl" === e && i.isSupported() ? ((h = new i(c)).on(i.Events.AUDIO_TRACKS_UPDATED, (function() {
+                                    S("audioTracks"), S("selectedAudioTrackId")
+                                })), h.on(i.Events.AUDIO_TRACK_SWITCHED, (function() {
+                                    S("audioTracks"), S("selectedAudioTrackId")
+                                })), h.loadSource(m.url), h.attachMedia(d)) : d.src = m.url)
+                            })).catch((function() {
+                                m === n.stream && (d.src = m.url)
+                            }))) : E(Object.assign({}, l.UNSUPPORTED_STREAM, {
                                 critical: !0,
                                 stream: n ? n.stream : null
                             }));
                             break;
                         case "unload":
-                            d = {
-                                loaded: !1,
-                                pause: !1,
-                                mute: !1,
-                                speed: 1,
-                                subtitlesTracks: [],
-                                audioTracks: [],
-                                buffering: !1,
-                                aid: null,
-                                sid: null
-                            }, v = 0, r.send("mpv-command", ["stop"]), A("loaded"), A("stream"), A("paused"), A("time"), A("duration"), A("buffering"), A("muted"), A("subtitlesTracks"), A("selectedSubtitlesTrackId"), y(!0);
+                            m = null, Array.from(d.textTracks).forEach((function(e) {
+                                e.oncuechange = null
+                            })), null !== h && (h.removeAllListeners(), h.detachMedia(d), h.destroy(), h = null), d.removeAttribute("src"), d.load(), d.currentTime = 0, S("stream"), S("loaded"), S("paused"), S("time"), S("duration"), S("buffering"), S("buffered"), S("subtitlesTracks"), S("selectedSubtitlesTrackId"), S("audioTracks"), S("selectedAudioTrackId");
                             break;
                         case "destroy":
-                            k("unload"), m = !0, g.removeAllListeners()
+                            A("unload"), g = !0, S("subtitlesOffset"), S("subtitlesSize"), S("subtitlesTextColor"), S("subtitlesBackgroundColor"), S("subtitlesOutlineColor"), S("subtitlesOpacity"), S("volume"), S("muted"), S("playbackSpeed"), f.removeAllListeners(), d.onerror = null, d.onended = null, d.onpause = null, d.onplay = null, d.ontimeupdate = null, d.ondurationchange = null, d.onwaiting = null, d.onseeking = null, d.onseeked = null, d.onstalled = null, d.onplaying = null, d.oncanplay = null, d.canplaythrough = null, d.onloadeddata = null, d.onvolumechange = null, d.onratechange = null, d.textTracks.onchange = null, t.removeChild(d), t.removeChild(r)
                     }
                 }
-                r.on("mpv-prop-change", (function(e) {
-                    switch (e.name) {
-                        case "mpv-version":
-                            t(e.data), d[e.name] = T(e);
-                            break;
-                        case "ffmpeg-version":
-                            d[e.name] = T(e);
-                            break;
-                        case "duration":
-                            var r = 0 | e.data;
-                            d[e.name] = e.data >= 30 && (!v || r === v) ? Math.round(1e3 * e.data) : null, v = v ? v + r >> 1 : r, d.loaded = r > 0, d.loaded && (y(!1), A("loaded"));
-                            break;
-                        case "time-pos":
-                        case "sub-delay":
-                            d[e.name] = Math.round(1e3 * e.data);
-                            break;
-                        case "sub-scale":
-                            d[e.name] = Math.round(e.data / o);
-                            break;
-                        case "sub-pos":
-                            d[e.name] = 100 - e.data;
-                            break;
-                        case "volume":
-                            "number" == typeof e.data && isFinite(e.data) && (d[e.name] = e.data, A("volume"));
-                            break;
-                        case "paused-for-cache":
-                        case "seeking":
-                            d.buffering !== e.data && (d.buffering = e.data, A("buffering"));
-                            break;
-                        case "aid":
-                        case "sid":
-                        case "vid":
-                            d[e.name] = function(e) {
-                                return e.data && "no" !== e.data ? "EMBEDDED_" + e.data.toString() : null
-                            }(e);
-                            break;
-                        case "track-list":
-                            d.audioTracks = e.data.filter((function(e) {
-                                return "audio" === e.type
-                            })).map((function(e, t) {
-                                return {
-                                    id: "EMBEDDED_" + e.id,
-                                    lang: void 0 === e.lang ? "Track" + (t + 1) : e.lang,
-                                    label: void 0 === e.title || void 0 === e.lang ? "" : e.title || e.lang,
-                                    origin: "EMBEDDED",
-                                    embedded: !0,
-                                    mode: e.id === d.aid ? "showing" : "disabled"
-                                }
-                            })), A("audioTracks"), d.subtitlesTracks = e.data.filter((function(e) {
-                                return "sub" === e.type
-                            })).map((function(e, t) {
-                                return {
-                                    id: "EMBEDDED_" + e.id,
-                                    lang: void 0 === e.lang ? "Track " + (t + 1) : e.lang,
-                                    label: void 0 === e.title || void 0 === e.lang ? "" : e.title || e.lang,
-                                    origin: "EMBEDDED",
-                                    embedded: !0,
-                                    mode: e.id === d.sid ? "showing" : "disabled"
-                                }
-                            })), A("subtitlesTracks");
-                            break;
-                        default:
-                            d[e.name] = e.data
-                    }
-                    var n = "time-pos" === e.name ? Math.floor(d["time-pos"] / 1e3) : null;
-                    n && b === n || !h[e.name] || (n && (b = n), A(h[e.name]))
-                })), r.on("mpv-event-ended", (function(e) {
-                    e.error ? S(e.error) : g.emit("ended")
-                })), this.on = function(e, t) {
-                    if (m) throw new Error("Video is destroyed");
-                    g.on(e, t)
+                this.on = function(e, t) {
+                    if (g) throw new Error("Video is destroyed");
+                    f.on(e, t)
                 }, this.dispatch = function(e) {
-                    if (m) throw new Error("Video is destroyed");
-                    if (e) switch ((e = a(i(e))).type) {
+                    if (g) throw new Error("Video is destroyed");
+                    if (e) switch ((e = s(a(e))).type) {
                         case "observeProp":
-                            t = e.propName, g.emit("propValue", t, E(t)), c[t] = !0;
-                            break;
+                            return t = e.propName, void(y.hasOwnProperty(t) && (f.emit("propValue", t, T(t)), y[t] = !0));
                         case "setProp":
                             return void
                             function(e, t) {
                                 switch (e) {
                                     case "paused":
-                                        null !== p && r.send("mpv-set-prop", ["pause", t]);
+                                        null !== m && (t ? d.pause() : d.play(), S("paused"));
                                         break;
                                     case "time":
-                                        null !== p && null !== t && isFinite(t) && r.send("mpv-set-prop", ["time-pos", t / 1e3]);
-                                        break;
-                                    case "playbackSpeed":
-                                        null !== p && null !== t && isFinite(t) && r.send("mpv-set-prop", ["speed", t]);
-                                        break;
-                                    case "volume":
-                                        null !== p && null !== t && isFinite(t) && (d.mute = !1, r.send("mpv-set-prop", ["mute", "no"]), r.send("mpv-set-prop", ["volume", t]), A("muted"), A("volume"));
-                                        break;
-                                    case "muted":
-                                        null !== p && (r.send("mpv-set-prop", ["mute", t ? "yes" : "no"]), d.mute = t, A("muted"));
-                                        break;
-                                    case "selectedAudioTrackId":
-                                        if (null !== p) {
-                                            var n = t.slice(9);
-                                            r.send("mpv-set-prop", ["aid", n])
-                                        }
+                                        null !== m && null !== t && isFinite(t) && (d.currentTime = parseInt(t, 10) / 1e3, S("time"));
                                         break;
                                     case "selectedSubtitlesTrackId":
-                                        null !== p && (t ? (n = t.slice(9), r.send("mpv-set-prop", ["sid", n]), g.emit("subtitlesTrackLoaded", t)) : (r.send("mpv-set-prop", ["sid", "no"]), d.sid = null)), A("selectedSubtitlesTrackId");
-                                        break;
-                                    case "subtitlesSize":
-                                        r.send("mpv-set-prop", [l[e], t * o]);
-                                        break;
-                                    case "subtitlesDelay":
-                                        r.send("mpv-set-prop", [l[e], t]);
+                                        if (null !== m) {
+                                            Array.from(d.textTracks).forEach((function(e, r) {
+                                                e.mode = "EMBEDDED_" + String(r) === t ? "showing" : "disabled"
+                                            }));
+                                            var n = T("subtitlesTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            n && (S("selectedSubtitlesTrackId"), f.emit("subtitlesTrackLoaded", n))
+                                        }
                                         break;
                                     case "subtitlesOffset":
-                                        r.send("mpv-set-prop", [l[e], 100 - t]);
+                                        null !== t && isFinite(t) && (p = Math.max(0, Math.min(100, parseInt(t, 10))), b(), S("subtitlesOffset"));
+                                        break;
+                                    case "subtitlesSize":
+                                        null !== t && isFinite(t) && (r.sheet.cssRules[0].style.fontSize = Math.floor(Math.max(0, parseInt(t, 10)) / 25) + "vmin", S("subtitlesSize"));
                                         break;
                                     case "subtitlesTextColor":
-                                    case "subtitlesBackgroundColor":
-                                    case "subtitlesOutlineColor":
-                                        var i = t.replace(/^#(\w{6})(\w{2})$/, "#$2$1");
-                                        r.send("mpv-set-prop", [l[e], i]);
+                                        if ("string" == typeof t) {
+                                            try {
+                                                r.sheet.cssRules[0].style.color = o(t).rgb().string()
+                                            } catch (e) {
+                                                console.error("HTMLVideo", e)
+                                            }
+                                            S("subtitlesTextColor")
+                                        }
                                         break;
-                                    default:
-                                        console.log("Unhandled setProp for", e)
+                                    case "subtitlesBackgroundColor":
+                                        if ("string" == typeof t) {
+                                            try {
+                                                r.sheet.cssRules[0].style.backgroundColor = o(t).rgb().string()
+                                            } catch (e) {
+                                                console.error("HTMLVideo", e)
+                                            }
+                                            S("subtitlesBackgroundColor")
+                                        }
+                                        break;
+                                    case "subtitlesOutlineColor":
+                                        if ("string" == typeof t) {
+                                            try {
+                                                var i = o(t).rgb().string();
+                                                r.sheet.cssRules[0].style.textShadow = "-0.15rem -0.15rem 0.15rem " + i + ", 0px -0.15rem 0.15rem " + i + ", 0.15rem -0.15rem 0.15rem " + i + ", -0.15rem 0px 0.15rem " + i + ", 0.15rem 0px 0.15rem " + i + ", -0.15rem 0.15rem 0.15rem " + i + ", 0px 0.15rem 0.15rem " + i + ", 0.15rem 0.15rem 0.15rem " + i
+                                            } catch (e) {
+                                                console.error("HTMLVideo", e)
+                                            }
+                                            S("subtitlesOutlineColor")
+                                        }
+                                        break;
+                                    case "subtitlesOpacity":
+                                        if ("number" == typeof t) {
+                                            try {
+                                                v = Math.min(Math.max(t / 100, 0), 1), r.sheet.cssRules[0].style.opacity = v + ""
+                                            } catch (e) {
+                                                console.error("VVideo with HTML Subtitles", e)
+                                            }
+                                            S("subtitlesOpacity")
+                                        }
+                                        break;
+                                    case "selectedAudioTrackId":
+                                        if (null !== h) {
+                                            var a = T("audioTracks").find((function(e) {
+                                                return e.id === t
+                                            }));
+                                            h.audioTrack = a ? parseInt(a.id.split("_").pop(), 10) : -1, a && (S("selectedAudioTrackId"), f.emit("audioTrackLoaded", a))
+                                        }
+                                        break;
+                                    case "volume":
+                                        null !== t && isFinite(t) && (d.muted = !1, d.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100, S("muted"), S("volume"));
+                                        break;
+                                    case "muted":
+                                        d.muted = !!t, S("muted");
+                                        break;
+                                    case "playbackSpeed":
+                                        null !== t && isFinite(t) && (d.playbackRate = parseFloat(t), S("playbackSpeed"))
                                 }
                             }(e.propName, e.propValue);
                         case "command":
-                            return void k(e.commandName, e.commandArgs)
+                            return void A(e.commandName, e.commandArgs)
                     }
-                    var t
+                    var t;
+                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
                 }
             }
-            c.canPlayStream = function() {
-                return Promise.resolve(!0)
-            }, c.manifest = {
-                name: "ShellVideo",
-                external: !1,
-                props: Object.keys(l),
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded"]
-            }, e.exports = c
-        },
-        4471: e => {
-            e.exports = {
-                debug: !1,
-                enableWorker: !0,
-                lowLatencyMode: !1,
-                backBufferLength: 30,
-                maxBufferLength: 50,
-                maxMaxBufferLength: 80,
-                maxFragLookUpTolerance: 0,
-                maxBufferHole: 0,
-                appendErrorMaxRetry: 20,
-                nudgeMaxRetry: 20,
-                manifestLoadingTimeOut: 3e4,
-                manifestLoadingMaxRetry: 10,
-                fragLoadPolicy: {
-                    default: {
-                        maxTimeToFirstByteMs: 1e4,
-                        maxLoadTimeMs: 12e4,
-                        timeoutRetry: {
-                            maxNumRetry: 20,
-                            retryDelayMs: 0,
-                            maxRetryDelayMs: 15
-                        },
-                        errorRetry: {
-                            maxNumRetry: 6,
-                            retryDelayMs: 1e3,
-                            maxRetryDelayMs: 15
-                        }
-                    }
-                }
-            }
-        },
-        4775: e => {
-            e.exports = function(e, t) {
-                fetch("http://127.0.0.1:11470/tracks/" + encodeURIComponent(e)).then((function(e) {
-                    return e.json()
-                })).then((function(e) {
-                    var r = e.filter((function(e) {
-                            return "audio" === (e || {}).type
-                        })),
-                        n = e.filter((function(e) {
-                            return "text" === (e || {}).type
-                        }));
-                    t({
-                        audio: r,
-                        subs: n
-                    })
-                })).catch((function(e) {
-                    console.error(e), t(!1)
+            d.canPlayStream = function(e) {
+                return !e || e.behaviorHints && e.behaviorHints.notWebReady ? Promise.resolve(!1) : u(e).then((function(e) {
+                    return !!document.createElement("video").canPlayType(e) || "application/vnd.apple.mpegurl" === e && i.isSupported()
+                })).catch((function() {
+                    return !1
                 }))
-            }
+            }, d.manifest = {
+                name: "HTMLVideo",
+                external: !1,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
+            }, e.exports = d
+        },
+        4812: (e, t, r) => {
+            var n = r(3301);
+            e.exports = n
         },
         4877: e => {
             "use strict";
@@ -17202,156 +17347,6 @@
                 whitesmoke: [245, 245, 245],
                 yellow: [255, 255, 0],
                 yellowgreen: [154, 205, 50]
-            }
-        },
-        4880: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(6205);
-
-            function o(e) {
-                var t = (e = e || {}).containerElement;
-                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var r = document.createElement("iframe");
-                r.style.width = "100%", r.style.height = "100%", r.style.border = 0, r.style.backgroundColor = "black", r.allowFullscreen = !1, r.allow = "autoplay", t.appendChild(r);
-                var o = new n,
-                    l = !1,
-                    u = {
-                        stream: !1,
-                        loaded: !1,
-                        paused: !1,
-                        time: !1,
-                        duration: !1,
-                        buffering: !1,
-                        buffered: !1,
-                        volume: !1,
-                        muted: !1,
-                        playbackSpeed: !1
-                    };
-
-                function c(e) {
-                    if (e.source === r.contentWindow) {
-                        var t = e.data || e.message;
-                        if (t && "string" == typeof t.event) {
-                            var n = t.event,
-                                i = Array.isArray(t.args) ? t.args : [];
-                            o.emit.apply(o, [n].concat(i))
-                        }
-                    }
-                }
-
-                function d(e) {
-                    r.contentWindow.postMessage(e, "*")
-                }
-
-                function h(e, t) {
-                    u[e] && o.emit("propChanged", e, t)
-                }
-
-                function f(e, n) {
-                    switch (e) {
-                        case "load":
-                            return f("unload"), n && n.stream && "string" == typeof n.stream.playerFrameUrl ? (window.addEventListener("message", c, !1), r.onload = function() {
-                                d({
-                                    type: "command",
-                                    commandName: e,
-                                    commandArgs: n
-                                })
-                            }, r.src = n.stream.playerFrameUrl) : (i = Object.assign({}, s.UNSUPPORTED_STREAM, {
-                                critical: !0,
-                                stream: n ? n.stream : null
-                            }), o.emit("error", i), i.critical && f("unload")), !0;
-                        case "unload":
-                            return window.removeEventListener("message", c), r.onload = null, r.removeAttribute("src"), h("stream", null), h("loaded", null), h("paused", null), h("time", null), h("duration", null), h("buffering", null), h("buffered", null), h("volume", null), h("muted", null), h("playbackSpeed", null), !0;
-                        case "destroy":
-                            return f("unload"), l = !0, o.removeAllListeners(), t.removeChild(r), !0
-                    }
-                    var i
-                }
-                this.on = function(e, t) {
-                    if (l) throw new Error("Video is destroyed");
-                    o.on(e, t)
-                }, this.dispatch = function(e) {
-                    if (l) throw new Error("Video is destroyed");
-                    if (e) switch ((e = a(i(e))).type) {
-                        case "observeProp":
-                            return t = e.propName, u.hasOwnProperty(t) && (u[t] = !0), void d(e);
-                        case "setProp":
-                            return void d(e);
-                        case "command":
-                            return void(f(e.commandName, e.commandArgs) || d(e))
-                    }
-                    var t;
-                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
-                }
-            }
-            o.canPlayStream = function(e) {
-                return Promise.resolve(e && "string" == typeof e.playerFrameUrl)
-            }, o.manifest = {
-                name: "IFrameVideo",
-                external: !0,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "volume", "muted", "playbackSpeed", "extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor"],
-                commands: ["load", "unload", "destroy", "addExtraSubtitlesTracks"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded", "extraSubtitlesTrackLoaded", "implementationChanged"]
-            }, e.exports = o
-        },
-        5071: e => {
-            e.exports = function(e, t) {
-                return t.includes("loaded") ? new Promise((function(t, r) {
-                    var n = null;
-                    e.on("propChanged", (function(e, i) {
-                        "loaded" === e && null !== i && null === n && (n = i, !0 === i ? t(!0) : !1 === i && r(Error("Player failed to load, will not retrieve video params")))
-                    })), e.dispatch({
-                        type: "observeProp",
-                        propName: "loaded"
-                    })
-                })) : Promise.resolve(!0)
-            }
-        },
-        5082: (e, t, r) => {
-            var n = r(8868);
-
-            function i(e, t, r) {
-                var i = r && "string" == typeof r.videoHash ? r.videoHash : null,
-                    a = r && isFinite(r.videoSize) ? r.videoSize : null;
-                if ("string" == typeof i && null !== a && isFinite(a)) return Promise.resolve({
-                    hash: i,
-                    size: a
-                });
-                var s = new URLSearchParams([
-                    ["videoUrl", t]
-                ]);
-                return fetch(n.resolve(e, "/opensubHash?" + s.toString())).then((function(e) {
-                    if (e.ok) return e.json();
-                    throw new Error(e.status + " (" + e.statusText + ")")
-                })).then((function(e) {
-                    if (e.error) throw new Error(e.error);
-                    return {
-                        hash: "string" == typeof i ? i : e.result && "string" == typeof e.result.hash ? e.result.hash : null,
-                        size: null !== a && isFinite(a) ? a : e.result && (e.result.size, 1) ? e.result.size : null
-                    }
-                }))
-            }
-
-            function a(e, t, r, i, a) {
-                return a && "string" == typeof a.filename ? Promise.resolve(a.filename) : r ? fetch(n.resolve(e, "/" + encodeURIComponent(r) + "/" + encodeURIComponent(i) + "/stats.json")).then((function(e) {
-                    if (e.ok) return e.json();
-                    throw new Error(e.status + " (" + e.statusText + ")")
-                })).then((function(e) {
-                    if (!e || "string" != typeof e.streamName) throw new Error("Could not retrieve filename from torrent");
-                    return e.streamName
-                })) : Promise.resolve(decodeURIComponent(t.split("/").pop()))
-            }
-            e.exports = function(e, t, r, n, s) {
-                return Promise.allSettled([i(e, t, s), a(e, t, r, n, s)]).then((function(e) {
-                    var t = {
-                        hash: null,
-                        size: null,
-                        filename: null
-                    };
-                    return "fulfilled" === e[0].status ? (t.hash = e[0].value.hash, t.size = e[0].value.size) : e[0].reason && console.error(e[0].reason), "fulfilled" === e[1].status ? t.filename = e[1].value : e[1].reason && console.error(e[1].reason), t
-                }))
             }
         },
         5126: (e, t, r) => {
@@ -17814,6 +17809,10 @@
                 return Oe(e, !0, !0)
             }
         },
+        5166: (e, t, r) => {
+            var n = r(5369);
+            e.exports = n
+        },
         5223: e => {
             "use strict";
             var t = function(e) {
@@ -17835,6 +17834,501 @@
                         return a + encodeURIComponent(t(e))
                     })).join(r) : a + encodeURIComponent(t(e[i]))
                 })).join(r) : i ? encodeURIComponent(t(i)) + n + encodeURIComponent(t(e)) : ""
+            }
+        },
+        5227: e => {
+            var t = null;
+            e.exports = {
+                set: function(e) {
+                    t = e
+                },
+                get: function() {
+                    return t
+                }
+            }
+        },
+        5369: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(8742),
+                o = r(5416),
+                l = /^\{(\\an[1-8])+\}/i;
+
+            function u(e) {
+                var t = 100,
+                    r = 0,
+                    u = "rgb(255, 255, 255)",
+                    c = "rgba(0, 0, 0, 0)",
+                    d = "rgb(34, 34, 34)",
+                    h = 1,
+                    f = (e = e || {}).containerElement;
+                if (!(f instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var g = document.createElement("video");
+                g.style.width = "100%", g.style.height = "100%", g.style.backgroundColor = "black", g.controls = !1, g.playsInline = !0, g.onerror = function() {
+                    ! function() {
+                        if (y) return;
+                        var e;
+                        switch (g.error.code) {
+                            case 1:
+                                e = o.HTML_VIDEO.MEDIA_ERR_ABORTED;
+                                break;
+                            case 2:
+                                e = o.HTML_VIDEO.MEDIA_ERR_NETWORK;
+                                break;
+                            case 3:
+                                e = o.HTML_VIDEO.MEDIA_ERR_DECODE;
+                                break;
+                            case 4:
+                                e = o.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
+                                break;
+                            default:
+                                e = o.UNKNOWN_ERROR
+                        }
+                        L(Object.assign({}, e, {
+                            critical: !0,
+                            error: g.error
+                        }))
+                    }()
+                }, g.onended = function() {
+                    v.emit("ended")
+                }, g.onpause = function() {
+                    R("paused")
+                }, g.onplay = function() {
+                    R("paused")
+                }, g.ontimeupdate = function() {
+                    R("time")
+                }, g.ondurationchange = function() {
+                    R("duration")
+                }, g.onwaiting = function() {
+                    R("buffering")
+                }, g.onseeking = function() {
+                    R("time"), R("buffering")
+                }, g.onseeked = function() {
+                    R("time"), R("buffering")
+                }, g.onstalled = function() {
+                    R("buffering")
+                }, g.onplaying = function() {
+                    R("time"), R("buffering")
+                }, g.oncanplay = function() {
+                    R("buffering")
+                }, g.canplaythrough = function() {
+                    R("buffering")
+                }, g.onloadedmetadata = function() {
+                    R("loaded")
+                }, g.onloadeddata = function() {
+                    R("buffering")
+                }, g.onvolumechange = function() {
+                    R("volume"), R("muted")
+                }, g.onratechange = function() {
+                    R("playbackSpeed")
+                }, g.textTracks.onchange = function() {
+                    R("subtitlesTracks"), R("selectedSubtitlesTrackId")
+                }, f.appendChild(g);
+                var m = document.createElement("div");
+                m.style.position = "absolute", m.style.right = "0", m.style.bottom = "0", m.style.left = "0", m.style.zIndex = "1", m.style.textAlign = "center", f.style.position = "relative", f.style.zIndex = "0", f.appendChild(m);
+                var p, v = new n,
+                    y = !1,
+                    T = null,
+                    b = {
+                        stream: !1,
+                        loaded: !1,
+                        paused: !1,
+                        time: !1,
+                        duration: !1,
+                        buffering: !1,
+                        subtitlesTracks: !1,
+                        selectedSubtitlesTrackId: !1,
+                        subtitlesOffset: !1,
+                        subtitlesSize: !1,
+                        subtitlesTextColor: !1,
+                        subtitlesBackgroundColor: !1,
+                        subtitlesOutlineColor: !1,
+                        audioTracks: !1,
+                        selectedAudioTrackId: !1,
+                        volume: !1,
+                        muted: !1,
+                        playbackSpeed: !1
+                    };
+                async function E() {
+                    p && S(p.text, "show")
+                }
+                async function S(e, n) {
+                    if ("hide" !== n) {
+                        for (p = {
+                                text: e
+                            }; m.hasChildNodes();) m.removeChild(m.lastChild);
+                        m.style.bottom = r + "%", m.style.opacity = h;
+                        var i = document.createElement("span");
+                        i.innerHTML = e, i.style.display = "inline-block", i.style.padding = "0.2em", i.style.fontSize = Math.floor(t / 25) + "vmin", i.style.color = u, i.style.backgroundColor = c, i.style.textShadow = "1px 1px 0.1em " + d, i.style.whiteSpace = "pre-wrap", m.appendChild(i), m.appendChild(document.createElement("br"))
+                    } else {
+                        for (; m.hasChildNodes();) m.removeChild(m.lastChild);
+                        p = null
+                    }
+                }
+
+                function A(e) {
+                    var t = (e.target || {}).activeCues;
+                    if (t.length) {
+                        if (t.length > 3) return e.target.removeEventListener("cuechange", A), void S("", "hide");
+                        var r = "";
+                        for (var n in t) {
+                            var i = t[n];
+                            if (i.text) r += (r ? "\n" : "") + i.text.replace(l, "")
+                        }
+                        S(r, "show")
+                    } else S("", "hide")
+                }
+
+                function k(e) {
+                    switch (e) {
+                        case "stream":
+                            return T;
+                        case "loaded":
+                            return null === T ? null : g.readyState >= g.HAVE_METADATA;
+                        case "paused":
+                            return null === T ? null : !!g.paused;
+                        case "time":
+                            return null !== T && null !== g.currentTime && isFinite(g.currentTime) ? Math.floor(1e3 * g.currentTime) : null;
+                        case "duration":
+                            return null !== T && null !== g.duration && isFinite(g.duration) ? Math.floor(1e3 * g.duration) : null;
+                        case "buffering":
+                            return null === T ? null : g.readyState < g.HAVE_FUTURE_DATA;
+                        case "subtitlesTracks":
+                            return null === T ? [] : g.textTracks && Array.from(g.textTracks).length ? Array.from(g.textTracks).filter((function(e) {
+                                return "subtitles" === e.kind
+                            })).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.language,
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            })) : [];
+                        case "selectedSubtitlesTrackId":
+                            return null === T ? null : g.textTracks && Array.from(g.textTracks).length ? Array.from(g.textTracks).reduce((function(e, t, r) {
+                                return null === e && "hidden" === t.mode ? "EMBEDDED_" + String(r) : e
+                            }), null) : null;
+                        case "subtitlesOffset":
+                            return y ? null : r;
+                        case "subtitlesSize":
+                            return y ? null : t;
+                        case "subtitlesTextColor":
+                            return y ? null : u;
+                        case "subtitlesBackgroundColor":
+                            return y ? null : c;
+                        case "subtitlesOutlineColor":
+                            return y ? null : d;
+                        case "subtitlesOpacity":
+                            return y ? null : h;
+                        case "audioTracks":
+                            return null === T ? [] : g.audioTracks && Array.from(g.audioTracks).length ? Array.from(g.audioTracks).map((function(e, t) {
+                                return Object.freeze({
+                                    id: "EMBEDDED_" + String(t),
+                                    lang: e.language,
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0
+                                })
+                            })) : [];
+                        case "selectedAudioTrackId":
+                            return null === T ? null : g.audioTracks && Array.from(g.audioTracks).length ? Array.from(g.audioTracks).reduce((function(e, t, r) {
+                                return null === e && t.enabled ? "EMBEDDED_" + String(r) : e
+                            }), null) : null;
+                        case "volume":
+                            return y || null === g.volume || !isFinite(g.volume) ? null : Math.floor(100 * g.volume);
+                        case "muted":
+                            return y ? null : !!g.muted;
+                        case "playbackSpeed":
+                            return y || null === g.playbackRate || !isFinite(g.playbackRate) ? null : g.playbackRate;
+                        default:
+                            return null
+                    }
+                }
+
+                function L(e) {
+                    v.emit("error", e), e.critical && I("unload")
+                }
+
+                function R(e) {
+                    b[e] && v.emit("propChanged", e, k(e))
+                }
+
+                function I(e, t) {
+                    switch (e) {
+                        case "load":
+                            I("unload"), t && t.stream && "string" == typeof t.stream.url ? (T = t.stream, R("stream"), R("loaded"), g.autoplay = "boolean" != typeof t.autoplay || t.autoplay, g.currentTime = null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) / 1e3 : 0, R("paused"), R("time"), R("duration"), R("buffering"), g.textTracks && (g.textTracks.onaddtrack = function() {
+                                g.textTracks.onaddtrack = null, setTimeout((function() {
+                                    R("subtitlesTracks"), R("selectedSubtitlesTrackId")
+                                }))
+                            }), g.audioTracks && (g.audioTracks.onaddtrack = function() {
+                                g.audioTracks.onaddtrack = null, setTimeout((function() {
+                                    R("audioTracks"), R("selectedAudioTrackId")
+                                }))
+                            }), g.src = T.url) : L(Object.assign({}, o.UNSUPPORTED_STREAM, {
+                                critical: !0,
+                                stream: t ? t.stream : null
+                            }));
+                            break;
+                        case "unload":
+                            T = null, Array.from(g.textTracks).forEach((function(e) {
+                                e.oncuechange = null
+                            })), g.removeAttribute("src"), g.load(), g.currentTime = 0, R("stream"), R("loaded"), R("paused"), R("time"), R("duration"), R("buffering"), R("subtitlesTracks"), R("selectedSubtitlesTrackId"), R("audioTracks"), R("selectedAudioTrackId");
+                            break;
+                        case "destroy":
+                            I("unload"), y = !0, R("subtitlesOffset"), R("subtitlesSize"), R("subtitlesTextColor"), R("subtitlesBackgroundColor"), R("subtitlesOutlineColor"), R("volume"), R("muted"), R("playbackSpeed"), v.removeAllListeners(), g.onerror = null, g.onended = null, g.onpause = null, g.onplay = null, g.ontimeupdate = null, g.ondurationchange = null, g.onwaiting = null, g.onseeking = null, g.onseeked = null, g.onstalled = null, g.onplaying = null, g.oncanplay = null, g.canplaythrough = null, g.onloadeddata = null, g.onvolumechange = null, g.onratechange = null, g.textTracks.onchange = null, f.removeChild(g)
+                    }
+                }
+                this.on = function(e, t) {
+                    if (y) throw new Error("Video is destroyed");
+                    v.on(e, t)
+                }, this.dispatch = function(e) {
+                    if (y) throw new Error("Video is destroyed");
+                    if (e) switch ((e = a(i(e))).type) {
+                        case "observeProp":
+                            return n = e.propName, void(b.hasOwnProperty(n) && (v.emit("propValue", n, k(n)), b[n] = !0));
+                        case "setProp":
+                            return void
+                            function(e, n) {
+                                switch (e) {
+                                    case "paused":
+                                        null !== T && (n ? g.pause() : g.play(), R("paused"));
+                                        break;
+                                    case "time":
+                                        null !== T && null !== n && isFinite(n) && (S("", "hide"), g.currentTime = parseInt(n, 10) / 1e3, R("time"));
+                                        break;
+                                    case "selectedSubtitlesTrackId":
+                                        if (null !== T) {
+                                            Array.from(g.textTracks).forEach((function(e, t) {
+                                                "hidden" === e.mode && e.removeEventListener("cuechange", A), e.mode = "EMBEDDED_" + String(t) === n ? "hidden" : "disabled", "hidden" === e.mode && e.addEventListener("cuechange", A)
+                                            }));
+                                            var i = k("subtitlesTracks").find((function(e) {
+                                                return e.id === n
+                                            }));
+                                            S("", "hide"), i && (R("selectedSubtitlesTrackId"), v.emit("subtitlesTrackLoaded", i))
+                                        }
+                                        break;
+                                    case "subtitlesOffset":
+                                        null !== n && isFinite(n) && (r = Math.max(0, Math.min(100, parseInt(n, 10))), E(), R("subtitlesOffset"));
+                                        break;
+                                    case "subtitlesSize":
+                                        null !== n && isFinite(n) && (t = Math.max(0, parseInt(n, 10)), E(), R("subtitlesSize"));
+                                        break;
+                                    case "subtitlesTextColor":
+                                        if ("string" == typeof n) {
+                                            try {
+                                                u = s(n).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            E(), R("subtitlesTextColor")
+                                        }
+                                        break;
+                                    case "subtitlesBackgroundColor":
+                                        if ("string" == typeof n) {
+                                            try {
+                                                c = s(n).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            E(), R("subtitlesBackgroundColor")
+                                        }
+                                        break;
+                                    case "subtitlesOutlineColor":
+                                        if ("string" == typeof n) {
+                                            try {
+                                                d = s(n).rgb().string()
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            E(), R("subtitlesOutlineColor")
+                                        }
+                                        break;
+                                    case "subtitlesOpacity":
+                                        if ("number" == typeof n) {
+                                            try {
+                                                h = Math.min(Math.max(n / 100, 0), 1)
+                                            } catch (e) {
+                                                console.error("Tizen player with HTML Subtitles", e)
+                                            }
+                                            E(), R("subtitlesOpacity")
+                                        }
+                                        break;
+                                    case "selectedAudioTrackId":
+                                        if (null !== T)
+                                            for (var a = 0; a < g.audioTracks.length; a++) g.audioTracks[a].enabled = !("EMBEDDED_" + String(a) !== n);
+                                        var o = k("audioTracks").find((function(e) {
+                                            return e.id === n
+                                        }));
+                                        o && (R("selectedAudioTrackId"), v.emit("audioTrackLoaded", o));
+                                        break;
+                                    case "volume":
+                                        null !== n && isFinite(n) && (g.muted = !1, g.volume = Math.max(0, Math.min(100, parseInt(n, 10))) / 100, R("muted"), R("volume"));
+                                        break;
+                                    case "muted":
+                                        g.muted = !!n, R("muted");
+                                        break;
+                                    case "playbackSpeed":
+                                        null !== n && isFinite(n) && (g.playbackRate = parseFloat(n), R("playbackSpeed"))
+                                }
+                            }(e.propName, e.propValue);
+                        case "command":
+                            return void I(e.commandName, e.commandArgs)
+                    }
+                    var n;
+                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
+                }
+            }
+            u.canPlayStream = function(e) {
+                return e ? Promise.resolve(!0) : Promise.resolve(!1)
+            }, u.manifest = {
+                name: "TitanVideo",
+                external: !1,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
+            }, e.exports = u
+        },
+        5399: e => {
+            var t, r, n = [{
+                    codec: "h264",
+                    force: window.chrome || window.cast,
+                    mime: 'video/mp4; codecs="avc1.42E01E"'
+                }, {
+                    codec: "h265",
+                    mime: 'video/mp4; codecs="hev1.1.6.L150.B0"',
+                    aliases: ["hevc"]
+                }, {
+                    codec: "vp8",
+                    mime: 'video/mp4; codecs="vp8"'
+                }, {
+                    codec: "vp9",
+                    mime: 'video/mp4; codecs="vp9"'
+                }],
+                i = [{
+                    codec: "aac",
+                    mime: 'audio/mp4; codecs="mp4a.40.2"'
+                }, {
+                    codec: "mp3",
+                    mime: 'audio/mp4; codecs="mp3"'
+                }, {
+                    codec: "ac3",
+                    mime: 'audio/mp4; codecs="ac-3"'
+                }, {
+                    codec: "eac3",
+                    mime: 'audio/mp4; codecs="ec-3"'
+                }, {
+                    codec: "vorbis",
+                    mime: 'audio/mp4; codecs="vorbis"'
+                }, {
+                    codec: "opus",
+                    mime: 'audio/mp4; codecs="opus"'
+                }];
+
+            function a(e, t) {
+                return e.force || "function" == typeof t.mediaElement.canPlayType && t.mediaElement.canPlayType(e.mime) ? [e.codec].concat(e.aliases || []) : []
+            }
+            e.exports = (t = document.createElement("video"), r = ["mp4"], (window.chrome || window.cast) && r.push("matroska,webm"), {
+                formats: r,
+                videoCodecs: n.map((function(e) {
+                    return a(e, {
+                        mediaElement: t
+                    })
+                })).reduce((function(e, t) {
+                    return e.concat(t)
+                }), []),
+                audioCodecs: i.map((function(e) {
+                    return a(e, {
+                        mediaElement: t
+                    })
+                })).reduce((function(e, t) {
+                    return e.concat(t)
+                }), []),
+                maxAudioChannels: function() {
+                    if (/firefox/i.test(window.navigator.userAgent)) return 6;
+                    if (!window.AudioContext || window.chrome || window.cast) return 2;
+                    var e = (new AudioContext).destination.maxChannelCount;
+                    return e > 0 ? e : 2
+                }()
+            })
+        },
+        5416: e => {
+            e.exports = {
+                CHROMECAST_SENDER_VIDEO: {
+                    INVALID_MESSAGE_RECEIVED: {
+                        code: 100,
+                        message: "Invalid message received"
+                    },
+                    MESSAGE_SEND_FAILED: {
+                        code: 101,
+                        message: "Failed to send message"
+                    }
+                },
+                YOUTUBE_VIDEO: {
+                    API_LOAD_FAILED: {
+                        code: 90,
+                        message: "YouTube player iframe API failed to load"
+                    },
+                    INVALID_PARAMETER: {
+                        code: 91,
+                        message: "The request contains an invalid parameter value"
+                    },
+                    HTML5_VIDEO: {
+                        code: 92,
+                        message: "The requested content cannot be played in an HTML5 player"
+                    },
+                    VIDEO_NOT_FOUND: {
+                        code: 93,
+                        message: "The video requested was not found"
+                    },
+                    VIDEO_NOT_EMBEDDABLE: {
+                        code: 94,
+                        message: "The owner of the requested video does not allow it to be played in embedded players"
+                    }
+                },
+                HTML_VIDEO: {
+                    MEDIA_ERR_ABORTED: {
+                        code: 80,
+                        message: "Fetching process aborted"
+                    },
+                    MEDIA_ERR_NETWORK: {
+                        code: 81,
+                        message: "Error occurred when downloading"
+                    },
+                    MEDIA_ERR_DECODE: {
+                        code: 82,
+                        message: "Error occurred when decoding"
+                    },
+                    MEDIA_ERR_SRC_NOT_SUPPORTED: {
+                        code: 83,
+                        message: "Video is not supported"
+                    }
+                },
+                WITH_HTML_SUBTITLES: {
+                    LOAD_FAILED: {
+                        code: 70,
+                        message: "Failed to load external subtitles"
+                    }
+                },
+                WITH_STREAMING_SERVER: {
+                    CONVERT_FAILED: {
+                        code: 60,
+                        message: "Your device does not support the stream"
+                    }
+                },
+                UNKNOWN_ERROR: {
+                    code: 1,
+                    message: "Unknown error"
+                },
+                UNSUPPORTED_STREAM: {
+                    code: 2,
+                    message: "Stream is not supported"
+                },
+                STREAM_FAILED_TO_LOAD: {
+                    code: 3,
+                    message: "Stream failed to load"
+                }
             }
         },
         5852: e => {
@@ -17942,63 +18436,89 @@
                 return e ? (t = r ? r + e : e, this._events[t] && s(this, t)) : (this._events = new n, this._eventsCount = 0), this
             }, o.prototype.off = o.prototype.removeListener, o.prototype.addListener = o.prototype.on, o.prefixed = r, o.EventEmitter = o, e.exports = o
         },
-        5940: (e, t, r) => {
-            var n = r(8868),
-                i = r(3909),
-                a = r(3597);
+        5872: (e, t, r) => {
+            var n = r(8868);
 
-            function s(e, t, r, i) {
-                var a = new URL(t),
-                    s = new URLSearchParams;
-                return s.set("d", a.origin), Object.entries(r).forEach((function(e) {
-                    s.append("h", e[0] + ":" + e[1])
-                })), Object.entries(i).forEach((function(e) {
-                    s.append("r", e[0] + ":" + e[1])
-                })), n.resolve(e, "/proxy/" + s.toString() + a.pathname) + a.search
+            function i(e, t, r, i) {
+                var a = Array.isArray(i) && i.length > 0 ? "?" + new URLSearchParams(i.map((function(e) {
+                    return ["tr", e]
+                }))) : "";
+                return {
+                    url: n.resolve(e, "/" + encodeURIComponent(t) + "/" + encodeURIComponent(r)) + a,
+                    infoHash: t,
+                    fileIdx: r,
+                    sources: i
+                }
             }
-            e.exports = function(e, t, r, n) {
-                return new Promise((function(o, l) {
-                    if ("string" != typeof t.url) "string" != typeof t.infoHash ? l(new Error("Stream cannot be converted")) : a(e, t.infoHash, t.fileIdx, t.announce, r).then((function(e) {
-                        o({
-                            url: e.url,
-                            infoHash: e.infoHash,
-                            fileIdx: e.fileIdx
-                        })
-                    })).catch((function(e) {
-                        l(e)
-                    }));
-                    else if (0 === t.url.indexOf("magnet:")) {
-                        var u;
-                        try {
-                            if (!(u = i.decode(t.url)) || "string" != typeof u.infoHash) throw new Error("Failed to decode magnet url")
-                        } catch (e) {
-                            return void l(e)
-                        }
-                        var c = Array.isArray(u.announce) ? u.announce.map((function(e) {
-                            return "tracker:" + e
-                        })) : [];
-                        a(e, u.infoHash, null, c, r).then((function(e) {
-                            o({
-                                url: e.url,
-                                infoHash: e.infoHash,
-                                fileIdx: e.fileIdx
-                            })
-                        })).catch((function(e) {
-                            l(e)
-                        }))
-                    } else {
-                        var d = n && n.proxyStreamsEnabled,
-                            h = t.behaviorHints && t.behaviorHints.proxyHeaders;
-                        if (d || h) {
-                            var f = h && h.request ? h.request : {},
-                                g = h && h.response ? h.response : {};
-                            o({
-                                url: s(e, t.url, f, g)
-                            })
-                        } else o({
-                            url: t.url
-                        })
+            e.exports = function(e, t, r, a, s) {
+                if ((!Array.isArray(a) || 0 === a.length) && null !== r && isFinite(r)) return Promise.resolve(i(e, t, r, a));
+                var o = {
+                    torrent: {
+                        infoHash: t
                     }
+                };
+                return Array.isArray(a) && a.length > 0 && (o.peerSearch = {
+                    sources: ["dht:" + t].concat(a).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    min: 40,
+                    max: 200
+                }), null !== r && isFinite(r) ? o.guessFileIdx = !1 : (o.guessFileIdx = {}, s && (null !== s.season && isFinite(s.season) && (o.guessFileIdx.season = s.season), null !== s.episode && isFinite(s.episode) && (o.guessFileIdx.episode = s.episode))), fetch(n.resolve(e, "/" + encodeURIComponent(t) + "/create"), {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(o)
+                }).then((function(e) {
+                    if (e.ok) return e.json();
+                    throw new Error(e.status + " (" + e.statusText + ")")
+                })).then((function(n) {
+                    return i(e, t, o.guessFileIdx ? n.guessedFileIdx : r, o.peerSearch ? o.peerSearch.sources : [])
+                }))
+            }
+        },
+        6089: (e, t, r) => {
+            var n = r(8868);
+
+            function i(e, t, r) {
+                var i = r && "string" == typeof r.videoHash ? r.videoHash : null,
+                    a = r && isFinite(r.videoSize) ? r.videoSize : null;
+                if ("string" == typeof i && null !== a && isFinite(a)) return Promise.resolve({
+                    hash: i,
+                    size: a
+                });
+                var s = new URLSearchParams([
+                    ["videoUrl", t]
+                ]);
+                return fetch(n.resolve(e, "/opensubHash?" + s.toString())).then((function(e) {
+                    if (e.ok) return e.json();
+                    throw new Error(e.status + " (" + e.statusText + ")")
+                })).then((function(e) {
+                    if (e.error) throw new Error(e.error);
+                    return {
+                        hash: "string" == typeof i ? i : e.result && "string" == typeof e.result.hash ? e.result.hash : null,
+                        size: null !== a && isFinite(a) ? a : e.result && (e.result.size, 1) ? e.result.size : null
+                    }
+                }))
+            }
+
+            function a(e, t, r, i, a) {
+                return a && "string" == typeof a.filename ? Promise.resolve(a.filename) : r ? fetch(n.resolve(e, "/" + encodeURIComponent(r) + "/" + encodeURIComponent(i) + "/stats.json")).then((function(e) {
+                    if (e.ok) return e.json();
+                    throw new Error(e.status + " (" + e.statusText + ")")
+                })).then((function(e) {
+                    if (!e || "string" != typeof e.streamName) throw new Error("Could not retrieve filename from torrent");
+                    return e.streamName
+                })) : Promise.resolve(decodeURIComponent(t.split("/").pop()))
+            }
+            e.exports = function(e, t, r, n, s) {
+                return Promise.allSettled([i(e, t, s), a(e, t, r, n, s)]).then((function(e) {
+                    var t = {
+                        hash: null,
+                        size: null,
+                        filename: null
+                    };
+                    return "fulfilled" === e[0].status ? (t.hash = e[0].value.hash, t.size = e[0].value.size) : e[0].reason && console.error(e[0].reason), "fulfilled" === e[1].status ? t.filename = e[1].value : e[1].reason && console.error(e[1].reason), t
                 }))
             }
         },
@@ -18098,375 +18618,919 @@
                 return s[e.slice(0, 3)]
             }
         },
-        6205: e => {
-            e.exports = {
-                CHROMECAST_SENDER_VIDEO: {
-                    INVALID_MESSAGE_RECEIVED: {
-                        code: 100,
-                        message: "Invalid message received"
-                    },
-                    MESSAGE_SEND_FAILED: {
-                        code: 101,
-                        message: "Failed to send message"
-                    }
-                },
-                YOUTUBE_VIDEO: {
-                    API_LOAD_FAILED: {
-                        code: 90,
-                        message: "YouTube player iframe API failed to load"
-                    },
-                    INVALID_PARAMETER: {
-                        code: 91,
-                        message: "The request contains an invalid parameter value"
-                    },
-                    HTML5_VIDEO: {
-                        code: 92,
-                        message: "The requested content cannot be played in an HTML5 player"
-                    },
-                    VIDEO_NOT_FOUND: {
-                        code: 93,
-                        message: "The video requested was not found"
-                    },
-                    VIDEO_NOT_EMBEDDABLE: {
-                        code: 94,
-                        message: "The owner of the requested video does not allow it to be played in embedded players"
-                    }
-                },
-                HTML_VIDEO: {
-                    MEDIA_ERR_ABORTED: {
-                        code: 80,
-                        message: "Fetching process aborted"
-                    },
-                    MEDIA_ERR_NETWORK: {
-                        code: 81,
-                        message: "Error occurred when downloading"
-                    },
-                    MEDIA_ERR_DECODE: {
-                        code: 82,
-                        message: "Error occurred when decoding"
-                    },
-                    MEDIA_ERR_SRC_NOT_SUPPORTED: {
-                        code: 83,
-                        message: "Video is not supported"
-                    }
-                },
-                WITH_HTML_SUBTITLES: {
-                    LOAD_FAILED: {
-                        code: 70,
-                        message: "Failed to load external subtitles"
-                    }
-                },
-                WITH_STREAMING_SERVER: {
-                    CONVERT_FAILED: {
-                        code: 60,
-                        message: "Your device does not support the stream"
-                    }
-                },
-                UNKNOWN_ERROR: {
-                    code: 1,
-                    message: "Unknown error"
-                },
-                UNSUPPORTED_STREAM: {
-                    code: 2,
-                    message: "Stream is not supported"
-                },
-                STREAM_FAILED_TO_LOAD: {
-                    code: 3,
-                    message: "Stream failed to load"
-                }
-            }
+        6191: (e, t, r) => {
+            var n = r(6253);
+            e.exports = n
         },
-        6210: (e, t, r) => {
+        6209: (e, t, r) => {
             var n = r(5852),
                 i = r(5126),
-                a = r(6435),
-                s = r(6205);
+                a = r(8816),
+                s = r(5416);
 
             function o(e) {
-                var t = null !== (e = e || {}).timeChangedTimeout && isFinite(e.timeChangedTimeout) ? parseInt(e.timeChangedTimeout, 10) : 100,
-                    r = e.containerElement;
-                if (!(r instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var o = document.createElement("script");
-                o.type = "text/javascript", o.src = "https://www.youtube.com/iframe_api", o.onload = function() {
-                    if (g) return;
-                    if (!YT || "function" != typeof YT.ready) return void y();
-                    YT.ready((function() {
-                        g || (YT && YT.PlayerState && "function" == typeof YT.Player ? c = new YT.Player(l, {
-                            width: "100%",
-                            height: "100%",
-                            playerVars: {
-                                autoplay: 1,
-                                cc_load_policy: 3,
-                                controls: 0,
-                                disablekb: 1,
-                                enablejsapi: 1,
-                                fs: 0,
-                                iv_load_policy: 3,
-                                loop: 0,
-                                modestbranding: 1,
-                                playsinline: 1,
-                                rel: 0
-                            },
-                            events: {
-                                onError: T,
-                                onReady: b,
-                                onApiChange: E,
-                                onStateChange: S
-                            }
-                        }) : y())
-                    }))
-                }, o.onerror = y, r.appendChild(o);
-                var l = document.createElement("div");
-                l.style.width = "100%", l.style.height = "100%", l.style.backgroundColor = "black", r.appendChild(l);
-                var u = window.setInterval((function() {
-                        L("time"), L("volume"), L("muted"), L("playbackSpeed")
-                    }), t),
-                    c = null,
-                    d = !1,
-                    h = null,
-                    f = new n,
-                    g = !1,
-                    m = null,
-                    p = null,
-                    v = {
+                var t = (e = e || {}).containerElement;
+                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var r = document.createElement("iframe");
+                r.style.width = "100%", r.style.height = "100%", r.style.border = 0, r.style.backgroundColor = "black", r.allowFullscreen = !1, r.allow = "autoplay", t.appendChild(r);
+                var o = new n,
+                    l = !1,
+                    u = {
                         stream: !1,
                         loaded: !1,
                         paused: !1,
                         time: !1,
                         duration: !1,
                         buffering: !1,
+                        buffered: !1,
                         volume: !1,
                         muted: !1,
-                        playbackSpeed: !1,
-                        subtitlesTracks: !1,
-                        selectedSubtitlesTrackId: !1
+                        playbackSpeed: !1
                     };
 
-                function y() {
-                    g || k(Object.assign({}, s.YOUTUBE_VIDEO.API_LOAD_FAILED, {
-                        critical: !0
-                    }))
-                }
-
-                function T(e) {
-                    if (!g) {
-                        var t;
-                        switch (e.data) {
-                            case 2:
-                                t = s.YOUTUBE_VIDEO.INVALID_PARAMETER;
-                                break;
-                            case 5:
-                                t = s.YOUTUBE_VIDEO.HTML5_VIDEO;
-                                break;
-                            case 100:
-                                t = s.YOUTUBE_VIDEO.VIDEO_NOT_FOUND;
-                                break;
-                            case 101:
-                            case 150:
-                                t = s.YOUTUBE_VIDEO.VIDEO_NOT_EMBEDDABLE;
-                                break;
-                            default:
-                                t = s.UNKNOWN_ERROR
+                function c(e) {
+                    if (e.source === r.contentWindow) {
+                        var t = e.data || e.message;
+                        if (t && "string" == typeof t.event) {
+                            var n = t.event,
+                                i = Array.isArray(t.args) ? t.args : [];
+                            o.emit.apply(o, [n].concat(i))
                         }
-                        k(Object.assign({}, t, {
-                            critical: !0,
-                            error: e
-                        }))
                     }
                 }
 
-                function b() {
-                    g || (d = !0, null !== h && (R("load", h), h = null))
+                function d(e) {
+                    r.contentWindow.postMessage(e, "*")
                 }
 
-                function E() {
-                    g || ("function" == typeof c.loadModule && c.loadModule("captions"), "function" == typeof c.setOption && c.setOption("captions", "track", {}), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId"))
+                function h(e, t) {
+                    u[e] && o.emit("propChanged", e, t)
                 }
 
-                function S(e) {
-                    switch (L("buffering"), e.data) {
-                        case YT.PlayerState.ENDED:
-                            f.emit("ended");
-                            break;
-                        case YT.PlayerState.CUED:
-                        case YT.PlayerState.UNSTARTED:
-                        case YT.PlayerState.PAUSED:
-                        case YT.PlayerState.PLAYING:
-                            L("paused"), L("time"), L("duration")
-                    }
-                }
-
-                function A(e) {
-                    switch (e) {
-                        case "stream":
-                            return m;
-                        case "loaded":
-                            return null !== m || null;
-                        case "paused":
-                            return null === m || "function" != typeof c.getPlayerState ? null : c.getPlayerState() !== YT.PlayerState.PLAYING;
-                        case "time":
-                            return null !== m && "function" == typeof c.getCurrentTime && null !== c.getCurrentTime() && isFinite(c.getCurrentTime()) ? Math.floor(1e3 * c.getCurrentTime()) : null;
-                        case "duration":
-                            return null !== m && "function" == typeof c.getDuration && null !== c.getDuration() && isFinite(c.getDuration()) ? Math.floor(1e3 * c.getDuration()) : null;
-                        case "buffering":
-                            return null === m || "function" != typeof c.getPlayerState ? null : c.getPlayerState() === YT.PlayerState.BUFFERING;
-                        case "volume":
-                            return null !== m && "function" == typeof c.getVolume && null !== c.getVolume() && isFinite(c.getVolume()) ? c.getVolume() : null;
-                        case "muted":
-                            return null === m || "function" != typeof c.isMuted ? null : c.isMuted();
-                        case "playbackSpeed":
-                            return null !== m && "function" == typeof c.getPlaybackRate && null !== c.getPlaybackRate() && isFinite(c.getPlaybackRate()) ? c.getPlaybackRate() : null;
-                        case "subtitlesTracks":
-                            return null === m || "function" != typeof c.getOption ? [] : (c.getOption("captions", "tracklist") || []).filter((function(e) {
-                                return e && "string" == typeof e.languageCode
-                            })).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.languageCode,
-                                    label: "string" == typeof e.displayName ? e.displayName : e.languageCode,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            }));
-                        case "selectedSubtitlesTrackId":
-                            return null === m ? null : p;
-                        default:
-                            return null
-                    }
-                }
-
-                function k(e) {
-                    f.emit("error", e), e.critical && R("unload")
-                }
-
-                function L(e) {
-                    v[e] && f.emit("propChanged", e, A(e))
-                }
-
-                function R(e, t) {
+                function f(e, n) {
                     switch (e) {
                         case "load":
-                            if (R("unload"), t && t.stream && "string" == typeof t.stream.ytId)
-                                if (d) {
-                                    m = t.stream, L("stream"), L("loaded");
-                                    var n = "boolean" != typeof t.autoplay || t.autoplay,
-                                        i = null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) / 1e3 : 0;
-                                    n && "function" == typeof c.loadVideoById ? c.loadVideoById({
-                                        videoId: t.stream.ytId,
-                                        startSeconds: i
-                                    }) : "function" == typeof c.cueVideoById && c.cueVideoById({
-                                        videoId: t.stream.ytId,
-                                        startSeconds: i
-                                    }), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId")
-                                } else h = t;
-                            else k(Object.assign({}, s.UNSUPPORTED_STREAM, {
+                            return f("unload"), n && n.stream && "string" == typeof n.stream.playerFrameUrl ? (window.addEventListener("message", c, !1), r.onload = function() {
+                                d({
+                                    type: "command",
+                                    commandName: e,
+                                    commandArgs: n
+                                })
+                            }, r.src = n.stream.playerFrameUrl) : (i = Object.assign({}, s.UNSUPPORTED_STREAM, {
                                 critical: !0,
-                                stream: t ? t.stream : null
-                            }));
-                            break;
+                                stream: n ? n.stream : null
+                            }), o.emit("error", i), i.critical && f("unload")), !0;
                         case "unload":
-                            h = null, m = null, L("stream"), L("loaded"), p = null, d && "function" == typeof c.stopVideo && c.stopVideo(), L("paused"), L("time"), L("duration"), L("buffering"), L("volume"), L("muted"), L("playbackSpeed"), L("subtitlesTracks"), L("selectedSubtitlesTrackId");
-                            break;
+                            return window.removeEventListener("message", c), r.onload = null, r.removeAttribute("src"), h("stream", null), h("loaded", null), h("paused", null), h("time", null), h("duration", null), h("buffering", null), h("buffered", null), h("volume", null), h("muted", null), h("playbackSpeed", null), !0;
                         case "destroy":
-                            R("unload"), g = !0, f.removeAllListeners(), clearInterval(u), d && "function" == typeof c.destroy && c.destroy(), r.removeChild(o), r.removeChild(l)
+                            return f("unload"), l = !0, o.removeAllListeners(), t.removeChild(r), !0
                     }
+                    var i
                 }
                 this.on = function(e, t) {
-                    if (g) throw new Error("Video is destroyed");
-                    f.on(e, t)
+                    if (l) throw new Error("Video is destroyed");
+                    o.on(e, t)
                 }, this.dispatch = function(e) {
-                    if (g) throw new Error("Video is destroyed");
+                    if (l) throw new Error("Video is destroyed");
                     if (e) switch ((e = a(i(e))).type) {
                         case "observeProp":
-                            return t = e.propName, void(v.hasOwnProperty(t) && (f.emit("propValue", t, A(t)), v[t] = !0));
+                            return t = e.propName, u.hasOwnProperty(t) && (u[t] = !0), void d(e);
                         case "setProp":
-                            return void
-                            function(e, t) {
-                                switch (e) {
-                                    case "paused":
-                                        null !== m && (t ? "function" == typeof c.pauseVideo && c.pauseVideo() : "function" == typeof c.playVideo && c.playVideo());
-                                        break;
-                                    case "time":
-                                        null !== m && "function" == typeof c.seekTo && null !== t && isFinite(t) && c.seekTo(parseInt(t, 10) / 1e3);
-                                        break;
-                                    case "volume":
-                                        null !== m && null !== t && isFinite(t) && ("function" == typeof c.unMute && c.unMute(), "function" == typeof c.setVolume && c.setVolume(Math.max(0, Math.min(100, parseInt(t, 10)))), L("muted"), L("volume"));
-                                        break;
-                                    case "muted":
-                                        null !== m && (t ? "function" == typeof c.mute && c.mute() : "function" == typeof c.unMute && c.unMute(), L("muted"));
-                                        break;
-                                    case "playbackSpeed":
-                                        null !== m && "function" == typeof c.setPlaybackRate && isFinite(t) && (c.setPlaybackRate(t), L("playbackSpeed"));
-                                        break;
-                                    case "selectedSubtitlesTrackId":
-                                        if (null !== m) {
-                                            p = null;
-                                            var r = A("subtitlesTracks").find((function(e) {
-                                                return e.id === t
-                                            }));
-                                            "function" == typeof c.setOption && (r ? (p = r.id, c.setOption("captions", "track", {
-                                                languageCode: r.lang
-                                            }), f.emit("subtitlesTrackLoaded", r)) : c.setOption("captions", "track", {})), L("selectedSubtitlesTrackId")
-                                        }
-                                }
-                            }(e.propName, e.propValue);
+                            return void d(e);
                         case "command":
-                            return void R(e.commandName, e.commandArgs)
+                            return void(f(e.commandName, e.commandArgs) || d(e))
                     }
                     var t;
                     throw new Error("Invalid action dispatched: " + JSON.stringify(e))
                 }
             }
             o.canPlayStream = function(e) {
-                return Promise.resolve(e && "string" == typeof e.ytId)
+                return Promise.resolve(e && "string" == typeof e.playerFrameUrl)
             }, o.manifest = {
-                name: "YouTubeVideo",
-                external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "volume", "muted", "playbackSpeed", "subtitlesTracks", "selectedSubtitlesTrackId"],
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded"]
+                name: "IFrameVideo",
+                external: !0,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "volume", "muted", "playbackSpeed", "extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor"],
+                commands: ["load", "unload", "destroy", "addExtraSubtitlesTracks"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded", "extraSubtitlesTrackLoaded", "implementationChanged"]
             }, e.exports = o
         },
-        6372: (e, t, r) => {
-            var n = r(6210);
-            e.exports = n
-        },
-        6435: e => {
-            e.exports = function e(t) {
-                return Object.freeze(t), Object.getOwnPropertyNames(t).forEach((function(r) {
-                    !t.hasOwnProperty(r) || null === t[r] || "object" != typeof t[r] && "function" != typeof t[r] || Object.isFrozen(t[r]) || e(t[r])
-                })), t
+        6224: e => {
+            e.exports = function(e) {
+                return e && "string" == typeof e.url ? e.behaviorHints && e.behaviorHints.proxyHeaders && e.behaviorHints.proxyHeaders.response && "string" == typeof e.behaviorHints.proxyHeaders.response["content-type"] ? Promise.resolve(e.behaviorHints.proxyHeaders.response["content-type"]) : fetch(e.url, {
+                    method: "HEAD"
+                }).then((function(e) {
+                    if (e.ok) return e.headers.get("content-type");
+                    throw new Error(e.status + " (" + e.statusText + ")")
+                })) : Promise.reject(new Error("Invalid stream parameter!"))
             }
         },
-        6675: e => {
-            function t(e) {
-                for (var t = "", r = (e = e.replace(/<[a-zA-Z/][^>]*>/g, "")).split(/\n/); r.length > 3;) {
-                    for (var n = 3; n < r.length; n++) r[2] += "\n" + r[n];
-                    r.splice(3, r.length - 3)
-                }
-                var i = 0;
-                if (!r[0].match(/\d+:\d+:\d+/) && r[1].match(/\d+:\d+:\d+/) && (t += r[0].match(/\w+/) + "\n", i += 1), !r[i].match(/\d+:\d+:\d+/)) return "";
-                var a = r[1].match(/(\d+):(\d+):(\d+)(?:,(\d+))?\s*--?>\s*(\d+):(\d+):(\d+)(?:,(\d+))?/);
-                return a ? (t += a[1] + ":" + a[2] + ":" + a[3] + "." + a[4] + " --\x3e " + a[5] + ":" + a[6] + ":" + a[7] + "." + a[8] + "\n", r[i += 1] && (t += r[i] + "\n\n"), t) : ""
+        6253: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(5416),
+                o = r(2152);
+
+            function l(e, t, r, n) {
+                t && (e.onSuccess = t || function() {}), e.onFailure = function(t) {
+                    console.log("WebOS", (e.method || n) + " [fail][" + t.errorCode + "] " + t.errorText), console.log("fail result", JSON.stringify(t)), r && r()
+                }, window.webOS.service.request(n || "luna://com.webos.media", e)
             }
-            e.exports = {
-                convert: function(e) {
-                    if (e.includes("WEBVTT")) return e;
-                    try {
-                        return function(e) {
-                            var r = e.replace(/\r+/g, ""),
-                                n = (r = r.replace(/^\s+|\s+$/g, "")).split("\n\n"),
-                                i = "";
-                            if (n.length > 0) {
-                                i += "WEBVTT\n\n";
-                                for (var a = 0; a < n.length; a += 1) i += t(n[a])
+            var u = ["none", "black", "white", "yellow", "red", "green", "blue"],
+                c = {
+                    "rgba(0, 0, 0, 0)": "none",
+                    "rgba(0, 0, 0, 255)": "black",
+                    "rgba(255, 255, 255, 255)": "white",
+                    "rgba(255, 255, 0, 255)": "yellow",
+                    "rgba(255, 0, 0, 255)": "red",
+                    "rgba(0, 255, 0, 255)": "green",
+                    "rgba(0, 0, 255, 255)": "blue",
+                    "rgba(0, 0, 0, 1)": "black",
+                    "rgba(255, 255, 255, 1)": "white",
+                    "rgba(255, 255, 0, 1)": "yellow",
+                    "rgba(255, 0, 0, 1)": "red",
+                    "rgba(0, 255, 0, 1)": "green",
+                    "rgba(0, 0, 255, 1)": "blue",
+                    "rgb(0, 0, 0)": "black",
+                    "rgb(255, 255, 255)": "white",
+                    "rgb(255, 255, 0)": "yellow",
+                    "rgb(255, 0, 0)": "red",
+                    "rgb(0, 255, 0)": "green",
+                    "rgb(0, 0, 255)": "blue",
+                    "#000000FF": "black",
+                    "#FFFFFFFF": "white",
+                    "#FFFF00FF": "yellow",
+                    "#FF0000FF": "red",
+                    "#00FF00FF": "green",
+                    "#0000FFFF": "blue",
+                    "#000000": "black",
+                    "#FFFFFF": "white",
+                    "#FFFF00": "yellow",
+                    "#FF0000": "red",
+                    "#00FF00": "green",
+                    "#0000FF": "blue"
+                };
+            var d = {
+                    unsupportedAudio: ["DTS", "TRUEHD"],
+                    unsupportedSubs: ["HDMV/PGS", "VOBSUB"]
+                },
+                h = !1;
+
+            function f() {
+                h || window.webOS.service.request("luna://com.webos.service.config", {
+                    method: "getConfigs",
+                    parameters: {
+                        configNames: ["tv.model.edidType"]
+                    },
+                    onSuccess: function(e) {
+                        if (((e || {}).configs || {})["tv.model.edidType"]) {
+                            h = !0;
+                            var t = e.configs["tv.model.edidType"].toLowerCase();
+                            t.includes("dts") && (d.unsupportedAudio = d.unsupportedAudio.filter((function(e) {
+                                return "DTS" !== e
+                            }))), t.includes("truehd") && (d.unsupportedAudio = d.unsupportedAudio.filter((function(e) {
+                                return "TRUEHD" !== e
+                            })))
+                        }
+                    },
+                    onFailure: function(e) {
+                        console.log("could not get deviceInfo", e)
+                    }
+                })
+            }
+
+            function g(e) {
+                var t = (e = e || {}).containerElement;
+                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                var r = null,
+                    h = 75,
+                    g = !0,
+                    m = !1,
+                    p = !1,
+                    v = [],
+                    y = [],
+                    T = {
+                        color: "white",
+                        font_size: 1,
+                        bg_color: "none",
+                        position: -1,
+                        bg_opacity: 0,
+                        char_opacity: 255
+                    },
+                    b = function(e) {
+                        S.mediaId && (g = !e, l({
+                            method: "setSubtitleEnable",
+                            parameters: {
+                                mediaId: S.mediaId,
+                                enable: e
                             }
-                            return i
-                        }(e)
-                    } catch (e) {
-                        throw new Error("Failed to convert srt to webvtt: " + e.message)
+                        }))
+                    },
+                    E = document.createElement("style");
+                t.appendChild(E), E.sheet.insertRule("video::cue { font-size: 4vmin; color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); text-shadow: rgb(34, 34, 34) 1px 1px 0.1em; }");
+                var S = document.createElement("video");
+                S.style.width = "100%", S.style.height = "100%", S.style.backgroundColor = "black", S.controls = !1, S.onerror = function() {
+                    ! function() {
+                        if (I) return;
+                        var e;
+                        switch ((S.error || {}).code) {
+                            case 1:
+                                e = s.HTML_VIDEO.MEDIA_ERR_ABORTED;
+                                break;
+                            case 2:
+                                e = s.HTML_VIDEO.MEDIA_ERR_NETWORK;
+                                break;
+                            case 3:
+                                e = s.HTML_VIDEO.MEDIA_ERR_DECODE;
+                                break;
+                            case 4:
+                                e = s.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
+                                break;
+                            default:
+                                e = s.UNKNOWN_ERROR
+                        }
+                        U(Object.assign({}, e, {
+                            critical: !0,
+                            error: S.error
+                        }))
+                    }()
+                }, S.onended = function() {
+                    R.emit("ended")
+                }, S.onpause = function() {
+                    B("paused")
+                }, S.onplay = function() {
+                    B("paused")
+                }, S.ontimeupdate = function() {
+                    B("time"), B("buffered")
+                }, S.ondurationchange = function() {
+                    B("duration")
+                }, S.onwaiting = function() {
+                    B("buffering"), B("buffered")
+                }, S.onseeking = function() {
+                    B("buffering"), B("buffered")
+                }, S.onseeked = function() {
+                    B("buffering"), B("buffered")
+                }, S.onstalled = function() {
+                    B("buffering"), B("buffered")
+                }, S.onplaying = function() {
+                    B("buffering"), B("buffered"), r || (r = !0, B("loaded"))
+                }, S.oncanplay = function() {
+                    B("buffering"), B("buffered")
+                }, S.canplaythrough = function() {
+                    B("buffering"), B("buffered")
+                }, S.onloadeddata = function() {
+                    B("buffering"), B("buffered")
+                }, S.onloadedmetadata = function() {
+                    B("buffering"), B("buffered"), G("time", D)
+                }, S.onvolumechange = function() {
+                    B("volume"), B("muted")
+                }, S.onratechange = function() {
+                    B("playbackSpeed")
+                }, S.textTracks.onchange = function() {
+                    B("subtitlesTracks"), B("selectedSubtitlesTrackId"), N(), Array.from(S.textTracks).forEach((function(e) {
+                        e.oncuechange = N
+                    }))
+                }, t.appendChild(S);
+                var A = null,
+                    k = null,
+                    L = 1,
+                    R = new n,
+                    I = !1,
+                    w = null,
+                    D = null,
+                    C = 0,
+                    x = 100,
+                    _ = {
+                        stream: !1,
+                        loaded: !1,
+                        paused: !1,
+                        time: !1,
+                        duration: !1,
+                        buffering: !1,
+                        buffered: !1,
+                        subtitlesTracks: !1,
+                        selectedSubtitlesTrackId: !1,
+                        subtitlesOffset: !1,
+                        subtitlesSize: !1,
+                        subtitlesTextColor: !1,
+                        subtitlesBackgroundColor: !1,
+                        subtitlesOpacity: !1,
+                        audioTracks: !1,
+                        selectedAudioTrackId: !1,
+                        volume: !1,
+                        muted: !1,
+                        playbackSpeed: !1
+                    },
+                    O = !1,
+                    P = {
+                        audio: [],
+                        subs: []
+                    };
+
+                function M() {
+                    O || null === w || (O = !0, o(w.url, (function(e) {
+                        var t = 0,
+                            r = 0;
+                        v = [], y = [], e && (P = e), ((P || {}).subs || []).length && (P.subs.forEach((function(e) {
+                            if (!d.unsupportedSubs.includes(e.codec || "")) {
+                                var r = t;
+                                t++, m || v.length || (m = r), v.push({
+                                    id: "EMBEDDED_" + r,
+                                    lang: e.lang || "eng",
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0,
+                                    mode: r === m ? "showing" : "disabled"
+                                })
+                            }
+                        })), B("subtitlesTracks"), B("selectedSubtitlesTrackId")), ((P || {}).audio || []).length && (P.audio.forEach((function(e) {
+                            if (!d.unsupportedAudio.includes(e.codec || "")) {
+                                var t = r;
+                                r++, p || y.length || (p = t), y.push({
+                                    id: "EMBEDDED_" + t,
+                                    lang: e.lang || "eng",
+                                    label: e.label || null,
+                                    origin: "EMBEDDED",
+                                    embedded: !0,
+                                    mode: t === p ? "showing" : "disabled"
+                                })
+                            }
+                        })), p = "EMBEDDED_0", B("audioTracks"), B("selectedAudioTrackId"))
+                    })))
+                }
+
+                function F(e) {
+                    switch (e) {
+                        case "stream":
+                            return w;
+                        case "loaded":
+                            return r;
+                        case "paused":
+                            return null === w ? null : !!S.paused;
+                        case "time":
+                            return null !== w && null !== S.currentTime && isFinite(S.currentTime) ? Math.floor(1e3 * S.currentTime) : null;
+                        case "duration":
+                            return null !== w && null !== S.duration && isFinite(S.duration) ? Math.floor(1e3 * S.duration) : null;
+                        case "buffering":
+                            return null === w ? null : S.readyState < S.HAVE_FUTURE_DATA;
+                        case "buffered":
+                            if (null === w) return null;
+                            for (var t = null !== S.currentTime && isFinite(S.currentTime) ? S.currentTime : 0, n = 0; n < S.buffered.length; n++)
+                                if (S.buffered.start(n) <= t && t <= S.buffered.end(n)) return Math.floor(1e3 * S.buffered.end(n));
+                            return Math.floor(1e3 * t);
+                        case "subtitlesTracks":
+                            return null === w ? [] : v;
+                        case "selectedSubtitlesTrackId":
+                            return null === w || g ? null : m;
+                        case "subtitlesOffset":
+                            return I ? null : C;
+                        case "subtitlesSize":
+                            return I ? null : h;
+                        case "subtitlesTextColor":
+                            return I ? null : A || "rgb(255, 255, 255)";
+                        case "subtitlesBackgroundColor":
+                            return I ? null : k || "rgba(0, 0, 0, 0)";
+                        case "subtitlesOpacity":
+                            return I ? null : x || 100;
+                        case "audioTracks":
+                            return y;
+                        case "selectedAudioTrackId":
+                            return p;
+                        case "volume":
+                            return I || null === S.volume || !isFinite(S.volume) ? null : Math.floor(100 * S.volume);
+                        case "muted":
+                            return I ? null : !!S.muted;
+                        case "playbackSpeed":
+                            return I || null === L || !isFinite(L) ? null : L;
+                        default:
+                            return null
                     }
                 }
+
+                function N() {
+                    Array.from(S.textTracks).forEach((function(e) {
+                        Array.from(e.cues || []).forEach((function(e) {
+                            e.snapToLines = !1, e.line = 100 - C
+                        }))
+                    }))
+                }
+
+                function U(e) {
+                    R.emit("error", e), e.critical && V("unload")
+                }
+
+                function B(e) {
+                    _[e] && R.emit("propChanged", e, F(e))
+                }
+
+                function G(e, t) {
+                    switch (e) {
+                        case "paused":
+                            null !== w && (t ? S.pause() : S.play());
+                            break;
+                        case "time":
+                            if (null !== w && S.readyState >= S.HAVE_METADATA && null !== t && isFinite(t)) try {
+                                S.currentTime = parseInt(t, 10) / 1e3, B("time")
+                            } catch (e) {}
+                            break;
+                        case "selectedSubtitlesTrackId":
+                            if (S.mediaId && null !== w && 0 === (t || "").indexOf("EMBEDDED_")) {
+                                b(!0), T.bg_opacity = "none" === T.bg_color ? 0 : 255, ["setSubtitleCharacterColor", "setSubtitleBackgroundColor", "setSubtitlePosition", "setSubtitleFontSize", "setSubtitleBackgroundOpacity", "setSubtitleCharacterOpacity"].forEach((function(e) {
+                                    l({
+                                        method: e,
+                                        parameters: {
+                                            mediaId: S.mediaId,
+                                            charColor: T.color,
+                                            bgColor: "none" === T.bg_color ? "black" : T.bg_color,
+                                            position: T.position,
+                                            fontSize: T.font_size,
+                                            bgOpacity: T.bg_opacity,
+                                            charOpacity: T.char_opacity
+                                        }
+                                    })
+                                })), console.log("WebOS", "change subtitles for id: ", S.mediaId, " index:", t), m = t;
+                                var r = parseInt(t.replace("EMBEDDED_", ""));
+                                console.log("set subs to track idx: " + r), setTimeout((function() {
+                                    var e = function() {
+                                        var e = F("subtitlesTracks").find((function(e) {
+                                            return e.id === t
+                                        }));
+                                        v = v.map((function(e) {
+                                            return e.mode = e.id === m ? "showing" : "disabled", e
+                                        })), e && (R.emit("subtitlesTrackLoaded", e), B("selectedSubtitlesTrackId"))
+                                    };
+                                    l({
+                                        method: "selectTrack",
+                                        parameters: {
+                                            type: "text",
+                                            mediaId: S.mediaId,
+                                            index: r
+                                        }
+                                    }, e, e)
+                                }), 500)
+                            } - 1 === (t || "").indexOf("EMBEDDED_") && (m = null, B("selectedSubtitlesTrackId"), b(!1));
+                            break;
+                        case "subtitlesOffset":
+                            if (null !== t && isFinite(t)) {
+                                C = t;
+                                var n = (f = Math.max(0, Math.min(100, parseInt(C, 10)))) <= 0 ? -3 : f <= 5 ? -2 : f <= 10 ? 0 : f <= 15 ? 2 : f <= 20 && 4;
+                                !1 === n && (n = -2), T.position = n, S.mediaId && l({
+                                    method: "setSubtitlePosition",
+                                    parameters: {
+                                        mediaId: S.mediaId,
+                                        position: n
+                                    }
+                                }), B("subtitlesOffset")
+                            }
+                            break;
+                        case "subtitlesSize":
+                            if (null !== t && isFinite(t)) {
+                                h = t;
+                                var i = (d = Math.max(0, parseInt(h, 10))) <= 100 ? 1 : d <= 125 ? 2 : d <= 150 ? 3 : d <= 200 && 4;
+                                !1 === i && (i = 1), T.font_size = i, S.mediaId && l({
+                                    method: "setSubtitleFontSize",
+                                    parameters: {
+                                        mediaId: S.mediaId,
+                                        fontSize: i
+                                    }
+                                }), B("subtitlesSize")
+                            }
+                            break;
+                        case "subtitlesTextColor":
+                            if ("string" == typeof t) {
+                                var a = "white";
+                                c[t] && u.indexOf(c[t]) > -1 && (a = c[t]), T.color = a, S.mediaId && l({
+                                    method: "setSubtitleCharacterColor",
+                                    parameters: {
+                                        mediaId: S.mediaId,
+                                        charColor: a
+                                    }
+                                }), A = t, B("subtitlesTextColor")
+                            }
+                            break;
+                        case "subtitlesBackgroundColor":
+                            "string" == typeof t && (c[t] && u.indexOf(c[t]) > -1 && (T.bg_color = c[t], S.mediaId && (l({
+                                method: "setSubtitleBackgroundColor",
+                                parameters: {
+                                    mediaId: S.mediaId,
+                                    bgColor: "none" === c[t] ? "black" : c[t]
+                                }
+                            }), l("none" === c[t] ? {
+                                method: "setSubtitleBackgroundOpacity",
+                                parameters: {
+                                    mediaId: S.mediaId,
+                                    bgOpacity: 0
+                                }
+                            } : {
+                                method: "setSubtitleBackgroundOpacity",
+                                parameters: {
+                                    mediaId: S.mediaId,
+                                    bgOpacity: 255
+                                }
+                            }))), k = t, B("subtitlesBackgroundColor"));
+                            break;
+                        case "subtitlesOpacity":
+                            if ("number" == typeof t) {
+                                var s = Math.floor(t / 100 * 255);
+                                T.char_opacity = s, S.mediaId && l({
+                                    method: "setSubtitleCharacterOpacity",
+                                    parameters: {
+                                        mediaId: S.mediaId,
+                                        charOpacity: s
+                                    }
+                                }), x = t, B("subtitlesOpacity")
+                            }
+                            break;
+                        case "selectedAudioTrackId":
+                            if (0 === (t || "").indexOf("EMBEDDED_")) {
+                                p = t;
+                                r = parseInt(t.replace("EMBEDDED_", ""));
+                                if (S.mediaId && l({
+                                        method: "selectTrack",
+                                        parameters: {
+                                            type: "audio",
+                                            mediaId: S.mediaId,
+                                            index: r
+                                        }
+                                    }, (function() {
+                                        var e = F("audioTracks").find((function(e) {
+                                            return e.id === t
+                                        }));
+                                        y = y.map((function(e) {
+                                            return e.mode = e.id === p ? "showing" : "disabled", e
+                                        })), e && (R.emit("audioTrackLoaded", e), B("selectedAudioTrackId"))
+                                    })), S && S.audioTracks) {
+                                    for (var o = 0; o < S.audioTracks.length; o++) S.audioTracks[o].enabled = !1;
+                                    S.audioTracks[r] && (S.audioTracks[r].enabled = !0)
+                                }
+                            }
+                            break;
+                        case "volume":
+                            null !== t && isFinite(t) && (S.muted = !1, S.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100);
+                            break;
+                        case "muted":
+                            S.muted = !!t;
+                            break;
+                        case "playbackSpeed":
+                            null !== t && isFinite(t) && (L = parseFloat(t), S.mediaId && l({
+                                method: "setPlayRate",
+                                parameters: {
+                                    mediaId: S.mediaId,
+                                    playRate: L,
+                                    audioOutput: !0
+                                }
+                            }), B("playbackSpeed"))
+                    }
+                    var d, f
+                }
+
+                function V(e, r) {
+                    switch (e) {
+                        case "load":
+                            if (r && r.stream && "string" == typeof r.stream.url) {
+                                w = r.stream, D = r.time, B("stream"), S.autoplay = "boolean" != typeof r.autoplay || r.autoplay, B("loaded"), B("paused"), B("time"), B("duration"), B("buffering"), B("buffered"), B("subtitlesTracks"), B("selectedSubtitlesTrackId"), B("audioTracks"), B("selectedAudioTrackId");
+                                var n = 0;
+                                S.src = w.url, i = function() {
+                                    try {
+                                        S.load()
+                                    } catch (e) {}
+                                    try {
+                                        S.play()
+                                    } catch (e) {}
+                                }, a = setInterval((function() {
+                                    if (S.mediaId) return clearInterval(a), M(), f(), void i();
+                                    ++n > 4 && (clearInterval(a), M(), f(), i())
+                                }), 300)
+                            } else U(Object.assign({}, s.UNSUPPORTED_STREAM, {
+                                critical: !0,
+                                stream: r ? r.stream : null
+                            }));
+                            break;
+                        case "unload":
+                            w = null, D = null, Array.from(S.textTracks).forEach((function(e) {
+                                e.oncuechange = null
+                            })), S.removeAttribute("src"), S.load(), B("stream"), B("paused"), B("time"), B("duration"), B("buffering"), B("buffered"), B("subtitlesTracks"), B("selectedSubtitlesTrackId"), B("audioTracks"), B("selectedAudioTrackId");
+                            break;
+                        case "destroy":
+                            V("unload"), I = !0, B("subtitlesOffset"), B("subtitlesSize"), B("subtitlesTextColor"), B("subtitlesBackgroundColor"), B("subtitlesOpacity"), B("volume"), B("muted"), B("playbackSpeed"), R.removeAllListeners(), S.onerror = null, S.onended = null, S.onpause = null, S.onplay = null, S.ontimeupdate = null, S.ondurationchange = null, S.onwaiting = null, S.onseeking = null, S.onseeked = null, S.onstalled = null, S.onplaying = null, S.oncanplay = null, S.canplaythrough = null, S.onloadeddata = null, S.onloadedmetadata = null, S.onvolumechange = null, S.onratechange = null, S.textTracks.onchange = null, t.removeChild(S), t.removeChild(E)
+                    }
+                    var i, a
+                }
+                this.on = function(e, t) {
+                    if (I) throw new Error("Video is destroyed");
+                    R.on(e, t)
+                }, this.dispatch = function(e) {
+                    if (I) throw new Error("Video is destroyed");
+                    if (e) switch ((e = a(i(e))).type) {
+                        case "observeProp":
+                            return t = e.propName, void(_.hasOwnProperty(t) && (R.emit("propValue", t, F(t)), _[t] = !0));
+                        case "setProp":
+                            return void G(e.propName, e.propValue);
+                        case "command":
+                            return void V(e.commandName, e.commandArgs)
+                    }
+                    var t;
+                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
+                }
+            }
+            g.canPlayStream = function() {
+                return Promise.resolve(!0)
+            }, g.manifest = {
+                name: "WebOsVideo",
+                external: !1,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
+            }, e.exports = g
+        },
+        6373: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(8742),
+                o = r(5416),
+                l = r(1665),
+                u = r(3133),
+                c = r(499);
+            e.exports = function(e) {
+                function t(t) {
+                    var r = new e(t = t || {});
+                    r.on("error", (function(e) {
+                        m.emit("error", e), e.critical && _("unload")
+                    })), r.on("propValue", w.bind(null, "propValue")), r.on("propChanged", w.bind(null, "propChanged")), e.manifest.events.filter((function(e) {
+                        return !["error", "propValue", "propChanged"].includes(e)
+                    })).forEach((function(e) {
+                        r.on(e, function(e) {
+                            return function() {
+                                m.emit.apply(m, [e].concat(Array.from(arguments)))
+                            }
+                        }(e))
+                    }));
+                    var d = t.containerElement;
+                    if (!(d instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
+                    var h = document.createElement("div");
+                    h.style.position = "absolute", h.style.right = "0", h.style.bottom = "0", h.style.left = "0", h.style.zIndex = "1", h.style.textAlign = "center", d.style.position = "relative", d.style.zIndex = "0", d.appendChild(h);
+                    var f = {
+                            time: null
+                        },
+                        g = null,
+                        m = new n,
+                        p = !1,
+                        v = [],
+                        y = null,
+                        T = null,
+                        b = 100,
+                        E = 0,
+                        S = "rgb(255, 255, 255)",
+                        A = "rgba(0, 0, 0, 0)",
+                        k = "rgb(34, 34, 34)",
+                        L = 1,
+                        R = {
+                            extraSubtitlesTracks: !1,
+                            selectedExtraSubtitlesTrackId: !1,
+                            extraSubtitlesDelay: !1,
+                            extraSubtitlesSize: !1,
+                            extraSubtitlesOffset: !1,
+                            extraSubtitlesTextColor: !1,
+                            extraSubtitlesBackgroundColor: !1,
+                            extraSubtitlesOutlineColor: !1,
+                            extraSubtitlesOpacity: !1
+                        };
+
+                    function I() {
+                        for (; h.hasChildNodes();) h.removeChild(h.lastChild);
+                        null !== g && null !== f.time && isFinite(f.time) && (h.style.bottom = E + "%", h.style.opacity = L, u.render(g, f.time - T).forEach((function(e) {
+                            e.style.display = "inline-block", e.style.padding = "0.2em", e.style.whiteSpace = "pre-wrap";
+                            var t = window.screen720p ? 1.538 : 1;
+                            e.style.fontSize = Math.floor(b / 25 * t) + "vmin", e.style.color = S, e.style.backgroundColor = A, e.style.textShadow = "-0.15rem -0.15rem 0.15rem " + k + ", 0px -0.15rem 0.15rem " + k + ", 0.15rem -0.15rem 0.15rem " + k + ", -0.15rem 0px 0.15rem " + k + ", 0.15rem 0px 0.15rem " + k + ", -0.15rem 0.15rem 0.15rem " + k + ", 0px 0.15rem 0.15rem " + k + ", 0.15rem 0.15rem 0.15rem " + k, h.appendChild(e), h.appendChild(document.createElement("br"))
+                        })))
+                    }
+
+                    function w(e, t, r) {
+                        if ("time" === t) f.time = r, I();
+                        m.emit(e, t, C(t, r))
+                    }
+
+                    function D(e) {
+                        R[e] && m.emit("propChanged", e, C(e, null))
+                    }
+
+                    function C(e, t) {
+                        switch (e) {
+                            case "extraSubtitlesTracks":
+                                return p ? [] : v.slice();
+                            case "selectedExtraSubtitlesTrackId":
+                                return p ? null : y;
+                            case "extraSubtitlesDelay":
+                                return p ? null : T;
+                            case "extraSubtitlesSize":
+                                return p ? null : b;
+                            case "extraSubtitlesOffset":
+                                return p ? null : E;
+                            case "extraSubtitlesTextColor":
+                                return p ? null : S;
+                            case "extraSubtitlesBackgroundColor":
+                                return p ? null : A;
+                            case "extraSubtitlesOutlineColor":
+                                return p ? null : k;
+                            case "extraSubtitlesOpacity":
+                                return p ? null : L;
+                            default:
+                                return t
+                        }
+                    }
+
+                    function x(e, t) {
+                        switch (e) {
+                            case "selectedExtraSubtitlesTrackId":
+                                g = null, y = null, T = null;
+                                var n = v.find((function(e) {
+                                    return e.id === t
+                                }));
+                                if (n) {
+                                    y = n.id, T = 0,
+                                        function e(t, i) {
+                                            (function(e, t) {
+                                                var r = t ? e.fallbackUrl : e.url;
+                                                if ("string" == typeof r) return fetch(r).then((function(e) {
+                                                    if (e.ok) return e.text();
+                                                    throw new Error(e.status + " (" + e.statusText + ")")
+                                                }));
+                                                if (e.buffer instanceof ArrayBuffer) try {
+                                                    const t = new Uint8Array(e.buffer),
+                                                        r = (new TextDecoder).decode(t);
+                                                    return Promise.resolve(r)
+                                                } catch (e) {
+                                                    return Promise.reject(e)
+                                                }
+                                                return Promise.reject("No `url` or `buffer` field available for this track")
+                                            })(t, i).then((function(e) {
+                                                return c.convert(e)
+                                            })).then((function(e) {
+                                                return l.parse(e)
+                                            })).then((function(e) {
+                                                y === n.id && (g = e, I(), m.emit("extraSubtitlesTrackLoaded", n))
+                                            })).catch((function(t) {
+                                                y === n.id && (i || "string" != typeof n.fallbackUrl ? function(e) {
+                                                    m.emit("error", e), e.critical && (_("unload"), r.dispatch({
+                                                        type: "command",
+                                                        commandName: "unload"
+                                                    }))
+                                                }(Object.assign({}, o.WITH_HTML_SUBTITLES.LOAD_FAILED, {
+                                                    error: t,
+                                                    track: n,
+                                                    critical: !1
+                                                })) : e(n, !0))
+                                            }))
+                                        }(n)
+                                }
+                                return I(), D("selectedExtraSubtitlesTrackId"), D("extraSubtitlesDelay"), !0;
+                            case "extraSubtitlesDelay":
+                                return null !== y && null !== t && isFinite(t) && (T = parseInt(t, 10), I(), D("extraSubtitlesDelay")), !0;
+                            case "extraSubtitlesSize":
+                                return null !== t && isFinite(t) && (b = Math.max(0, parseInt(t, 10)), I(), D("extraSubtitlesSize")), !0;
+                            case "extraSubtitlesOffset":
+                                return null !== t && isFinite(t) && (E = Math.max(0, Math.min(100, parseInt(t, 10))), I(), D("extraSubtitlesOffset")), !0;
+                            case "extraSubtitlesTextColor":
+                                if ("string" == typeof t) {
+                                    try {
+                                        S = s(t).rgb().string()
+                                    } catch (e) {
+                                        console.error("withHTMLSubtitles", e)
+                                    }
+                                    I(), D("extraSubtitlesTextColor")
+                                }
+                                return !0;
+                            case "extraSubtitlesBackgroundColor":
+                                if ("string" == typeof t) {
+                                    try {
+                                        A = s(t).rgb().string()
+                                    } catch (e) {
+                                        console.error("withHTMLSubtitles", e)
+                                    }
+                                    I(), D("extraSubtitlesBackgroundColor")
+                                }
+                                return !0;
+                            case "extraSubtitlesOutlineColor":
+                                if ("string" == typeof t) {
+                                    try {
+                                        k = s(t).rgb().string()
+                                    } catch (e) {
+                                        console.error("withHTMLSubtitles", e)
+                                    }
+                                    I(), D("extraSubtitlesOutlineColor")
+                                }
+                                return !0;
+                            case "extraSubtitlesOpacity":
+                                if ("number" == typeof t) {
+                                    try {
+                                        L = Math.min(Math.max(t / 100, 0), 1)
+                                    } catch (e) {
+                                        console.error("withHTMLSubtitles", e)
+                                    }
+                                    I(), D("extraSubtitlesOpacity")
+                                }
+                                return !0;
+                            default:
+                                return !1
+                        }
+                    }
+
+                    function _(e, t) {
+                        switch (e) {
+                            case "addExtraSubtitlesTracks":
+                                return t && Array.isArray(t.tracks) && (v = v.concat(t.tracks).filter((function(e, t, r) {
+                                    return e && "string" == typeof e.id && "string" == typeof e.lang && "string" == typeof e.label && "string" == typeof e.origin && !e.embedded && t === r.findIndex((function(t) {
+                                        return t.id === e.id
+                                    }))
+                                })), D("extraSubtitlesTracks")), !0;
+                            case "addLocalSubtitles":
+                                if (t && "string" == typeof t.filename && t.buffer instanceof ArrayBuffer) {
+                                    var n = "LOCAL_" + v.filter((function(e) {
+                                            return e.local
+                                        })).length,
+                                        i = {
+                                            id: n,
+                                            url: null,
+                                            buffer: t.buffer,
+                                            lang: "local",
+                                            label: t.filename,
+                                            origin: "LOCAL",
+                                            local: !0,
+                                            embedded: !1
+                                        };
+                                    v.push(i), D("extraSubtitlesTracks"), m.emit("extraSubtitlesTrackAdded", i)
+                                }
+                                return !0;
+                            case "load":
+                                return _("unload"), t.stream && Array.isArray(t.stream.subtitles) && _("addExtraSubtitlesTracks", {
+                                    tracks: t.stream.subtitles.map((function(e) {
+                                        return Object.assign({}, e, {
+                                            origin: "EXCLUSIVE",
+                                            exclusive: !0,
+                                            embedded: !1
+                                        })
+                                    }))
+                                }), !1;
+                            case "unload":
+                                return g = null, v = [], y = null, T = null, I(), D("extraSubtitlesTracks"), D("selectedExtraSubtitlesTrackId"), D("extraSubtitlesDelay"), !1;
+                            case "destroy":
+                                return _("unload"), p = !0, D("extraSubtitlesSize"), D("extraSubtitlesOffset"), D("extraSubtitlesTextColor"), D("extraSubtitlesBackgroundColor"), D("extraSubtitlesOutlineColor"), D("extraSubtitlesOpacity"), r.dispatch({
+                                    type: "command",
+                                    commandName: "destroy"
+                                }), m.removeAllListeners(), d.removeChild(h), !0;
+                            default:
+                                return !1
+                        }
+                    }
+                    this.on = function(e, t) {
+                        if (p) throw new Error("Video is destroyed");
+                        m.on(e, t)
+                    }, this.dispatch = function(e) {
+                        if (p) throw new Error("Video is destroyed");
+                        if (e) switch ((e = a(i(e))).type) {
+                            case "observeProp":
+                                if (function(e) {
+                                        switch (e) {
+                                            case "extraSubtitlesTracks":
+                                            case "selectedExtraSubtitlesTrackId":
+                                            case "extraSubtitlesDelay":
+                                            case "extraSubtitlesSize":
+                                            case "extraSubtitlesOffset":
+                                            case "extraSubtitlesTextColor":
+                                            case "extraSubtitlesBackgroundColor":
+                                            case "extraSubtitlesOutlineColor":
+                                            case "extraSubtitlesOpacity":
+                                                return m.emit("propValue", e, C(e, null)), R[e] = !0, !0;
+                                            default:
+                                                return !1
+                                        }
+                                    }(e.propName)) return;
+                                break;
+                            case "setProp":
+                                if (x(e.propName, e.propValue)) return;
+                                break;
+                            case "command":
+                                if (_(e.commandName, e.commandArgs)) return
+                        }
+                        r.dispatch(e)
+                    }
+                }
+                return t.canPlayStream = function(t) {
+                    return e.canPlayStream(t)
+                }, t.manifest = {
+                    name: e.manifest.name + "WithHTMLSubtitles",
+                    external: e.manifest.external,
+                    props: e.manifest.props.concat(["extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor", "extraSubtitlesOpacity"]).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    commands: e.manifest.commands.concat(["load", "unload", "destroy", "addExtraSubtitlesTracks", "addLocalSubtitles"]).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    })),
+                    events: e.manifest.events.concat(["propValue", "propChanged", "error", "extraSubtitlesTrackLoaded", "extraSubtitlesTrackAdded"]).filter((function(e, t, r) {
+                        return r.indexOf(e) === t
+                    }))
+                }, t
             }
         },
         6694: function(e, t, r) {
@@ -18576,84 +19640,318 @@
                     }.call(t, r, t, e)) || (e.exports = n)
                 }()
         },
-        7081: e => {
-            e.exports = function(e, t) {
-                if (t < e[0] || e[e.length - 1] < t) return -1;
-                for (var r = 0, n = e.length - 1, i = -1; r <= n;) {
-                    var a = Math.floor((r + n) / 2);
-                    e[a] > t ? n = a - 1 : (e[a] < t || (i = a), r = a + 1)
-                }
-                return -1 !== i ? i : n
-            }
-        },
-        7169: e => {
-            var t, r, n = [{
-                    codec: "h264",
-                    force: window.chrome || window.cast,
-                    mime: 'video/mp4; codecs="avc1.42E01E"'
-                }, {
-                    codec: "h265",
-                    mime: 'video/mp4; codecs="hev1.1.6.L150.B0"',
-                    aliases: ["hevc"]
-                }, {
-                    codec: "vp8",
-                    mime: 'video/mp4; codecs="vp8"'
-                }, {
-                    codec: "vp9",
-                    mime: 'video/mp4; codecs="vp9"'
-                }],
-                i = [{
-                    codec: "aac",
-                    mime: 'audio/mp4; codecs="mp4a.40.2"'
-                }, {
-                    codec: "mp3",
-                    mime: 'audio/mp4; codecs="mp3"'
-                }, {
-                    codec: "ac3",
-                    mime: 'audio/mp4; codecs="ac-3"'
-                }, {
-                    codec: "eac3",
-                    mime: 'audio/mp4; codecs="ec-3"'
-                }, {
-                    codec: "vorbis",
-                    mime: 'audio/mp4; codecs="vorbis"'
-                }, {
-                    codec: "opus",
-                    mime: 'audio/mp4; codecs="opus"'
-                }];
+        7037: (e, t, r) => {
+            var n = r(8868),
+                i = r(3909),
+                a = r(5872);
 
-            function a(e, t) {
-                return e.force || "function" == typeof t.mediaElement.canPlayType && t.mediaElement.canPlayType(e.mime) ? [e.codec].concat(e.aliases || []) : []
+            function s(e, t, r, i) {
+                var a = new URL(t),
+                    s = new URLSearchParams;
+                return s.set("d", a.origin), Object.entries(r).forEach((function(e) {
+                    s.append("h", e[0] + ":" + e[1])
+                })), Object.entries(i).forEach((function(e) {
+                    s.append("r", e[0] + ":" + e[1])
+                })), n.resolve(e, "/proxy/" + s.toString() + a.pathname) + a.search
             }
-            e.exports = (t = document.createElement("video"), r = ["mp4"], (window.chrome || window.cast) && r.push("matroska,webm"), {
-                formats: r,
-                videoCodecs: n.map((function(e) {
-                    return a(e, {
-                        mediaElement: t
-                    })
-                })).reduce((function(e, t) {
-                    return e.concat(t)
-                }), []),
-                audioCodecs: i.map((function(e) {
-                    return a(e, {
-                        mediaElement: t
-                    })
-                })).reduce((function(e, t) {
-                    return e.concat(t)
-                }), []),
-                maxAudioChannels: function() {
-                    if (/firefox/i.test(window.navigator.userAgent)) return 6;
-                    if (!window.AudioContext || window.chrome || window.cast) return 2;
-                    var e = (new AudioContext).destination.maxChannelCount;
-                    return e > 0 ? e : 2
-                }()
-            })
+            e.exports = function(e, t, r, n) {
+                return new Promise((function(o, l) {
+                    if ("string" != typeof t.url) "string" != typeof t.infoHash ? l(new Error("Stream cannot be converted")) : a(e, t.infoHash, t.fileIdx, t.announce, r).then((function(e) {
+                        o({
+                            url: e.url,
+                            infoHash: e.infoHash,
+                            fileIdx: e.fileIdx
+                        })
+                    })).catch((function(e) {
+                        l(e)
+                    }));
+                    else if (0 === t.url.indexOf("magnet:")) {
+                        var u;
+                        try {
+                            if (!(u = i.decode(t.url)) || "string" != typeof u.infoHash) throw new Error("Failed to decode magnet url")
+                        } catch (e) {
+                            return void l(e)
+                        }
+                        var c = Array.isArray(u.announce) ? u.announce.map((function(e) {
+                            return "tracker:" + e
+                        })) : [];
+                        a(e, u.infoHash, null, c, r).then((function(e) {
+                            o({
+                                url: e.url,
+                                infoHash: e.infoHash,
+                                fileIdx: e.fileIdx
+                            })
+                        })).catch((function(e) {
+                            l(e)
+                        }))
+                    } else {
+                        var d = n && n.proxyStreamsEnabled,
+                            h = t.behaviorHints && t.behaviorHints.proxyHeaders;
+                        if (d || h) {
+                            var f = h && h.request ? h.request : {},
+                                g = h && h.response ? h.response : {};
+                            o({
+                                url: s(e, t.url, f, g)
+                            })
+                        } else o({
+                            url: t.url
+                        })
+                    }
+                }))
+            }
         },
-        7255: (e, t, r) => {
-            var n = r(3020);
-            e.exports = function() {
-                return ["Tizen", "webOS", "Titan", "NetTV"].includes(n.get()) || void 0 !== window.qt ? Promise.resolve(!1) : Promise.resolve(!0)
+        7241: (e, t, r) => {
+            var n = r(5852),
+                i = r(5126),
+                a = r(8816),
+                s = r(5416),
+                o = .0066,
+                l = {
+                    loaded: "loaded",
+                    stream: null,
+                    paused: "pause",
+                    time: "time-pos",
+                    duration: "duration",
+                    buffering: "buffering",
+                    volume: "volume",
+                    muted: "mute",
+                    playbackSpeed: "speed",
+                    audioTracks: "audioTracks",
+                    selectedAudioTrackId: "aid",
+                    subtitlesTracks: "subtitlesTracks",
+                    selectedSubtitlesTrackId: "sid",
+                    subtitlesSize: "sub-scale",
+                    subtitlesOffset: "sub-pos",
+                    subtitlesDelay: "sub-delay",
+                    subtitlesTextColor: "sub-color",
+                    subtitlesBackgroundColor: "sub-back-color",
+                    subtitlesOutlineColor: "sub-border-color"
+                };
+
+            function u(e) {
+                return e.split(".").slice(0, 2).map((function(e) {
+                    return parseInt(e)
+                }))
             }
+
+            function c(e) {
+                var t, r = (e = e || {}).shellTransport,
+                    c = {},
+                    d = {},
+                    h = {};
+                Object.keys(l).forEach((function(e) {
+                    l[e] && (h[l[e]] = e)
+                }));
+                var f = new Promise((function(e) {
+                    t = e
+                }));
+                k("unload"), r.send("mpv-command", ["stop"]), r.send("mpv-observe-prop", "path"), r.send("mpv-observe-prop", "time-pos"), r.send("mpv-observe-prop", "volume"), r.send("mpv-observe-prop", "pause"), r.send("mpv-observe-prop", "seeking"), r.send("mpv-observe-prop", "eof-reached"), r.send("mpv-observe-prop", "duration"), r.send("mpv-observe-prop", "metadata"), r.send("mpv-observe-prop", "video-params"), r.send("mpv-observe-prop", "track-list"), r.send("mpv-observe-prop", "paused-for-cache"), r.send("mpv-observe-prop", "cache-buffering-state"), r.send("mpv-observe-prop", "aid"), r.send("mpv-observe-prop", "vid"), r.send("mpv-observe-prop", "sid"), r.send("mpv-observe-prop", "sub-scale"), r.send("mpv-observe-prop", "sub-pos"), r.send("mpv-observe-prop", "sub-delay"), r.send("mpv-observe-prop", "speed"), r.send("mpv-observe-prop", "mpv-version"), r.send("mpv-observe-prop", "ffmpeg-version");
+                var g = new n,
+                    m = !1,
+                    p = null,
+                    v = 0;
+
+                function y(t) {
+                    for (var r = t ? "" : "transparent", n = e.containerElement; n; n = n.parentElement) n.style.background = r;
+                    if (((window || {}).document || {}).getElementsByTagName) {
+                        var i = window.document.getElementsByTagName("body");
+                        (i || [])[0] && (i[0].style.background = r)
+                    }
+                }
+
+                function T(e) {
+                    console.log(e.name + ": " + e.data)
+                }
+                var b = 0;
+
+                function E(e) {
+                    return l[e] ? d[l[e]] : (console.log("Unsupported prop requested", e), null)
+                }
+
+                function S(e) {
+                    g.emit("error", e), e.critical && k("unload")
+                }
+
+                function A(e) {
+                    c[e] && g.emit("propChanged", e, E(e))
+                }
+
+                function k(t, n) {
+                    switch (t) {
+                        case "load":
+                            k("unload"), n && n.stream && "string" == typeof n.stream.url ? f.then((function(t) {
+                                p = n.stream, A("stream");
+                                var i = n.assSubtitlesStyling ? "strip" : "no";
+                                r.send("mpv-set-prop", ["sub-ass-override", i]);
+                                var a = n.hardwareDecoding ? "auto-copy" : "no";
+                                r.send("mpv-set-prop", ["hwdec", a]);
+                                var s = "windows" === n.platform ? null === n.videoMode ? "gpu-next" : "gpu" : "libmpv";
+                                r.send("mpv-set-prop", ["vo", s]);
+                                var o = e.mpvSeparateWindow ? "yes" : "no";
+                                r.send("mpv-set-prop", ["osc", o]), r.send("mpv-set-prop", ["input-default-bindings", o]), r.send("mpv-set-prop", ["input-vo-keyboard", o]);
+                                var l, c, h, f = Math.floor(parseInt(n.time, 10) / 1e3) || 0;
+                                0 !== f ? (l = "0.39", c = u(t), h = u(l), c[0] > h[0] || !(c[0] < h[0]) && c[1] >= h[1] ? r.send("mpv-command", ["loadfile", p.url, "replace", "-1", "start=+" + f]) : r.send("mpv-command", ["loadfile", p.url, "replace", "start=+" + f])) : r.send("mpv-command", ["loadfile", p.url]), r.send("mpv-set-prop", ["pause", !1]), r.send("mpv-set-prop", ["speed", d.speed]), d.aid && ("string" == typeof d.aid && d.aid.startsWith("EMBEDDED_") ? r.send("mpv-set-prop", ["aid", d.aid.slice(9)]) : r.send("mpv-set-prop", ["aid", d.aid])), r.send("mpv-set-prop", ["mute", "no"]), A("paused"), A("time"), A("duration"), A("buffering"), A("muted"), A("subtitlesTracks"), A("selectedSubtitlesTrackId")
+                            })) : S(Object.assign({}, s.UNSUPPORTED_STREAM, {
+                                critical: !0,
+                                stream: n ? n.stream : null
+                            }));
+                            break;
+                        case "unload":
+                            d = {
+                                loaded: !1,
+                                pause: !1,
+                                mute: !1,
+                                speed: 1,
+                                subtitlesTracks: [],
+                                audioTracks: [],
+                                buffering: !1,
+                                aid: null,
+                                sid: null
+                            }, v = 0, r.send("mpv-command", ["stop"]), A("loaded"), A("stream"), A("paused"), A("time"), A("duration"), A("buffering"), A("muted"), A("subtitlesTracks"), A("selectedSubtitlesTrackId"), y(!0);
+                            break;
+                        case "destroy":
+                            k("unload"), m = !0, g.removeAllListeners()
+                    }
+                }
+                r.on("mpv-prop-change", (function(e) {
+                    switch (e.name) {
+                        case "mpv-version":
+                            t(e.data), d[e.name] = T(e);
+                            break;
+                        case "ffmpeg-version":
+                            d[e.name] = T(e);
+                            break;
+                        case "duration":
+                            var r = 0 | e.data;
+                            d[e.name] = e.data >= 30 && (!v || r === v) ? Math.round(1e3 * e.data) : null, v = v ? v + r >> 1 : r, d.loaded = r > 0, d.loaded && (y(!1), A("loaded"));
+                            break;
+                        case "time-pos":
+                        case "sub-delay":
+                            d[e.name] = Math.round(1e3 * e.data);
+                            break;
+                        case "sub-scale":
+                            d[e.name] = Math.round(e.data / o);
+                            break;
+                        case "sub-pos":
+                            d[e.name] = 100 - e.data;
+                            break;
+                        case "volume":
+                            "number" == typeof e.data && isFinite(e.data) && (d[e.name] = e.data, A("volume"));
+                            break;
+                        case "paused-for-cache":
+                        case "seeking":
+                            d.buffering !== e.data && (d.buffering = e.data, A("buffering"));
+                            break;
+                        case "aid":
+                        case "sid":
+                        case "vid":
+                            d[e.name] = function(e) {
+                                return e.data && "no" !== e.data ? "EMBEDDED_" + e.data.toString() : null
+                            }(e);
+                            break;
+                        case "track-list":
+                            d.audioTracks = e.data.filter((function(e) {
+                                return "audio" === e.type
+                            })).map((function(e, t) {
+                                return {
+                                    id: "EMBEDDED_" + e.id,
+                                    lang: void 0 === e.lang ? "Track" + (t + 1) : e.lang,
+                                    label: void 0 === e.title || void 0 === e.lang ? "" : e.title || e.lang,
+                                    origin: "EMBEDDED",
+                                    embedded: !0,
+                                    mode: e.id === d.aid ? "showing" : "disabled"
+                                }
+                            })), A("audioTracks"), d.subtitlesTracks = e.data.filter((function(e) {
+                                return "sub" === e.type
+                            })).map((function(e, t) {
+                                return {
+                                    id: "EMBEDDED_" + e.id,
+                                    lang: void 0 === e.lang ? "Track " + (t + 1) : e.lang,
+                                    label: void 0 === e.title || void 0 === e.lang ? "" : e.title || e.lang,
+                                    origin: "EMBEDDED",
+                                    embedded: !0,
+                                    mode: e.id === d.sid ? "showing" : "disabled"
+                                }
+                            })), A("subtitlesTracks");
+                            break;
+                        default:
+                            d[e.name] = e.data
+                    }
+                    var n = "time-pos" === e.name ? Math.floor(d["time-pos"] / 1e3) : null;
+                    n && b === n || !h[e.name] || (n && (b = n), A(h[e.name]))
+                })), r.on("mpv-event-ended", (function(e) {
+                    e.error ? S(e.error) : g.emit("ended")
+                })), this.on = function(e, t) {
+                    if (m) throw new Error("Video is destroyed");
+                    g.on(e, t)
+                }, this.dispatch = function(e) {
+                    if (m) throw new Error("Video is destroyed");
+                    if (e) switch ((e = a(i(e))).type) {
+                        case "observeProp":
+                            t = e.propName, g.emit("propValue", t, E(t)), c[t] = !0;
+                            break;
+                        case "setProp":
+                            return void
+                            function(e, t) {
+                                switch (e) {
+                                    case "paused":
+                                        null !== p && r.send("mpv-set-prop", ["pause", t]);
+                                        break;
+                                    case "time":
+                                        null !== p && null !== t && isFinite(t) && r.send("mpv-set-prop", ["time-pos", t / 1e3]);
+                                        break;
+                                    case "playbackSpeed":
+                                        null !== p && null !== t && isFinite(t) && r.send("mpv-set-prop", ["speed", t]);
+                                        break;
+                                    case "volume":
+                                        null !== p && null !== t && isFinite(t) && (d.mute = !1, r.send("mpv-set-prop", ["mute", "no"]), r.send("mpv-set-prop", ["volume", t]), A("muted"), A("volume"));
+                                        break;
+                                    case "muted":
+                                        null !== p && (r.send("mpv-set-prop", ["mute", t ? "yes" : "no"]), d.mute = t, A("muted"));
+                                        break;
+                                    case "selectedAudioTrackId":
+                                        if (null !== p) {
+                                            var n = t.slice(9);
+                                            r.send("mpv-set-prop", ["aid", n])
+                                        }
+                                        break;
+                                    case "selectedSubtitlesTrackId":
+                                        null !== p && (t ? (n = t.slice(9), r.send("mpv-set-prop", ["sid", n]), g.emit("subtitlesTrackLoaded", t)) : (r.send("mpv-set-prop", ["sid", "no"]), d.sid = null)), A("selectedSubtitlesTrackId");
+                                        break;
+                                    case "subtitlesSize":
+                                        r.send("mpv-set-prop", [l[e], t * o]);
+                                        break;
+                                    case "subtitlesDelay":
+                                        r.send("mpv-set-prop", [l[e], t]);
+                                        break;
+                                    case "subtitlesOffset":
+                                        r.send("mpv-set-prop", [l[e], 100 - t]);
+                                        break;
+                                    case "subtitlesTextColor":
+                                    case "subtitlesBackgroundColor":
+                                    case "subtitlesOutlineColor":
+                                        var i = t.replace(/^#(\w{6})(\w{2})$/, "#$2$1");
+                                        r.send("mpv-set-prop", [l[e], i]);
+                                        break;
+                                    default:
+                                        console.log("Unhandled setProp for", e)
+                                }
+                            }(e.propName, e.propValue);
+                        case "command":
+                            return void k(e.commandName, e.commandArgs)
+                    }
+                    var t
+                }
+            }
+            c.canPlayStream = function() {
+                return Promise.resolve(!0)
+            }, c.manifest = {
+                name: "ShellVideo",
+                external: !1,
+                props: Object.keys(l),
+                commands: ["load", "unload", "destroy"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded"]
+            }, e.exports = c
         },
         7385: function(e, t, r) {
             var n;
@@ -18701,91 +19999,38 @@
                 }, i.bits = e || 128, i.base = r || 16, i
             }
         },
-        8064: (e, t, r) => {
+        7462: (e, t, r) => {
+            var n = r(5227);
+            e.exports = function() {
+                return ["Tizen", "webOS", "Titan", "NetTV"].includes(n.get()) || void 0 !== window.qt ? Promise.resolve(!1) : Promise.resolve(!0)
+            }
+        },
+        7495: (e, t, r) => {
+            var n = r(6373);
+            e.exports = n
+        },
+        7575: (e, t, r) => {
+            var n = r(2563);
+            e.exports = n
+        },
+        7705: (e, t, r) => {
             var n = r(5852),
-                i = r(2258),
-                a = r(5126),
-                s = r(6435),
-                o = r(8742),
-                l = r(6205),
-                u = r(8343),
-                c = r(4471);
+                i = r(5416);
 
-            function d(e) {
+            function a(e) {
                 var t = (e = e || {}).containerElement;
                 if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var r = document.createElement("style");
-                t.appendChild(r), r.sheet.insertRule("video::cue { font-size: 4vmin; color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); text-shadow: -0.15rem -0.15rem 0.15rem rgb(34, 34, 34), 0px -0.15rem 0.15rem rgb(34, 34, 34), 0.15rem -0.15rem 0.15rem rgb(34, 34, 34), -0.15rem 0px 0.15rem rgb(34, 34, 34), 0.15rem 0px 0.15rem rgb(34, 34, 34), -0.15rem 0.15rem 0.15rem rgb(34, 34, 34), 0px 0.15rem 0.15rem rgb(34, 34, 34), 0.15rem 0.15rem 0.15rem rgb(34, 34, 34); }");
-                var d = document.createElement("video");
-                d.style.width = "100%", d.style.height = "100%", d.style.backgroundColor = "black", d.controls = !1, d.playsInline = !0, d.onerror = function() {
-                    ! function() {
-                        if (g) return;
-                        var e;
-                        switch (d.error.code) {
-                            case 1:
-                                e = l.HTML_VIDEO.MEDIA_ERR_ABORTED;
-                                break;
-                            case 2:
-                                e = l.HTML_VIDEO.MEDIA_ERR_NETWORK;
-                                break;
-                            case 3:
-                                e = l.HTML_VIDEO.MEDIA_ERR_DECODE;
-                                break;
-                            case 4:
-                                e = l.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
-                                break;
-                            default:
-                                e = l.UNKNOWN_ERROR
-                        }
-                        E(Object.assign({}, e, {
-                            critical: !0,
-                            error: d.error
-                        }))
-                    }()
-                }, d.onended = function() {
-                    f.emit("ended")
-                }, d.onpause = function() {
-                    S("paused")
-                }, d.onplay = function() {
-                    S("paused")
-                }, d.ontimeupdate = function() {
-                    S("time"), S("buffered")
-                }, d.ondurationchange = function() {
-                    S("duration")
-                }, d.onwaiting = function() {
-                    S("buffering"), S("buffered")
-                }, d.onseeking = function() {
-                    S("time"), S("buffering"), S("buffered")
-                }, d.onseeked = function() {
-                    S("time"), S("buffering"), S("buffered")
-                }, d.onstalled = function() {
-                    S("buffering"), S("buffered")
-                }, d.onplaying = function() {
-                    S("time"), S("buffering"), S("buffered")
-                }, d.oncanplay = function() {
-                    S("buffering"), S("buffered")
-                }, d.canplaythrough = function() {
-                    S("buffering"), S("buffered")
-                }, d.onloadedmetadata = function() {
-                    S("loaded")
-                }, d.onloadeddata = function() {
-                    S("buffering"), S("buffered")
-                }, d.onvolumechange = function() {
-                    S("volume"), S("muted")
-                }, d.onratechange = function() {
-                    S("playbackSpeed")
-                }, d.textTracks.onchange = function() {
-                    S("subtitlesTracks"), S("selectedSubtitlesTrackId"), b(), Array.from(d.textTracks).forEach((function(e) {
-                        e.oncuechange = b
-                    }))
-                }, t.appendChild(d);
-                var h = null,
-                    f = new n,
-                    g = !1,
-                    m = null,
-                    p = 0,
-                    v = 1,
-                    y = {
+                var r = e.chromecastTransport;
+                if (!r) throw new Error("Chromecast transport required");
+                var a = r.getCastDevice();
+                if (null === a) throw new Error("Chromecast session must be started");
+                var s = document.createElement("div");
+                s.style.display = "flex", s.style.flexDirection = "row", s.style.alignItems = "center", s.style.justifyContent = "center", s.style.width = "100%", s.style.height = "100%", s.style.backgroundColor = "black";
+                var o = document.createElement("div");
+                o.style.flex = "none", o.style.maxWidth = "80%", o.style.fontSize = "5vmin", o.style.lineHeight = "1.2em", o.style.maxHeight = "3.6em", o.style.textAlign = "center", o.style.color = "#FFFFFF90", o.innerText = "Casting to " + a.friendlyName, s.appendChild(o), t.appendChild(s), r.on("message", f), r.on("message-error", h);
+                var l = new n,
+                    u = !1,
+                    c = {
                         stream: !1,
                         loaded: !1,
                         paused: !1,
@@ -18793,6 +20038,8 @@
                         duration: !1,
                         buffering: !1,
                         buffered: !1,
+                        audioTracks: !1,
+                        selectedAudioTrackId: !1,
                         subtitlesTracks: !1,
                         selectedSubtitlesTrackId: !1,
                         subtitlesOffset: !1,
@@ -18800,236 +20047,79 @@
                         subtitlesTextColor: !1,
                         subtitlesBackgroundColor: !1,
                         subtitlesOutlineColor: !1,
-                        audioTracks: !1,
-                        selectedAudioTrackId: !1,
                         volume: !1,
                         muted: !1,
-                        playbackSpeed: !1
+                        playbackSpeed: !1,
+                        videoParams: !1,
+                        extraSubtitlesTracks: !1,
+                        selectedExtraSubtitlesTrackId: !1,
+                        extraSubtitlesDelay: !1,
+                        extraSubtitlesSize: !1,
+                        extraSubtitlesOffset: !1,
+                        extraSubtitlesTextColor: !1,
+                        extraSubtitlesBackgroundColor: !1,
+                        extraSubtitlesOutlineColor: !1
                     };
 
-                function T(e) {
-                    switch (e) {
-                        case "stream":
-                            return m;
-                        case "loaded":
-                            return null === m ? null : d.readyState >= d.HAVE_METADATA;
-                        case "paused":
-                            return null === m ? null : !!d.paused;
-                        case "time":
-                            return null !== m && null !== d.currentTime && isFinite(d.currentTime) ? Math.floor(1e3 * d.currentTime) : null;
-                        case "duration":
-                            return null !== m && null !== d.duration && isFinite(d.duration) ? Math.floor(1e3 * d.duration) : null;
-                        case "buffering":
-                            return null === m ? null : d.readyState < d.HAVE_FUTURE_DATA;
-                        case "buffered":
-                            if (null === m) return null;
-                            for (var t = null !== d.currentTime && isFinite(d.currentTime) ? d.currentTime : 0, n = 0; n < d.buffered.length; n++)
-                                if (d.buffered.start(n) <= t && t <= d.buffered.end(n)) return Math.floor(1e3 * d.buffered.end(n));
-                            return Math.floor(1e3 * t);
-                        case "subtitlesTracks":
-                            return null === m ? [] : Array.from(d.textTracks).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.language,
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            }));
-                        case "selectedSubtitlesTrackId":
-                            return null === m ? null : Array.from(d.textTracks).reduce((function(e, t, r) {
-                                return null === e && "showing" === t.mode ? "EMBEDDED_" + String(r) : e
-                            }), null);
-                        case "subtitlesOffset":
-                            return g ? null : p;
-                        case "subtitlesSize":
-                            return g ? null : 25 * parseInt(r.sheet.cssRules[0].style.fontSize, 10);
-                        case "subtitlesTextColor":
-                            return g ? null : r.sheet.cssRules[0].style.color;
-                        case "subtitlesBackgroundColor":
-                            return g ? null : r.sheet.cssRules[0].style.backgroundColor;
-                        case "subtitlesOutlineColor":
-                            return g ? null : r.sheet.cssRules[0].style.textShadow.slice(0, r.sheet.cssRules[0].style.textShadow.indexOf(")") + 1);
-                        case "subtitlesOpacity":
-                            return g ? null : Math.round(100 * v);
-                        case "audioTracks":
-                            return null !== h && Array.isArray(h.audioTracks) ? h.audioTracks.map((function(e) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(e.id),
-                                    lang: "string" == typeof e.lang && e.lang.length > 0 ? e.lang : "string" == typeof e.name && e.name.length > 0 ? e.name : String(e.id),
-                                    label: "string" == typeof e.name && e.name.length > 0 ? e.name : "string" == typeof e.lang && e.lang.length > 0 ? e.lang : String(e.id),
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            })) : [];
-                        case "selectedAudioTrackId":
-                            return null !== h && null !== h.audioTrack && isFinite(h.audioTrack) && -1 !== h.audioTrack ? "EMBEDDED_" + String(h.audioTrack) : null;
-                        case "volume":
-                            return g || null === d.volume || !isFinite(d.volume) ? null : Math.floor(100 * d.volume);
-                        case "muted":
-                            return g ? null : !!d.muted;
-                        case "playbackSpeed":
-                            return g || null === d.playbackRate || !isFinite(d.playbackRate) ? null : d.playbackRate;
-                        default:
-                            return null
-                    }
-                }
-
-                function b() {
-                    Array.from(d.textTracks).forEach((function(e) {
-                        Array.from(e.cues || []).forEach((function(e) {
-                            e.snapToLines = !1, e.line = 100 - p
-                        }))
+                function d(e, t) {
+                    l.emit("error", Object.assign({}, i.CHROMECAST_SENDER_VIDEO.MESSAGE_SEND_FAILED, {
+                        error: e,
+                        action: t
                     }))
                 }
 
-                function E(e) {
-                    f.emit("error", e), e.critical && A("unload")
+                function h(e) {
+                    l.emit("error", Object.assign({}, i.CHROMECAST_SENDER_VIDEO.INVALID_MESSAGE_RECEIVED, {
+                        error: e
+                    }))
                 }
 
-                function S(e) {
-                    y[e] && f.emit("propChanged", e, T(e))
+                function f(e) {
+                    if (e && "string" == typeof e.event) {
+                        var t = Array.isArray(e.args) ? e.args : [];
+                        l.emit.apply(l, [e.event].concat(t))
+                    } else h(new Error("Invalid message: " + e))
                 }
 
-                function A(e, n) {
-                    switch (e) {
-                        case "load":
-                            A("unload"), n && n.stream && "string" == typeof n.stream.url ? (m = n.stream, S("stream"), S("loaded"), d.autoplay = "boolean" != typeof n.autoplay || n.autoplay, d.currentTime = null !== n.time && isFinite(n.time) ? parseInt(n.time, 10) / 1e3 : 0, S("paused"), S("time"), S("duration"), S("buffering"), S("buffered"), S("subtitlesTracks"), S("selectedSubtitlesTrackId"), S("audioTracks"), S("selectedAudioTrackId"), u(m).then((function(e) {
-                                m === n.stream && ("application/vnd.apple.mpegurl" === e && i.isSupported() ? ((h = new i(c)).on(i.Events.AUDIO_TRACKS_UPDATED, (function() {
-                                    S("audioTracks"), S("selectedAudioTrackId")
-                                })), h.on(i.Events.AUDIO_TRACK_SWITCHED, (function() {
-                                    S("audioTracks"), S("selectedAudioTrackId")
-                                })), h.loadSource(m.url), h.attachMedia(d)) : d.src = m.url)
-                            })).catch((function() {
-                                m === n.stream && (d.src = m.url)
-                            }))) : E(Object.assign({}, l.UNSUPPORTED_STREAM, {
-                                critical: !0,
-                                stream: n ? n.stream : null
-                            }));
-                            break;
-                        case "unload":
-                            m = null, Array.from(d.textTracks).forEach((function(e) {
-                                e.oncuechange = null
-                            })), null !== h && (h.removeAllListeners(), h.detachMedia(d), h.destroy(), h = null), d.removeAttribute("src"), d.load(), d.currentTime = 0, S("stream"), S("loaded"), S("paused"), S("time"), S("duration"), S("buffering"), S("buffered"), S("subtitlesTracks"), S("selectedSubtitlesTrackId"), S("audioTracks"), S("selectedAudioTrackId");
-                            break;
-                        case "destroy":
-                            A("unload"), g = !0, S("subtitlesOffset"), S("subtitlesSize"), S("subtitlesTextColor"), S("subtitlesBackgroundColor"), S("subtitlesOutlineColor"), S("subtitlesOpacity"), S("volume"), S("muted"), S("playbackSpeed"), f.removeAllListeners(), d.onerror = null, d.onended = null, d.onpause = null, d.onplay = null, d.ontimeupdate = null, d.ondurationchange = null, d.onwaiting = null, d.onseeking = null, d.onseeked = null, d.onstalled = null, d.onplaying = null, d.oncanplay = null, d.canplaythrough = null, d.onloadeddata = null, d.onvolumechange = null, d.onratechange = null, d.textTracks.onchange = null, t.removeChild(d), t.removeChild(r)
-                    }
+                function g(e, t) {
+                    c[e] && l.emit("propChanged", e, t)
                 }
                 this.on = function(e, t) {
-                    if (g) throw new Error("Video is destroyed");
-                    f.on(e, t)
+                    if (u) throw new Error("Video is destroyed");
+                    l.on(e, t)
                 }, this.dispatch = function(e) {
-                    if (g) throw new Error("Video is destroyed");
-                    if (e) switch ((e = s(a(e))).type) {
+                    if (u) throw new Error("Video is destroyed");
+                    if (e) switch (e.type) {
                         case "observeProp":
-                            return t = e.propName, void(y.hasOwnProperty(t) && (f.emit("propValue", t, T(t)), y[t] = !0));
+                            return i = e.propName, c.hasOwnProperty(i) && (c[i] = !0), void r.sendMessage(e).catch((function(t) {
+                                d(t, e)
+                            }));
                         case "setProp":
-                            return void
-                            function(e, t) {
-                                switch (e) {
-                                    case "paused":
-                                        null !== m && (t ? d.pause() : d.play(), S("paused"));
-                                        break;
-                                    case "time":
-                                        null !== m && null !== t && isFinite(t) && (d.currentTime = parseInt(t, 10) / 1e3, S("time"));
-                                        break;
-                                    case "selectedSubtitlesTrackId":
-                                        if (null !== m) {
-                                            Array.from(d.textTracks).forEach((function(e, r) {
-                                                e.mode = "EMBEDDED_" + String(r) === t ? "showing" : "disabled"
-                                            }));
-                                            var n = T("subtitlesTracks").find((function(e) {
-                                                return e.id === t
-                                            }));
-                                            n && (S("selectedSubtitlesTrackId"), f.emit("subtitlesTrackLoaded", n))
-                                        }
-                                        break;
-                                    case "subtitlesOffset":
-                                        null !== t && isFinite(t) && (p = Math.max(0, Math.min(100, parseInt(t, 10))), b(), S("subtitlesOffset"));
-                                        break;
-                                    case "subtitlesSize":
-                                        null !== t && isFinite(t) && (r.sheet.cssRules[0].style.fontSize = Math.floor(Math.max(0, parseInt(t, 10)) / 25) + "vmin", S("subtitlesSize"));
-                                        break;
-                                    case "subtitlesTextColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                r.sheet.cssRules[0].style.color = o(t).rgb().string()
-                                            } catch (e) {
-                                                console.error("HTMLVideo", e)
-                                            }
-                                            S("subtitlesTextColor")
-                                        }
-                                        break;
-                                    case "subtitlesBackgroundColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                r.sheet.cssRules[0].style.backgroundColor = o(t).rgb().string()
-                                            } catch (e) {
-                                                console.error("HTMLVideo", e)
-                                            }
-                                            S("subtitlesBackgroundColor")
-                                        }
-                                        break;
-                                    case "subtitlesOutlineColor":
-                                        if ("string" == typeof t) {
-                                            try {
-                                                var i = o(t).rgb().string();
-                                                r.sheet.cssRules[0].style.textShadow = "-0.15rem -0.15rem 0.15rem " + i + ", 0px -0.15rem 0.15rem " + i + ", 0.15rem -0.15rem 0.15rem " + i + ", -0.15rem 0px 0.15rem " + i + ", 0.15rem 0px 0.15rem " + i + ", -0.15rem 0.15rem 0.15rem " + i + ", 0px 0.15rem 0.15rem " + i + ", 0.15rem 0.15rem 0.15rem " + i
-                                            } catch (e) {
-                                                console.error("HTMLVideo", e)
-                                            }
-                                            S("subtitlesOutlineColor")
-                                        }
-                                        break;
-                                    case "subtitlesOpacity":
-                                        if ("number" == typeof t) {
-                                            try {
-                                                v = Math.min(Math.max(t / 100, 0), 1), r.sheet.cssRules[0].style.opacity = v + ""
-                                            } catch (e) {
-                                                console.error("VVideo with HTML Subtitles", e)
-                                            }
-                                            S("subtitlesOpacity")
-                                        }
-                                        break;
-                                    case "selectedAudioTrackId":
-                                        if (null !== h) {
-                                            var a = T("audioTracks").find((function(e) {
-                                                return e.id === t
-                                            }));
-                                            h.audioTrack = a ? parseInt(a.id.split("_").pop(), 10) : -1, a && (S("selectedAudioTrackId"), f.emit("audioTrackLoaded", a))
-                                        }
-                                        break;
-                                    case "volume":
-                                        null !== t && isFinite(t) && (d.muted = !1, d.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100, S("muted"), S("volume"));
-                                        break;
-                                    case "muted":
-                                        d.muted = !!t, S("muted");
-                                        break;
-                                    case "playbackSpeed":
-                                        null !== t && isFinite(t) && (d.playbackRate = parseFloat(t), S("playbackSpeed"))
-                                }
-                            }(e.propName, e.propValue);
+                            return void r.sendMessage(e).catch((function(t) {
+                                d(t, e)
+                            }));
                         case "command":
-                            return void A(e.commandName, e.commandArgs)
+                            return n = e.commandName, e.commandArgs, "destroy" === n && (u = !0, g("stream", null), g("loaded", null), g("paused", null), g("time", null), g("duration", null), g("buffering", null), g("buffered", null), g("audioTracks", []), g("selectedAudioTrackId", []), g("subtitlesTracks", []), g("selectedSubtitlesTrackId", null), g("subtitlesOffset", null), g("subtitlesSize", null), g("subtitlesTextColor", null), g("subtitlesBackgroundColor", null), g("subtitlesOutlineColor", null), g("volume", null), g("muted", null), g("playbackSpeed", null), g("videoParams", null), g("extraSubtitlesTracks", []), g("selectedExtraSubtitlesTrackId", null), g("extraSubtitlesDelay", null), g("extraSubtitlesSize", null), g("extraSubtitlesOffset", null), g("extraSubtitlesTextColor", null), g("extraSubtitlesBackgroundColor", null), g("extraSubtitlesOutlineColor", null), l.removeAllListeners(), r.off("message", f), t.removeChild(s)), void r.sendMessage(e).catch((function(t) {
+                                d(t, e)
+                            }))
                     }
-                    var t;
+                    var n, i;
                     throw new Error("Invalid action dispatched: " + JSON.stringify(e))
                 }
             }
-            d.canPlayStream = function(e) {
-                return !e || e.behaviorHints && e.behaviorHints.notWebReady ? Promise.resolve(!1) : u(e).then((function(e) {
-                    return !!document.createElement("video").canPlayType(e) || "application/vnd.apple.mpegurl" === e && i.isSupported()
-                })).catch((function() {
-                    return !1
-                }))
-            }, d.manifest = {
-                name: "HTMLVideo",
-                external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
-            }, e.exports = d
+            a.canPlayStream = function() {
+                return Promise.resolve(!0)
+            }, a.manifest = {
+                name: "ChromecastSenderVideo",
+                external: !0,
+                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "volume", "muted", "playbackSpeed", "videoParams", "extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor"],
+                commands: ["load", "unload", "destroy", "addExtraSubtitlesTracks"],
+                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded", "extraSubtitlesTrackLoaded", "implementationChanged"]
+            }, e.exports = a
+        },
+        7838: (e, t, r) => {
+            var n = r(6209);
+            e.exports = n
         },
         8099: function() {
             ! function(e) {
@@ -19753,475 +20843,10 @@
                 }, e.WebVTT = E
             }(this)
         },
-        8131: (e, t, r) => {
-            var n = r(856);
-            e.exports = n
-        },
-        8203: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(8742),
-                o = r(6205),
-                l = /^\{(\\an[1-8])+\}/i;
-
-            function u(e) {
-                var t = 100,
-                    r = 0,
-                    u = "rgb(255, 255, 255)",
-                    c = "rgba(0, 0, 0, 0)",
-                    d = "rgb(34, 34, 34)",
-                    h = 1,
-                    f = (e = e || {}).containerElement;
-                if (!(f instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var g = document.createElement("video");
-                g.style.width = "100%", g.style.height = "100%", g.style.backgroundColor = "black", g.controls = !1, g.playsInline = !0, g.onerror = function() {
-                    ! function() {
-                        if (y) return;
-                        var e;
-                        switch (g.error.code) {
-                            case 1:
-                                e = o.HTML_VIDEO.MEDIA_ERR_ABORTED;
-                                break;
-                            case 2:
-                                e = o.HTML_VIDEO.MEDIA_ERR_NETWORK;
-                                break;
-                            case 3:
-                                e = o.HTML_VIDEO.MEDIA_ERR_DECODE;
-                                break;
-                            case 4:
-                                e = o.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED;
-                                break;
-                            default:
-                                e = o.UNKNOWN_ERROR
-                        }
-                        L(Object.assign({}, e, {
-                            critical: !0,
-                            error: g.error
-                        }))
-                    }()
-                }, g.onended = function() {
-                    v.emit("ended")
-                }, g.onpause = function() {
-                    R("paused")
-                }, g.onplay = function() {
-                    R("paused")
-                }, g.ontimeupdate = function() {
-                    R("time")
-                }, g.ondurationchange = function() {
-                    R("duration")
-                }, g.onwaiting = function() {
-                    R("buffering")
-                }, g.onseeking = function() {
-                    R("time"), R("buffering")
-                }, g.onseeked = function() {
-                    R("time"), R("buffering")
-                }, g.onstalled = function() {
-                    R("buffering")
-                }, g.onplaying = function() {
-                    R("time"), R("buffering")
-                }, g.oncanplay = function() {
-                    R("buffering")
-                }, g.canplaythrough = function() {
-                    R("buffering")
-                }, g.onloadedmetadata = function() {
-                    R("loaded")
-                }, g.onloadeddata = function() {
-                    R("buffering")
-                }, g.onvolumechange = function() {
-                    R("volume"), R("muted")
-                }, g.onratechange = function() {
-                    R("playbackSpeed")
-                }, g.textTracks.onchange = function() {
-                    R("subtitlesTracks"), R("selectedSubtitlesTrackId")
-                }, f.appendChild(g);
-                var m = document.createElement("div");
-                m.style.position = "absolute", m.style.right = "0", m.style.bottom = "0", m.style.left = "0", m.style.zIndex = "1", m.style.textAlign = "center", f.style.position = "relative", f.style.zIndex = "0", f.appendChild(m);
-                var p, v = new n,
-                    y = !1,
-                    T = null,
-                    b = {
-                        stream: !1,
-                        loaded: !1,
-                        paused: !1,
-                        time: !1,
-                        duration: !1,
-                        buffering: !1,
-                        subtitlesTracks: !1,
-                        selectedSubtitlesTrackId: !1,
-                        subtitlesOffset: !1,
-                        subtitlesSize: !1,
-                        subtitlesTextColor: !1,
-                        subtitlesBackgroundColor: !1,
-                        subtitlesOutlineColor: !1,
-                        audioTracks: !1,
-                        selectedAudioTrackId: !1,
-                        volume: !1,
-                        muted: !1,
-                        playbackSpeed: !1
-                    };
-                async function E() {
-                    p && S(p.text, "show")
-                }
-                async function S(e, n) {
-                    if ("hide" !== n) {
-                        for (p = {
-                                text: e
-                            }; m.hasChildNodes();) m.removeChild(m.lastChild);
-                        m.style.bottom = r + "%", m.style.opacity = h;
-                        var i = document.createElement("span");
-                        i.innerHTML = e, i.style.display = "inline-block", i.style.padding = "0.2em", i.style.fontSize = Math.floor(t / 25) + "vmin", i.style.color = u, i.style.backgroundColor = c, i.style.textShadow = "1px 1px 0.1em " + d, i.style.whiteSpace = "pre-wrap", m.appendChild(i), m.appendChild(document.createElement("br"))
-                    } else {
-                        for (; m.hasChildNodes();) m.removeChild(m.lastChild);
-                        p = null
-                    }
-                }
-
-                function A(e) {
-                    var t = (e.target || {}).activeCues;
-                    if (t.length) {
-                        if (t.length > 3) return e.target.removeEventListener("cuechange", A), void S("", "hide");
-                        var r = "";
-                        for (var n in t) {
-                            var i = t[n];
-                            if (i.text) r += (r ? "\n" : "") + i.text.replace(l, "")
-                        }
-                        S(r, "show")
-                    } else S("", "hide")
-                }
-
-                function k(e) {
-                    switch (e) {
-                        case "stream":
-                            return T;
-                        case "loaded":
-                            return null === T ? null : g.readyState >= g.HAVE_METADATA;
-                        case "paused":
-                            return null === T ? null : !!g.paused;
-                        case "time":
-                            return null !== T && null !== g.currentTime && isFinite(g.currentTime) ? Math.floor(1e3 * g.currentTime) : null;
-                        case "duration":
-                            return null !== T && null !== g.duration && isFinite(g.duration) ? Math.floor(1e3 * g.duration) : null;
-                        case "buffering":
-                            return null === T ? null : g.readyState < g.HAVE_FUTURE_DATA;
-                        case "subtitlesTracks":
-                            return null === T ? [] : g.textTracks && Array.from(g.textTracks).length ? Array.from(g.textTracks).filter((function(e) {
-                                return "subtitles" === e.kind
-                            })).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.language,
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            })) : [];
-                        case "selectedSubtitlesTrackId":
-                            return null === T ? null : g.textTracks && Array.from(g.textTracks).length ? Array.from(g.textTracks).reduce((function(e, t, r) {
-                                return null === e && "hidden" === t.mode ? "EMBEDDED_" + String(r) : e
-                            }), null) : null;
-                        case "subtitlesOffset":
-                            return y ? null : r;
-                        case "subtitlesSize":
-                            return y ? null : t;
-                        case "subtitlesTextColor":
-                            return y ? null : u;
-                        case "subtitlesBackgroundColor":
-                            return y ? null : c;
-                        case "subtitlesOutlineColor":
-                            return y ? null : d;
-                        case "subtitlesOpacity":
-                            return y ? null : h;
-                        case "audioTracks":
-                            return null === T ? [] : g.audioTracks && Array.from(g.audioTracks).length ? Array.from(g.audioTracks).map((function(e, t) {
-                                return Object.freeze({
-                                    id: "EMBEDDED_" + String(t),
-                                    lang: e.language,
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0
-                                })
-                            })) : [];
-                        case "selectedAudioTrackId":
-                            return null === T ? null : g.audioTracks && Array.from(g.audioTracks).length ? Array.from(g.audioTracks).reduce((function(e, t, r) {
-                                return null === e && t.enabled ? "EMBEDDED_" + String(r) : e
-                            }), null) : null;
-                        case "volume":
-                            return y || null === g.volume || !isFinite(g.volume) ? null : Math.floor(100 * g.volume);
-                        case "muted":
-                            return y ? null : !!g.muted;
-                        case "playbackSpeed":
-                            return y || null === g.playbackRate || !isFinite(g.playbackRate) ? null : g.playbackRate;
-                        default:
-                            return null
-                    }
-                }
-
-                function L(e) {
-                    v.emit("error", e), e.critical && I("unload")
-                }
-
-                function R(e) {
-                    b[e] && v.emit("propChanged", e, k(e))
-                }
-
-                function I(e, t) {
-                    switch (e) {
-                        case "load":
-                            I("unload"), t && t.stream && "string" == typeof t.stream.url ? (T = t.stream, R("stream"), R("loaded"), g.autoplay = "boolean" != typeof t.autoplay || t.autoplay, g.currentTime = null !== t.time && isFinite(t.time) ? parseInt(t.time, 10) / 1e3 : 0, R("paused"), R("time"), R("duration"), R("buffering"), g.textTracks && (g.textTracks.onaddtrack = function() {
-                                g.textTracks.onaddtrack = null, setTimeout((function() {
-                                    R("subtitlesTracks"), R("selectedSubtitlesTrackId")
-                                }))
-                            }), g.audioTracks && (g.audioTracks.onaddtrack = function() {
-                                g.audioTracks.onaddtrack = null, setTimeout((function() {
-                                    R("audioTracks"), R("selectedAudioTrackId")
-                                }))
-                            }), g.src = T.url) : L(Object.assign({}, o.UNSUPPORTED_STREAM, {
-                                critical: !0,
-                                stream: t ? t.stream : null
-                            }));
-                            break;
-                        case "unload":
-                            T = null, Array.from(g.textTracks).forEach((function(e) {
-                                e.oncuechange = null
-                            })), g.removeAttribute("src"), g.load(), g.currentTime = 0, R("stream"), R("loaded"), R("paused"), R("time"), R("duration"), R("buffering"), R("subtitlesTracks"), R("selectedSubtitlesTrackId"), R("audioTracks"), R("selectedAudioTrackId");
-                            break;
-                        case "destroy":
-                            I("unload"), y = !0, R("subtitlesOffset"), R("subtitlesSize"), R("subtitlesTextColor"), R("subtitlesBackgroundColor"), R("subtitlesOutlineColor"), R("volume"), R("muted"), R("playbackSpeed"), v.removeAllListeners(), g.onerror = null, g.onended = null, g.onpause = null, g.onplay = null, g.ontimeupdate = null, g.ondurationchange = null, g.onwaiting = null, g.onseeking = null, g.onseeked = null, g.onstalled = null, g.onplaying = null, g.oncanplay = null, g.canplaythrough = null, g.onloadeddata = null, g.onvolumechange = null, g.onratechange = null, g.textTracks.onchange = null, f.removeChild(g)
-                    }
-                }
-                this.on = function(e, t) {
-                    if (y) throw new Error("Video is destroyed");
-                    v.on(e, t)
-                }, this.dispatch = function(e) {
-                    if (y) throw new Error("Video is destroyed");
-                    if (e) switch ((e = a(i(e))).type) {
-                        case "observeProp":
-                            return n = e.propName, void(b.hasOwnProperty(n) && (v.emit("propValue", n, k(n)), b[n] = !0));
-                        case "setProp":
-                            return void
-                            function(e, n) {
-                                switch (e) {
-                                    case "paused":
-                                        null !== T && (n ? g.pause() : g.play(), R("paused"));
-                                        break;
-                                    case "time":
-                                        null !== T && null !== n && isFinite(n) && (S("", "hide"), g.currentTime = parseInt(n, 10) / 1e3, R("time"));
-                                        break;
-                                    case "selectedSubtitlesTrackId":
-                                        if (null !== T) {
-                                            Array.from(g.textTracks).forEach((function(e, t) {
-                                                "hidden" === e.mode && e.removeEventListener("cuechange", A), e.mode = "EMBEDDED_" + String(t) === n ? "hidden" : "disabled", "hidden" === e.mode && e.addEventListener("cuechange", A)
-                                            }));
-                                            var i = k("subtitlesTracks").find((function(e) {
-                                                return e.id === n
-                                            }));
-                                            S("", "hide"), i && (R("selectedSubtitlesTrackId"), v.emit("subtitlesTrackLoaded", i))
-                                        }
-                                        break;
-                                    case "subtitlesOffset":
-                                        null !== n && isFinite(n) && (r = Math.max(0, Math.min(100, parseInt(n, 10))), E(), R("subtitlesOffset"));
-                                        break;
-                                    case "subtitlesSize":
-                                        null !== n && isFinite(n) && (t = Math.max(0, parseInt(n, 10)), E(), R("subtitlesSize"));
-                                        break;
-                                    case "subtitlesTextColor":
-                                        if ("string" == typeof n) {
-                                            try {
-                                                u = s(n).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            E(), R("subtitlesTextColor")
-                                        }
-                                        break;
-                                    case "subtitlesBackgroundColor":
-                                        if ("string" == typeof n) {
-                                            try {
-                                                c = s(n).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            E(), R("subtitlesBackgroundColor")
-                                        }
-                                        break;
-                                    case "subtitlesOutlineColor":
-                                        if ("string" == typeof n) {
-                                            try {
-                                                d = s(n).rgb().string()
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            E(), R("subtitlesOutlineColor")
-                                        }
-                                        break;
-                                    case "subtitlesOpacity":
-                                        if ("number" == typeof n) {
-                                            try {
-                                                h = Math.min(Math.max(n / 100, 0), 1)
-                                            } catch (e) {
-                                                console.error("Tizen player with HTML Subtitles", e)
-                                            }
-                                            E(), R("subtitlesOpacity")
-                                        }
-                                        break;
-                                    case "selectedAudioTrackId":
-                                        if (null !== T)
-                                            for (var a = 0; a < g.audioTracks.length; a++) g.audioTracks[a].enabled = !("EMBEDDED_" + String(a) !== n);
-                                        var o = k("audioTracks").find((function(e) {
-                                            return e.id === n
-                                        }));
-                                        o && (R("selectedAudioTrackId"), v.emit("audioTrackLoaded", o));
-                                        break;
-                                    case "volume":
-                                        null !== n && isFinite(n) && (g.muted = !1, g.volume = Math.max(0, Math.min(100, parseInt(n, 10))) / 100, R("muted"), R("volume"));
-                                        break;
-                                    case "muted":
-                                        g.muted = !!n, R("muted");
-                                        break;
-                                    case "playbackSpeed":
-                                        null !== n && isFinite(n) && (g.playbackRate = parseFloat(n), R("playbackSpeed"))
-                                }
-                            }(e.propName, e.propValue);
-                        case "command":
-                            return void I(e.commandName, e.commandArgs)
-                    }
-                    var n;
-                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
-                }
-            }
-            u.canPlayStream = function(e) {
-                return e ? Promise.resolve(!0) : Promise.resolve(!1)
-            }, u.manifest = {
-                name: "TitanVideo",
-                external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
-            }, e.exports = u
-        },
         8336: e => {
             e.exports = function(e) {
                 return !(!e || "string" == typeof e) && (e instanceof Array || Array.isArray(e) || e.length >= 0 && (e.splice instanceof Function || Object.getOwnPropertyDescriptor(e, e.length - 1) && "String" !== e.constructor.name))
             }
-        },
-        8343: e => {
-            e.exports = function(e) {
-                return e && "string" == typeof e.url ? e.behaviorHints && e.behaviorHints.proxyHeaders && e.behaviorHints.proxyHeaders.response && "string" == typeof e.behaviorHints.proxyHeaders.response["content-type"] ? Promise.resolve(e.behaviorHints.proxyHeaders.response["content-type"]) : fetch(e.url, {
-                    method: "HEAD"
-                }).then((function(e) {
-                    if (e.ok) return e.headers.get("content-type");
-                    throw new Error(e.status + " (" + e.statusText + ")")
-                })) : Promise.reject(new Error("Invalid stream parameter!"))
-            }
-        },
-        8392: (e, t, r) => {
-            var n = r(5852),
-                i = r(6205);
-
-            function a(e) {
-                var t = (e = e || {}).containerElement;
-                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var r = e.chromecastTransport;
-                if (!r) throw new Error("Chromecast transport required");
-                var a = r.getCastDevice();
-                if (null === a) throw new Error("Chromecast session must be started");
-                var s = document.createElement("div");
-                s.style.display = "flex", s.style.flexDirection = "row", s.style.alignItems = "center", s.style.justifyContent = "center", s.style.width = "100%", s.style.height = "100%", s.style.backgroundColor = "black";
-                var o = document.createElement("div");
-                o.style.flex = "none", o.style.maxWidth = "80%", o.style.fontSize = "5vmin", o.style.lineHeight = "1.2em", o.style.maxHeight = "3.6em", o.style.textAlign = "center", o.style.color = "#FFFFFF90", o.innerText = "Casting to " + a.friendlyName, s.appendChild(o), t.appendChild(s), r.on("message", f), r.on("message-error", h);
-                var l = new n,
-                    u = !1,
-                    c = {
-                        stream: !1,
-                        loaded: !1,
-                        paused: !1,
-                        time: !1,
-                        duration: !1,
-                        buffering: !1,
-                        buffered: !1,
-                        audioTracks: !1,
-                        selectedAudioTrackId: !1,
-                        subtitlesTracks: !1,
-                        selectedSubtitlesTrackId: !1,
-                        subtitlesOffset: !1,
-                        subtitlesSize: !1,
-                        subtitlesTextColor: !1,
-                        subtitlesBackgroundColor: !1,
-                        subtitlesOutlineColor: !1,
-                        volume: !1,
-                        muted: !1,
-                        playbackSpeed: !1,
-                        videoParams: !1,
-                        extraSubtitlesTracks: !1,
-                        selectedExtraSubtitlesTrackId: !1,
-                        extraSubtitlesDelay: !1,
-                        extraSubtitlesSize: !1,
-                        extraSubtitlesOffset: !1,
-                        extraSubtitlesTextColor: !1,
-                        extraSubtitlesBackgroundColor: !1,
-                        extraSubtitlesOutlineColor: !1
-                    };
-
-                function d(e, t) {
-                    l.emit("error", Object.assign({}, i.CHROMECAST_SENDER_VIDEO.MESSAGE_SEND_FAILED, {
-                        error: e,
-                        action: t
-                    }))
-                }
-
-                function h(e) {
-                    l.emit("error", Object.assign({}, i.CHROMECAST_SENDER_VIDEO.INVALID_MESSAGE_RECEIVED, {
-                        error: e
-                    }))
-                }
-
-                function f(e) {
-                    if (e && "string" == typeof e.event) {
-                        var t = Array.isArray(e.args) ? e.args : [];
-                        l.emit.apply(l, [e.event].concat(t))
-                    } else h(new Error("Invalid message: " + e))
-                }
-
-                function g(e, t) {
-                    c[e] && l.emit("propChanged", e, t)
-                }
-                this.on = function(e, t) {
-                    if (u) throw new Error("Video is destroyed");
-                    l.on(e, t)
-                }, this.dispatch = function(e) {
-                    if (u) throw new Error("Video is destroyed");
-                    if (e) switch (e.type) {
-                        case "observeProp":
-                            return i = e.propName, c.hasOwnProperty(i) && (c[i] = !0), void r.sendMessage(e).catch((function(t) {
-                                d(t, e)
-                            }));
-                        case "setProp":
-                            return void r.sendMessage(e).catch((function(t) {
-                                d(t, e)
-                            }));
-                        case "command":
-                            return n = e.commandName, e.commandArgs, "destroy" === n && (u = !0, g("stream", null), g("loaded", null), g("paused", null), g("time", null), g("duration", null), g("buffering", null), g("buffered", null), g("audioTracks", []), g("selectedAudioTrackId", []), g("subtitlesTracks", []), g("selectedSubtitlesTrackId", null), g("subtitlesOffset", null), g("subtitlesSize", null), g("subtitlesTextColor", null), g("subtitlesBackgroundColor", null), g("subtitlesOutlineColor", null), g("volume", null), g("muted", null), g("playbackSpeed", null), g("videoParams", null), g("extraSubtitlesTracks", []), g("selectedExtraSubtitlesTrackId", null), g("extraSubtitlesDelay", null), g("extraSubtitlesSize", null), g("extraSubtitlesOffset", null), g("extraSubtitlesTextColor", null), g("extraSubtitlesBackgroundColor", null), g("extraSubtitlesOutlineColor", null), l.removeAllListeners(), r.off("message", f), t.removeChild(s)), void r.sendMessage(e).catch((function(t) {
-                                d(t, e)
-                            }))
-                    }
-                    var n, i;
-                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
-                }
-            }
-            a.canPlayStream = function() {
-                return Promise.resolve(!0)
-            }, a.manifest = {
-                name: "ChromecastSenderVideo",
-                external: !0,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOutlineColor", "volume", "muted", "playbackSpeed", "videoParams", "extraSubtitlesTracks", "selectedExtraSubtitlesTrackId", "extraSubtitlesDelay", "extraSubtitlesSize", "extraSubtitlesOffset", "extraSubtitlesTextColor", "extraSubtitlesBackgroundColor", "extraSubtitlesOutlineColor"],
-                commands: ["load", "unload", "destroy", "addExtraSubtitlesTracks"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded", "extraSubtitlesTrackLoaded", "implementationChanged"]
-            }, e.exports = a
-        },
-        8584: (e, t, r) => {
-            var n = r(8064);
-            e.exports = n
         },
         8684: function() {
             ! function(e) {
@@ -20642,9 +21267,12 @@
             }
             e.exports = l
         },
-        8803: (e, t, r) => {
-            var n = r(8904);
-            e.exports = n
+        8816: e => {
+            e.exports = function e(t) {
+                return Object.freeze(t), Object.getOwnPropertyNames(t).forEach((function(r) {
+                    !t.hasOwnProperty(r) || null === t[r] || "object" != typeof t[r] && "function" != typeof t[r] || Object.isFrozen(t[r]) || e(t[r])
+                })), t
+            }
         },
         8868: (e, t, r) => {
             "use strict";
@@ -20839,682 +21467,13 @@
                 t && (":" !== (t = t[0]) && (this.port = t.substr(1)), e = e.substr(0, e.length - t.length)), e && (this.hostname = e)
             }
         },
-        8904: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(6205),
-                o = r(4775);
-
-            function l(e, t, r, n) {
-                t && (e.onSuccess = t || function() {}), e.onFailure = function(t) {
-                    console.log("WebOS", (e.method || n) + " [fail][" + t.errorCode + "] " + t.errorText), console.log("fail result", JSON.stringify(t)), r && r()
-                }, window.webOS.service.request(n || "luna://com.webos.media", e)
-            }
-
-            function u(e, t, r) {
-                window.webOS.service.request("luna://com.webos.applicationManager", {
-                    method: "launch",
-                    parameters: {
-                        id: e.id,
-                        params: {
-                            payload: [{
-                                fullPath: e.url,
-                                artist: "",
-                                subtitle: "",
-                                dlnaInfo: {
-                                    flagVal: 4096,
-                                    cleartextSize: "-1",
-                                    contentLength: "-1",
-                                    opVal: 1,
-                                    protocolInfo: "http-get:*:video/x-matroska:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000",
-                                    duration: 0
-                                },
-                                mediaType: "VIDEO",
-                                thumbnail: "",
-                                deviceType: "DMR",
-                                album: "",
-                                fileName: e.name,
-                                lastPlayPosition: e.position
-                            }]
-                        }
-                    },
-                    onSuccess: function() {
-                        t && t()
-                    },
-                    onFailure: function() {
-                        r && r(new Error("Failed to launch" + e.id)), "com.webos.app.photovideo" === e.id ? (e.id = "com.webos.app.smartshare", u(e, t, r)) : "com.webos.app.smartshare" === e.id && (e.id = "com.webos.app.mediadiscovery", u(e, t, r))
-                    }
-                })
-            }
-            var c = ["none", "black", "white", "yellow", "red", "green", "blue"],
-                d = {
-                    "rgba(0, 0, 0, 0)": "none",
-                    "rgba(0, 0, 0, 255)": "black",
-                    "rgba(255, 255, 255, 255)": "white",
-                    "rgba(255, 255, 0, 255)": "yellow",
-                    "rgba(255, 0, 0, 255)": "red",
-                    "rgba(0, 255, 0, 255)": "green",
-                    "rgba(0, 0, 255, 255)": "blue",
-                    "rgba(0, 0, 0, 1)": "black",
-                    "rgba(255, 255, 255, 1)": "white",
-                    "rgba(255, 255, 0, 1)": "yellow",
-                    "rgba(255, 0, 0, 1)": "red",
-                    "rgba(0, 255, 0, 1)": "green",
-                    "rgba(0, 0, 255, 1)": "blue",
-                    "rgb(0, 0, 0)": "black",
-                    "rgb(255, 255, 255)": "white",
-                    "rgb(255, 255, 0)": "yellow",
-                    "rgb(255, 0, 0)": "red",
-                    "rgb(0, 255, 0)": "green",
-                    "rgb(0, 0, 255)": "blue",
-                    "#000000FF": "black",
-                    "#FFFFFFFF": "white",
-                    "#FFFF00FF": "yellow",
-                    "#FF0000FF": "red",
-                    "#00FF00FF": "green",
-                    "#0000FFFF": "blue",
-                    "#000000": "black",
-                    "#FFFFFF": "white",
-                    "#FFFF00": "yellow",
-                    "#FF0000": "red",
-                    "#00FF00": "green",
-                    "#0000FF": "blue"
-                };
-            var h = {
-                    unsupportedAudio: ["DTS", "TRUEHD"],
-                    unsupportedSubs: ["HDMV/PGS", "VOBSUB"]
-                },
-                f = !1;
-
-            function g() {
-                f || window.webOS.service.request("luna://com.webos.service.config", {
-                    method: "getConfigs",
-                    parameters: {
-                        configNames: ["tv.model.edidType"]
-                    },
-                    onSuccess: function(e) {
-                        if (((e || {}).configs || {})["tv.model.edidType"]) {
-                            f = !0;
-                            var t = e.configs["tv.model.edidType"].toLowerCase();
-                            t.includes("dts") && (h.unsupportedAudio = h.unsupportedAudio.filter((function(e) {
-                                return "DTS" !== e
-                            }))), t.includes("truehd") && (h.unsupportedAudio = h.unsupportedAudio.filter((function(e) {
-                                return "TRUEHD" !== e
-                            })))
-                        }
-                    },
-                    onFailure: function(e) {
-                        console.log("could not get deviceInfo", e)
-                    }
-                })
-            }
-
-            function m(e) {
-                var t = (e = e || {}).containerElement;
-                if (!(t instanceof HTMLElement)) throw new Error("Container element required to be instance of HTMLElement");
-                var r = null,
-                    f = 75,
-                    m = !0,
-                    p = !1,
-                    v = !1,
-                    y = [],
-                    T = [],
-                    b = {
-                        color: "white",
-                        font_size: 1,
-                        bg_color: "none",
-                        position: -1,
-                        bg_opacity: 0,
-                        char_opacity: 255
-                    },
-                    E = function(e) {
-                        A.mediaId && (m = !e, l({
-                            method: "setSubtitleEnable",
-                            parameters: {
-                                mediaId: A.mediaId,
-                                enable: e
-                            }
-                        }))
-                    },
-                    S = document.createElement("style");
-                t.appendChild(S), S.sheet.insertRule("video::cue { font-size: 4vmin; color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); text-shadow: rgb(34, 34, 34) 1px 1px 0.1em; }");
-                var A = document.createElement("video");
-                A.style.width = "100%", A.style.height = "100%", A.style.backgroundColor = "black", A.controls = !1, A.onerror = function() {
-                    ! function() {
-                        if (w) return;
-                        var e;
-                        switch ((A.error || {}).code) {
-                            case 1:
-                                e = s.HTML_VIDEO.MEDIA_ERR_ABORTED;
-                                break;
-                            case 2:
-                                e = s.HTML_VIDEO.MEDIA_ERR_NETWORK;
-                                break;
-                            case 3:
-                                e = s.HTML_VIDEO.MEDIA_ERR_DECODE, u({
-                                    id: "com.webos.app.photovideo",
-                                    url: D.url,
-                                    name: "Stremio",
-                                    position: -1
-                                }, null, (function(e) {
-                                    console.error(e)
-                                }));
-                                break;
-                            case 4:
-                                e = s.HTML_VIDEO.MEDIA_ERR_SRC_NOT_SUPPORTED, u({
-                                    id: "com.webos.app.photovideo",
-                                    url: D.url,
-                                    name: "Stremio",
-                                    position: -1
-                                }, null, (function(e) {
-                                    console.error(e)
-                                }));
-                                break;
-                            default:
-                                e = s.UNKNOWN_ERROR
-                        }
-                        B(Object.assign({}, e, {
-                            critical: !0,
-                            error: A.error
-                        }))
-                    }()
-                }, A.onended = function() {
-                    I.emit("ended")
-                }, A.onpause = function() {
-                    G("paused")
-                }, A.onplay = function() {
-                    G("paused")
-                }, A.ontimeupdate = function() {
-                    G("time"), G("buffered")
-                }, A.ondurationchange = function() {
-                    G("duration")
-                }, A.onwaiting = function() {
-                    G("buffering"), G("buffered")
-                }, A.onseeking = function() {
-                    G("buffering"), G("buffered")
-                }, A.onseeked = function() {
-                    G("buffering"), G("buffered")
-                }, A.onstalled = function() {
-                    G("buffering"), G("buffered")
-                }, A.onplaying = function() {
-                    G("buffering"), G("buffered"), r || (r = !0, G("loaded"))
-                }, A.oncanplay = function() {
-                    G("buffering"), G("buffered")
-                }, A.canplaythrough = function() {
-                    G("buffering"), G("buffered")
-                }, A.onloadeddata = function() {
-                    G("buffering"), G("buffered")
-                }, A.onloadedmetadata = function() {
-                    G("buffering"), G("buffered"), V("time", C)
-                }, A.onvolumechange = function() {
-                    G("volume"), G("muted")
-                }, A.onratechange = function() {
-                    G("playbackSpeed")
-                }, A.textTracks.onchange = function() {
-                    G("subtitlesTracks"), G("selectedSubtitlesTrackId"), U(), Array.from(A.textTracks).forEach((function(e) {
-                        e.oncuechange = U
-                    }))
-                }, t.appendChild(A);
-                var k = null,
-                    L = null,
-                    R = 1,
-                    I = new n,
-                    w = !1,
-                    D = null,
-                    C = null,
-                    x = 0,
-                    _ = 100,
-                    O = {
-                        stream: !1,
-                        loaded: !1,
-                        paused: !1,
-                        time: !1,
-                        duration: !1,
-                        buffering: !1,
-                        buffered: !1,
-                        subtitlesTracks: !1,
-                        selectedSubtitlesTrackId: !1,
-                        subtitlesOffset: !1,
-                        subtitlesSize: !1,
-                        subtitlesTextColor: !1,
-                        subtitlesBackgroundColor: !1,
-                        subtitlesOpacity: !1,
-                        audioTracks: !1,
-                        selectedAudioTrackId: !1,
-                        volume: !1,
-                        muted: !1,
-                        playbackSpeed: !1
-                    },
-                    P = !1,
-                    M = {
-                        audio: [],
-                        subs: []
-                    };
-
-                function F() {
-                    P || null === D || (P = !0, o(D.url, (function(e) {
-                        var t = 0,
-                            r = 0;
-                        y = [], T = [], e && (M = e), ((M || {}).subs || []).length && (M.subs.forEach((function(e) {
-                            if (!h.unsupportedSubs.includes(e.codec || "")) {
-                                var r = t;
-                                t++, p || y.length || (p = r), y.push({
-                                    id: "EMBEDDED_" + r,
-                                    lang: e.lang || "eng",
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0,
-                                    mode: r === p ? "showing" : "disabled"
-                                })
-                            }
-                        })), G("subtitlesTracks"), G("selectedSubtitlesTrackId")), ((M || {}).audio || []).length && (M.audio.forEach((function(e) {
-                            if (!h.unsupportedAudio.includes(e.codec || "")) {
-                                var t = r;
-                                r++, v || T.length || (v = t), T.push({
-                                    id: "EMBEDDED_" + t,
-                                    lang: e.lang || "eng",
-                                    label: e.label || null,
-                                    origin: "EMBEDDED",
-                                    embedded: !0,
-                                    mode: t === v ? "showing" : "disabled"
-                                })
-                            }
-                        })), v = "EMBEDDED_0", G("audioTracks"), G("selectedAudioTrackId"))
-                    })))
-                }
-
-                function N(e) {
-                    switch (e) {
-                        case "stream":
-                            return D;
-                        case "loaded":
-                            return r;
-                        case "paused":
-                            return null === D ? null : !!A.paused;
-                        case "time":
-                            return null !== D && null !== A.currentTime && isFinite(A.currentTime) ? Math.floor(1e3 * A.currentTime) : null;
-                        case "duration":
-                            return null !== D && null !== A.duration && isFinite(A.duration) ? Math.floor(1e3 * A.duration) : null;
-                        case "buffering":
-                            return null === D ? null : A.readyState < A.HAVE_FUTURE_DATA;
-                        case "buffered":
-                            if (null === D) return null;
-                            for (var t = null !== A.currentTime && isFinite(A.currentTime) ? A.currentTime : 0, n = 0; n < A.buffered.length; n++)
-                                if (A.buffered.start(n) <= t && t <= A.buffered.end(n)) return Math.floor(1e3 * A.buffered.end(n));
-                            return Math.floor(1e3 * t);
-                        case "subtitlesTracks":
-                            return null === D ? [] : y;
-                        case "selectedSubtitlesTrackId":
-                            return null === D || m ? null : p;
-                        case "subtitlesOffset":
-                            return w ? null : x;
-                        case "subtitlesSize":
-                            return w ? null : f;
-                        case "subtitlesTextColor":
-                            return w ? null : k || "rgb(255, 255, 255)";
-                        case "subtitlesBackgroundColor":
-                            return w ? null : L || "rgba(0, 0, 0, 0)";
-                        case "subtitlesOpacity":
-                            return w ? null : _ || 100;
-                        case "audioTracks":
-                            return T;
-                        case "selectedAudioTrackId":
-                            return v;
-                        case "volume":
-                            return w || null === A.volume || !isFinite(A.volume) ? null : Math.floor(100 * A.volume);
-                        case "muted":
-                            return w ? null : !!A.muted;
-                        case "playbackSpeed":
-                            return w || null === R || !isFinite(R) ? null : R;
-                        default:
-                            return null
-                    }
-                }
-
-                function U() {
-                    Array.from(A.textTracks).forEach((function(e) {
-                        Array.from(e.cues || []).forEach((function(e) {
-                            e.snapToLines = !1, e.line = 100 - x
-                        }))
-                    }))
-                }
-
-                function B(e) {
-                    I.emit("error", e), e.critical && H("unload")
-                }
-
-                function G(e) {
-                    O[e] && I.emit("propChanged", e, N(e))
-                }
-
-                function V(e, t) {
-                    switch (e) {
-                        case "paused":
-                            null !== D && (t ? A.pause() : A.play());
-                            break;
-                        case "time":
-                            if (null !== D && A.readyState >= A.HAVE_METADATA && null !== t && isFinite(t)) try {
-                                A.currentTime = parseInt(t, 10) / 1e3, G("time")
-                            } catch (e) {}
-                            break;
-                        case "selectedSubtitlesTrackId":
-                            if (A.mediaId && null !== D && 0 === (t || "").indexOf("EMBEDDED_")) {
-                                E(!0), b.bg_opacity = "none" === b.bg_color ? 0 : 255, ["setSubtitleCharacterColor", "setSubtitleBackgroundColor", "setSubtitlePosition", "setSubtitleFontSize", "setSubtitleBackgroundOpacity", "setSubtitleCharacterOpacity"].forEach((function(e) {
-                                    l({
-                                        method: e,
-                                        parameters: {
-                                            mediaId: A.mediaId,
-                                            charColor: b.color,
-                                            bgColor: "none" === b.bg_color ? "black" : b.bg_color,
-                                            position: b.position,
-                                            fontSize: b.font_size,
-                                            bgOpacity: b.bg_opacity,
-                                            charOpacity: b.char_opacity
-                                        }
-                                    })
-                                })), console.log("WebOS", "change subtitles for id: ", A.mediaId, " index:", t), p = t;
-                                var r = parseInt(t.replace("EMBEDDED_", ""));
-                                console.log("set subs to track idx: " + r), setTimeout((function() {
-                                    var e = function() {
-                                        var e = N("subtitlesTracks").find((function(e) {
-                                            return e.id === t
-                                        }));
-                                        y = y.map((function(e) {
-                                            return e.mode = e.id === p ? "showing" : "disabled", e
-                                        })), e && (I.emit("subtitlesTrackLoaded", e), G("selectedSubtitlesTrackId"))
-                                    };
-                                    l({
-                                        method: "selectTrack",
-                                        parameters: {
-                                            type: "text",
-                                            mediaId: A.mediaId,
-                                            index: r
-                                        }
-                                    }, e, e)
-                                }), 500)
-                            } - 1 === (t || "").indexOf("EMBEDDED_") && (p = null, G("selectedSubtitlesTrackId"), E(!1));
-                            break;
-                        case "subtitlesOffset":
-                            if (null !== t && isFinite(t)) {
-                                x = t;
-                                var n = (h = Math.max(0, Math.min(100, parseInt(x, 10)))) <= 0 ? -3 : h <= 5 ? -2 : h <= 10 ? 0 : h <= 15 ? 2 : h <= 20 && 4;
-                                !1 === n && (n = -2), b.position = n, A.mediaId && l({
-                                    method: "setSubtitlePosition",
-                                    parameters: {
-                                        mediaId: A.mediaId,
-                                        position: n
-                                    }
-                                }), G("subtitlesOffset")
-                            }
-                            break;
-                        case "subtitlesSize":
-                            if (null !== t && isFinite(t)) {
-                                f = t;
-                                var i = (u = Math.max(0, parseInt(f, 10))) <= 100 ? 1 : u <= 125 ? 2 : u <= 150 ? 3 : u <= 200 && 4;
-                                !1 === i && (i = 1), b.font_size = i, A.mediaId && l({
-                                    method: "setSubtitleFontSize",
-                                    parameters: {
-                                        mediaId: A.mediaId,
-                                        fontSize: i
-                                    }
-                                }), G("subtitlesSize")
-                            }
-                            break;
-                        case "subtitlesTextColor":
-                            if ("string" == typeof t) {
-                                var a = "white";
-                                d[t] && c.indexOf(d[t]) > -1 && (a = d[t]), b.color = a, A.mediaId && l({
-                                    method: "setSubtitleCharacterColor",
-                                    parameters: {
-                                        mediaId: A.mediaId,
-                                        charColor: a
-                                    }
-                                }), k = t, G("subtitlesTextColor")
-                            }
-                            break;
-                        case "subtitlesBackgroundColor":
-                            "string" == typeof t && (d[t] && c.indexOf(d[t]) > -1 && (b.bg_color = d[t], A.mediaId && (l({
-                                method: "setSubtitleBackgroundColor",
-                                parameters: {
-                                    mediaId: A.mediaId,
-                                    bgColor: "none" === d[t] ? "black" : d[t]
-                                }
-                            }), l("none" === d[t] ? {
-                                method: "setSubtitleBackgroundOpacity",
-                                parameters: {
-                                    mediaId: A.mediaId,
-                                    bgOpacity: 0
-                                }
-                            } : {
-                                method: "setSubtitleBackgroundOpacity",
-                                parameters: {
-                                    mediaId: A.mediaId,
-                                    bgOpacity: 255
-                                }
-                            }))), L = t, G("subtitlesBackgroundColor"));
-                            break;
-                        case "subtitlesOpacity":
-                            if ("number" == typeof t) {
-                                var s = Math.floor(t / 100 * 255);
-                                b.char_opacity = s, A.mediaId && l({
-                                    method: "setSubtitleCharacterOpacity",
-                                    parameters: {
-                                        mediaId: A.mediaId,
-                                        charOpacity: s
-                                    }
-                                }), _ = t, G("subtitlesOpacity")
-                            }
-                            break;
-                        case "selectedAudioTrackId":
-                            if (0 === (t || "").indexOf("EMBEDDED_")) {
-                                v = t;
-                                r = parseInt(t.replace("EMBEDDED_", ""));
-                                if (A.mediaId && l({
-                                        method: "selectTrack",
-                                        parameters: {
-                                            type: "audio",
-                                            mediaId: A.mediaId,
-                                            index: r
-                                        }
-                                    }, (function() {
-                                        var e = N("audioTracks").find((function(e) {
-                                            return e.id === t
-                                        }));
-                                        T = T.map((function(e) {
-                                            return e.mode = e.id === v ? "showing" : "disabled", e
-                                        })), e && (I.emit("audioTrackLoaded", e), G("selectedAudioTrackId"))
-                                    })), A && A.audioTracks) {
-                                    for (var o = 0; o < A.audioTracks.length; o++) A.audioTracks[o].enabled = !1;
-                                    A.audioTracks[r] && (A.audioTracks[r].enabled = !0)
-                                }
-                            }
-                            break;
-                        case "volume":
-                            null !== t && isFinite(t) && (A.muted = !1, A.volume = Math.max(0, Math.min(100, parseInt(t, 10))) / 100);
-                            break;
-                        case "muted":
-                            A.muted = !!t;
-                            break;
-                        case "playbackSpeed":
-                            null !== t && isFinite(t) && (R = parseFloat(t), A.mediaId && l({
-                                method: "setPlayRate",
-                                parameters: {
-                                    mediaId: A.mediaId,
-                                    playRate: R,
-                                    audioOutput: !0
-                                }
-                            }), G("playbackSpeed"))
-                    }
-                    var u, h
-                }
-
-                function H(e, r) {
-                    switch (e) {
-                        case "load":
-                            if (r && r.stream && "string" == typeof r.stream.url) {
-                                D = r.stream, C = r.time, G("stream"), A.autoplay = "boolean" != typeof r.autoplay || r.autoplay, G("loaded"), G("paused"), G("time"), G("duration"), G("buffering"), G("buffered"), G("subtitlesTracks"), G("selectedSubtitlesTrackId"), G("audioTracks"), G("selectedAudioTrackId");
-                                var n = 0;
-                                A.src = D.url, i = function() {
-                                    try {
-                                        A.load()
-                                    } catch (e) {}
-                                    try {
-                                        A.play()
-                                    } catch (e) {}
-                                }, a = setInterval((function() {
-                                    if (A.mediaId) return clearInterval(a), F(), g(), void i();
-                                    ++n > 4 && (clearInterval(a), F(), g(), i())
-                                }), 300)
-                            } else B(Object.assign({}, s.UNSUPPORTED_STREAM, {
-                                critical: !0,
-                                stream: r ? r.stream : null
-                            }));
-                            break;
-                        case "unload":
-                            D = null, C = null, Array.from(A.textTracks).forEach((function(e) {
-                                e.oncuechange = null
-                            })), A.removeAttribute("src"), A.load(), G("stream"), G("paused"), G("time"), G("duration"), G("buffering"), G("buffered"), G("subtitlesTracks"), G("selectedSubtitlesTrackId"), G("audioTracks"), G("selectedAudioTrackId");
-                            break;
-                        case "destroy":
-                            H("unload"), w = !0, G("subtitlesOffset"), G("subtitlesSize"), G("subtitlesTextColor"), G("subtitlesBackgroundColor"), G("subtitlesOpacity"), G("volume"), G("muted"), G("playbackSpeed"), I.removeAllListeners(), A.onerror = null, A.onended = null, A.onpause = null, A.onplay = null, A.ontimeupdate = null, A.ondurationchange = null, A.onwaiting = null, A.onseeking = null, A.onseeked = null, A.onstalled = null, A.onplaying = null, A.oncanplay = null, A.canplaythrough = null, A.onloadeddata = null, A.onloadedmetadata = null, A.onvolumechange = null, A.onratechange = null, A.textTracks.onchange = null, t.removeChild(A), t.removeChild(S)
-                    }
-                    var i, a
-                }
-                this.on = function(e, t) {
-                    if (w) throw new Error("Video is destroyed");
-                    I.on(e, t)
-                }, this.dispatch = function(e) {
-                    if (w) throw new Error("Video is destroyed");
-                    if (e) switch ((e = a(i(e))).type) {
-                        case "observeProp":
-                            return t = e.propName, void(O.hasOwnProperty(t) && (I.emit("propValue", t, N(t)), O[t] = !0));
-                        case "setProp":
-                            return void V(e.propName, e.propValue);
-                        case "command":
-                            return void H(e.commandName, e.commandArgs)
-                    }
-                    var t;
-                    throw new Error("Invalid action dispatched: " + JSON.stringify(e))
-                }
-            }
-            m.canPlayStream = function() {
-                return Promise.resolve(!0)
-            }, m.manifest = {
-                name: "WebOsVideo",
-                external: !1,
-                props: ["stream", "loaded", "paused", "time", "duration", "buffering", "buffered", "audioTracks", "selectedAudioTrackId", "subtitlesTracks", "selectedSubtitlesTrackId", "subtitlesOffset", "subtitlesSize", "subtitlesTextColor", "subtitlesBackgroundColor", "subtitlesOpacity", "volume", "muted", "playbackSpeed"],
-                commands: ["load", "unload", "destroy"],
-                events: ["propValue", "propChanged", "ended", "error", "subtitlesTrackLoaded", "audioTrackLoaded"]
-            }, e.exports = m
-        },
-        9103: (e, t, r) => {
-            var n = r(1552);
+        8968: (e, t, r) => {
+            var n = r(1621);
             e.exports = n
         },
-        9260: (e, t, r) => {
-            var n = r(1417),
-                i = r(7081);
-            e.exports = {
-                parse: function(e) {
-                    return new Promise((function(t, r) {
-                        var a = new n.WebVTT.Parser(window, n.WebVTT.StringDecoder()),
-                            s = [],
-                            o = [],
-                            l = {};
-                        a.oncue = function(e) {
-                            var t = {
-                                startTime: 1e3 * e.startTime | 0,
-                                endTime: 1e3 * e.endTime | 0,
-                                text: e.text
-                            };
-                            o.push(t), l[t.startTime] = l[t.startTime] || [], l[t.endTime] = l[t.endTime] || []
-                        }, a.onparsingerror = function(e) {
-                            0 === e.code ? (a.oncue = null, a.onparsingerror = null, a.onflush = null, r(e)) : (console.warn("Subtitles parsing error", e), s.push(e))
-                        }, a.onflush = function() {
-                            l.times = Object.keys(l).map((function(e) {
-                                return parseInt(e, 10)
-                            })).sort((function(e, t) {
-                                return e - t
-                            }));
-                            for (var e = 0; e < o.length; e++) {
-                                l[o[e].startTime].push(o[e]);
-                                for (var n = i(l.times, o[e].startTime) + 1; n < l.times.length && !(o[e].endTime <= l.times[n]); n++) l[l.times[n]].push(o[e])
-                            }
-                            for (var u = 0; u < l.times.length; u++) l[l.times[u]].sort((function(e, t) {
-                                return e.startTime - t.startTime || e.endTime - t.endTime
-                            }));
-                            a.oncue = null, a.onparsingerror = null, a.onflush = null, 0 === o.length && s.length ? r(s[0]) : 0 === l.times.length ? r(new Error("Missing subtitle track cues")) : t(l)
-                        }, a.parse(e)
-                    }))
-                }
-            }
-        },
-        9382: (e, t, r) => {
-            var n = r(5852),
-                i = r(5126),
-                a = r(6435),
-                s = r(361),
-                o = r(3020),
-                l = r(6205);
-
-            function u() {
-                var e = null,
-                    t = new n,
-                    r = !1;
-                this.on = function(e, n) {
-                    if (r) throw new Error("Video is destroyed");
-                    t.on(e, n)
-                }, this.dispatch = function(n, u) {
-                    if (r) throw new Error("Video is destroyed");
-                    if (!n) throw new Error("Invalid action dispatched: " + JSON.stringify(n));
-                    if (u = u || {}, "command" === (n = a(i(n))).type && "load" === n.commandName && n.commandArgs) {
-                        n.commandArgs.platform && o.set(n.commandArgs.platform);
-                        var c = s(n.commandArgs, u);
-                        if (null !== e && e.constructor !== c && (e.dispatch({
-                                type: "command",
-                                commandName: "destroy"
-                            }), e = null), null === e) {
-                            if (null === c) return void t.emit("error", Object.assign({}, l.UNSUPPORTED_STREAM, {
-                                error: new Error("No video implementation was selected"),
-                                critical: !0,
-                                stream: n.commandArgs.stream
-                            }));
-                            (e = new c(u)).on("ended", (function() {
-                                t.emit("ended")
-                            })), e.on("error", (function(e) {
-                                t.emit("error", e)
-                            })), e.on("propValue", (function(e, r) {
-                                t.emit("propValue", e, r)
-                            })), e.on("propChanged", (function(e, r) {
-                                t.emit("propChanged", e, r)
-                            })), e.on("subtitlesTrackLoaded", (function(e) {
-                                t.emit("subtitlesTrackLoaded", e)
-                            })), e.on("audioTrackLoaded", (function(e) {
-                                t.emit("audioTrackLoaded", e)
-                            })), e.on("extraSubtitlesTrackLoaded", (function(e) {
-                                t.emit("extraSubtitlesTrackLoaded", e)
-                            })), e.on("extraSubtitlesTrackAdded", (function(e) {
-                                t.emit("extraSubtitlesTrackAdded", e)
-                            })), c.manifest.external ? e.on("implementationChanged", (function(e) {
-                                t.emit("implementationChanged", e)
-                            })) : t.emit("implementationChanged", c.manifest)
-                        }
-                    }
-                    if (null !== e) try {
-                        e.dispatch(n)
-                    } catch (t) {
-                        console.error(e.constructor.manifest.name, t)
-                    }
-                    "command" === n.type && "destroy" === n.commandName && (e = null)
-                }, this.destroy = function() {
-                    r = !0, null !== e && (e.dispatch({
-                        type: "command",
-                        commandName: "destroy"
-                    }), e = null), t.removeAllListeners()
-                }
-            }
-            u.ERROR = l, e.exports = u
+        9794: (e, t, r) => {
+            var n = r(2715);
+            e.exports = n
         }
     }
 ]);

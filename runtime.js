@@ -45,7 +45,7 @@
         var o = {};
         r = r || [null, e({}), e([]), e(e)];
         for (var s = 2 & n && t;
-            "object" == typeof s && !~r.indexOf(s); s = e(s)) Object.getOwnPropertyNames(s).forEach((r => o[r] = () => t[r]));
+            ("object" == typeof s || "function" == typeof s) && !~r.indexOf(s); s = e(s)) Object.getOwnPropertyNames(s).forEach((r => o[r] = () => t[r]));
         return o.default = () => t, i.d(a, o), a
     }, i.d = (t, r) => {
         for (var e in r) i.o(r, e) && !i.o(t, e) && Object.defineProperty(t, e, {
@@ -58,6 +58,7 @@
         344: "translations32",
         467: "translations6",
         478: "translations3",
+        620: "translations47",
         631: "translations44",
         940: "translations36",
         1088: "player",
@@ -80,6 +81,7 @@
         4869: "translations19",
         5194: "translations27",
         5252: "translations9",
+        5394: "translations49",
         5710: "addons",
         5714: "translations38",
         5779: "translations26",
@@ -101,6 +103,7 @@
         7920: "library",
         7962: "home",
         8061: "translations8",
+        8203: "translations48",
         8523: "translations39",
         8588: "translations21",
         8599: "translations22",
@@ -130,7 +133,7 @@
                         break
                     }
                 }
-            s || (l = !0, (s = document.createElement("script")).charset = "utf-8", s.timeout = 120, i.nc && s.setAttribute("nonce", i.nc), s.setAttribute("data-webpack", a + e), s.src = t), n[t] = [r];
+            s || (l = !0, (s = document.createElement("script")).charset = "utf-8", i.nc && s.setAttribute("nonce", i.nc), s.setAttribute("data-webpack", a + e), s.src = t), n[t] = [r];
             var f = (r, e) => {
                     s.onerror = s.onload = null, clearTimeout(p);
                     var a = n[t];
@@ -160,7 +163,7 @@
         if (!t) throw new Error("Automatic publicPath is not supported in this browser");
         t = t.replace(/^blob:/, "").replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/"), i.p = t
     })(), (() => {
-        i.b = document.baseURI || self.location.href;
+        i.b = "undefined" != typeof document && document.baseURI || self.location.href;
         var t = {
             9121: 0
         };
