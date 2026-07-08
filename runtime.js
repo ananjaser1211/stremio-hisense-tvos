@@ -114,7 +114,7 @@
         9494: "translations12",
         9576: "translations25",
         9643: "translations17"
-    }[t] + ".chunk.js"), i.g = function() {
+    }[t] + ".chunk.js?v=20260709-0215"), i.g = function() {
         if ("object" == typeof globalThis) return globalThis;
         try {
             return this || new Function("return this")()

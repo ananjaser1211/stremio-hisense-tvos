@@ -7,24 +7,46 @@
     <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" type="image/ico" href="assets/favicon.ico" />
     <title>Stremio - Freedom to Stream</title>
-    <script defer="defer" src="runtime.js"></script>
-    <script defer="defer" src="main.js"></script>
-    <script defer="defer" src="service.js"></script>
-    <script defer="defer" src="webOSTV.js"></script>
+    <script>
+        (function() {
+            function isVidaa() {
+                try {
+                    if (typeof Hisense_GetFirmWareVersion === 'function' && Hisense_GetFirmWareVersion()) return true;
+                } catch (e) {}
+                try {
+                    if (typeof Hisense_GetOSVersion === 'function' && Hisense_GetOSVersion()) return true;
+                } catch (e) {}
+                return /vidaa|hisense/i.test(navigator.userAgent || '');
+            }
+
+            function is720pViewport() {
+                var width = window.innerWidth || document.documentElement.clientWidth || screen.width || 0;
+                var height = window.innerHeight || document.documentElement.clientHeight || screen.height || 0;
+                return width <= 1366 && height <= 760;
+            }
+
+            window.screen720p = isVidaa() && is720pViewport();
+        })();
+    </script>
+    <script defer="defer" src="runtime.js?v=20260709-0215"></script>
+    <script defer="defer" src="main.js?v=20260709-0215"></script>
+    <script defer="defer" src="service.js?v=20260709-0215"></script>
+    <script defer="defer" src="webOSTV.js?v=20260709-0215"></script>
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 </body>
 <script>
-    // detect strange case of Vidaa TV with 720p viewport
+    try {
+        window.top.postMessage(JSON.stringify({
+            id: 0,
+            scope: 'Status',
+            name: 'ready'
+        }), '*');
+    } catch (e) {}
+    // Apply the Vidaa 720p correction after body exists.
     setTimeout(function() {
-        window.screen720p = false
-        try {
-            if (Hisense_GetFirmWareVersion() && window.innerHeight === 720) {
-                window.screen720p = true
-            }
-        } catch (e) {}
         if (window.screen720p) {
             document.body.style.zoom = '65%';
         }
