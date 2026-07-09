@@ -544,7 +544,7 @@
                 f = r(7495),
                 g = r(4812);
             e.exports = function(e, t) {
-                return e.stream && "string" != typeof e.stream.externalUrl ? t.chromecastTransport && t.chromecastTransport.getCastState() === cast.framework.CastState.CONNECTED ? n : "string" == typeof e.stream.ytId ? g(f(d)) : "string" == typeof e.stream.playerFrameUrl ? g(c) : t.shellTransport ? h(f(i)) : "string" == typeof e.streamingServerURL ? "Tizen" === e.platform ? h(f(s)) : "webOS" === e.platform ? h(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? h(f(o)) : "Vidaa" === e.platform ? h(f(l)) : h(f(a)) : "string" == typeof e.stream.url ? "Tizen" === e.platform ? g(f(s)) : "webOS" === e.platform ? g(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? g(f(o)) : "Vidaa" === e.platform ? g(f(l)) : g(f(a)) : null : null
+                return e.stream ? t.chromecastTransport && t.chromecastTransport.getCastState() === cast.framework.CastState.CONNECTED ? n : "string" == typeof e.stream.ytId ? g(f(d)) : "string" == typeof e.stream.playerFrameUrl ? g(c) : t.shellTransport ? h(f(i)) : "string" == typeof e.streamingServerURL ? "Tizen" === e.platform ? h(f(s)) : "webOS" === e.platform ? h(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? h(f(o)) : "Vidaa" === e.platform ? h(f(l)) : h(f(a)) : "string" == typeof e.stream.url ? "Tizen" === e.platform ? g(f(s)) : "webOS" === e.platform ? g(f(u)) : "Titan" === e.platform || "NetTV" === e.platform ? g(f(o)) : "Vidaa" === e.platform ? g(f(l)) : g(f(a)) : null : null
             }
         },
         1615: function() {
@@ -16172,6 +16172,20 @@
                                             audioCodecs: d,
                                             maxAudioChannels: h
                                         });
+                                    if (!n.forceTranscoding && "string" == typeof r && /\.m3u8(?:$|[?#])/i.test(r)) return Promise.resolve({
+                                        mediaURL: r,
+                                        infoHash: s,
+                                        fileIdx: o,
+                                        stream: {
+                                            url: r,
+                                            subtitles: Array.isArray(n.stream.subtitles) ? n.stream.subtitles : [],
+                                            behaviorHints: {
+                                                headers: {
+                                                    "content-type": "application/vnd.apple.mpegurl"
+                                                }
+                                            }
+                                        }
+                                    });
                                     return (n.forceTranscoding ? Promise.resolve(!1) : t.canPlayStream({
                                         url: r
                                     }, f)).catch((function(e) {
@@ -19686,8 +19700,9 @@
                         }))
                     } else {
                         var d = n && n.proxyStreamsEnabled,
-                            h = t.behaviorHints && t.behaviorHints.proxyHeaders;
-                        if (d || h) {
+                            h = t.behaviorHints && t.behaviorHints.proxyHeaders,
+                            p = /^https?:\/\//i.test(t.url) && !/^https?:\/\/(?:127\.0\.0\.1|localhost|192\.168\.1\.167:11470)(?:\/|$)/i.test(t.url) && /\.m3u8(?:$|[?#])/i.test(t.url);
+                        if (d || h || p) {
                             var f = h && h.request ? h.request : {},
                                 g = h && h.response ? h.response : {};
                             o({

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Expose the HTTP port
-EXPOSE 8000
+EXPOSE 8001
 
 # Start the simple Python HTTP server
-CMD ["python", "-m", "http.server", "8000"]
+CMD ["python", "-m", "http.server", "8001"]

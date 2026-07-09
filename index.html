@@ -9,6 +9,58 @@
     <title>Stremio - Freedom to Stream</title>
     <script>
         (function() {
+            var streamingServerUrl = 'http://192.168.1.167:11470';
+            var localhostServerPattern = /http:\/\/(?:127\.0\.0\.1|localhost):11470\/?/g;
+
+            function normalizeServerUrl(value) {
+                return typeof value === 'string' ? value.replace(localhostServerPattern, streamingServerUrl + '/') : value;
+            }
+
+            function patchLocalStorage() {
+                try {
+                    var originalGetItem = Storage.prototype.getItem;
+                    var originalSetItem = Storage.prototype.setItem;
+
+                    Storage.prototype.getItem = function(key) {
+                        return normalizeServerUrl(originalGetItem.call(this, key));
+                    };
+
+                    Storage.prototype.setItem = function(key, value) {
+                        return originalSetItem.call(this, key, normalizeServerUrl(value));
+                    };
+
+                    for (var i = 0; i < localStorage.length; i += 1) {
+                        var key = localStorage.key(i);
+                        var value = originalGetItem.call(localStorage, key);
+                        var normalized = normalizeServerUrl(value);
+                        if (value !== normalized) {
+                            originalSetItem.call(localStorage, key, normalized);
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            function patchFetch() {
+                if (typeof window.fetch !== 'function') return;
+                var originalFetch = window.fetch.bind(window);
+                window.fetch = function(input, init) {
+                    try {
+                        if (typeof input === 'string') {
+                            input = normalizeServerUrl(input);
+                        } else if (input && typeof input.url === 'string') {
+                            var normalizedUrl = normalizeServerUrl(input.url);
+                            if (normalizedUrl !== input.url) {
+                                input = new Request(normalizedUrl, input);
+                            }
+                        }
+                    } catch (e) {}
+                    return originalFetch(input, init);
+                };
+            }
+
+            patchLocalStorage();
+            patchFetch();
+
             function isVidaa() {
                 try {
                     if (typeof Hisense_GetFirmWareVersion === 'function' && Hisense_GetFirmWareVersion()) return true;
@@ -28,10 +80,10 @@
             window.screen720p = isVidaa() && is720pViewport();
         })();
     </script>
-    <script defer="defer" src="runtime.js?v=20260709-0215"></script>
-    <script defer="defer" src="main.js?v=20260709-0215"></script>
-    <script defer="defer" src="service.js?v=20260709-0215"></script>
-    <script defer="defer" src="webOSTV.js?v=20260709-0215"></script>
+    <script defer="defer" src="runtime.js?v=20260709-0347"></script>
+    <script defer="defer" src="main.js?v=20260709-0347"></script>
+    <script defer="defer" src="service.js?v=20260709-0347"></script>
+    <script defer="defer" src="webOSTV.js?v=20260709-0347"></script>
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
