@@ -10,5 +10,5 @@ COPY . .
 # Expose the HTTP port
 EXPOSE 8001
 
-# Start the simple Python HTTP server
-CMD ["python", "-m", "http.server", "8001"]
+# Start the static server with request and viewport debug logging
+CMD ["python", "debug_server.py"]
