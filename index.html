@@ -281,6 +281,25 @@
                 force1080Layout();
                 sendViewportDebug('window-resize');
             });
+            // DPR-flip probe. The VIDAA devicePixelRatio sometimes changes mid-life
+            // (hypothesis: after switching HDMI input / display mode, e.g. powering on
+            // a PS5, the panel renegotiates 4K/HDR and the webview re-inits at 1.5).
+            // Poll for a change, log it with before->after + viewport context, and
+            // re-fit the scale so the UI stays correct without a reload.
+            document.addEventListener('visibilitychange', function() {
+                force1080Layout();
+                sendViewportDebug('visibilitychange:' + document.visibilityState + ' dpr=' + (window.devicePixelRatio || 0));
+            });
+            var __tvLastDpr = window.devicePixelRatio || 0;
+            setInterval(function() {
+                var d = window.devicePixelRatio || 0;
+                if (d !== __tvLastDpr) {
+                    var vv = window.visualViewport;
+                    sendViewportDebug('DPR-CHANGED ' + __tvLastDpr + '->' + d + ' vp=' + (vv ? Math.round(vv.width) + 'x' + Math.round(vv.height) : '?') + ' screen=' + (screen.width || 0) + 'x' + (screen.height || 0));
+                    __tvLastDpr = d;
+                    force1080Layout();
+                }
+            }, 2000);
         })();
     </script>
     <script defer="defer" src="runtime.js?v=20260710-remote-refresh"></script>
