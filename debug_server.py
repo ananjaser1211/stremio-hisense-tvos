@@ -97,29 +97,11 @@ try {
     }
 
     function forceLayout() {
-        forceFlags(window);
-        try { forceFlags(self); } catch (e) {}
-        try {
-            ensureStyle();
-            var html = document.documentElement;
-            var body = document.body;
-            var root = document.getElementById("root");
-            [html, body, root].forEach(function(el) {
-                if (!el || !el.style) return;
-                el.style.width = W + "px";
-                el.style.height = H + "px";
-                el.style.minWidth = W + "px";
-                el.style.minHeight = H + "px";
-                el.style.maxWidth = W + "px";
-                el.style.maxHeight = H + "px";
-                el.style.overflow = "hidden";
-            });
-            if (body && body.style) {
-                body.style.zoom = Z;
-                body.style.margin = "0";
-                body.style.background = "#000";
-            }
-        } catch (e) {}
+        // Scaling hacks removed: no screen720p/innerWidth override, no zoom, no
+        // fixed-1920 CSS wall. stremio-web renders natively into the real VIDAA
+        // viewport and fills the screen. Diagnostics below (snap/error capture)
+        // are kept intact for debugging live playback on-device.
+        return;
     }
 
     function rect(selector) {

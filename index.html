@@ -60,78 +60,79 @@
                 };
             }
 
+            // TV 1080p scaling. The VIDAA browser exposes a REAL CSS viewport of
+            // ~1280x720 (devicePixelRatio 1.0) or ~853x480 (dpr 1.5) - the product
+            // dpr*viewportWidth is ~1280 in every state. We render the app at a fixed
+            // 1920x1080 design box (1080p asset mode -> sharper text/art than 720p)
+            // and uniformly scale it to fit the LIVE viewport with a CSS transform.
+            // Because the scale is recomputed from visualViewport (not a hardcoded
+            // zoom), it fills the screen at BOTH dpr states - the old bug was a fixed
+            // zoom:44.45% (right only at dpr 1.5 -> 853px island at dpr 1.0) plus CSS
+            // `zoom` instead of `transform`. Change TV_W/TV_H to retune (e.g. 1280x720).
+            var TV_W = 1920, TV_H = 1080;
+
             function force1080ModeFlag() {
-                window.screen720p = false;
                 try {
+                    window.screen720p = false;
                     Object.defineProperty(window, 'screen720p', {
-                        configurable: true,
-                        get: function() {
-                            return false;
-                        },
-                        set: function() {}
+                        configurable: true, get: function() { return false; }, set: function() {}
                     });
                 } catch (e) {}
+                // Make stremio-web lay out for a 1920x1080 canvas regardless of the
+                // flipping dpr (its layout/focus math reads window.innerWidth/Height).
+                try {
+                    Object.defineProperty(window, 'innerWidth',  { configurable: true, get: function() { return TV_W; } });
+                    Object.defineProperty(window, 'innerHeight', { configurable: true, get: function() { return TV_H; } });
+                } catch (e) {}
+            }
+
+            function tvRealViewport() {
+                // The true visible viewport. NEVER window.innerWidth here (overridden
+                // to 1920 above); visualViewport is the reliable source, then the
+                // documentElement client box as a fallback.
+                var vv = window.visualViewport;
+                var de = document.documentElement || {};
+                var w = (vv && vv.width) || de.clientWidth || TV_W;
+                var h = (vv && vv.height) || de.clientHeight || TV_H;
+                return { w: w, h: h };
             }
 
             function force1080Layout() {
                 force1080ModeFlag();
                 try {
-                    Object.defineProperty(window, 'innerWidth', {
-                        configurable: true,
-                        get: function() {
-                            return 1920;
-                        }
-                    });
-                    Object.defineProperty(window, 'innerHeight', {
-                        configurable: true,
-                        get: function() {
-                            return 1080;
-                        }
-                    });
-                } catch (e) {}
-
-                try {
-                    if (document.head && !document.getElementById('__stremio_global_1080p_fix')) {
-                        var style = document.createElement('style');
-                        style.id = '__stremio_global_1080p_fix';
-                        style.textContent = [
-                            'html,body,#root{width:1920px!important;height:1080px!important;min-width:1920px!important;min-height:1080px!important;max-width:1920px!important;max-height:1080px!important;overflow:hidden!important;}',
-                            'body{margin:0!important;zoom:44.45%!important;background:#000!important;}',
-                            '#root{display:block!important;position:relative!important;}',
-                            '.page-jI4PO{width:1920px!important;height:1080px!important;min-width:1920px!important;min-height:1080px!important;max-width:1920px!important;max-height:1080px!important;overflow:hidden!important;}',
-                            '.page-jI4PO .inner-DXVjx{height:1080px!important;width:calc(1920px - 10rem)!important;margin-left:10rem!important;overflow:hidden!important;}',
-                            '.page-jI4PO.hide-navbar-Q5Bl7 .inner-DXVjx{width:1920px!important;margin-left:0!important;}',
-                            '.item-preview-nq13h{height:443px!important;}',
-                            '.item-preview-nq13h.item-preview-720p-nskCW{height:680px!important;}',
-                            '.item-preview-nq13h .background-container-D9GP9{position:fixed!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:1920px!important;height:1080px!important;overflow:hidden!important;}',
-                            '.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj,.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj.background-inner-720p-Xc9rr{position:absolute!important;top:0!important;right:0!important;bottom:auto!important;left:0!important;width:1920px!important;height:1080px!important;overflow:hidden!important;}',
-                            '.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj .background-image-Tlzwm{width:1920px!important;height:1080px!important;min-width:1920px!important;min-height:1080px!important;object-fit:cover!important;object-position:center center!important;}',
-                            '.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj .gradient-overlay-sYJZ9{width:1920px!important;height:1080px!important;}',
-                            '.details-omgjE .info-c3Gsa{height:475px!important;}',
-                            '.details-omgjE .info-c3Gsa.info-720p-jPzlb{height:724px!important;}',
-                            '.player-SmYw4 .background-image-jHLNn{width:1920px!important;height:1080px!important;}',
-                            '.addons-LUJe6 .heading-q2AKI{max-width:1248px!important;}',
-                            '.tabs-wr1wR{display:flex!important;visibility:visible!important;}',
-                            '.navbar-NNb1c{display:flex!important;visibility:visible!important;}'
-                        ].join('\n');
+                    var vp = tvRealViewport();
+                    var scale = Math.min(vp.w / TV_W, vp.h / TV_H);
+                    if (!(scale > 0) || !isFinite(scale)) scale = 1;
+                    var style = document.getElementById('__tv_1080_scale');
+                    if (!style && document.head) {
+                        style = document.createElement('style');
+                        style.id = '__tv_1080_scale';
                         document.head.appendChild(style);
                     }
-
-                    [document.documentElement, document.body, document.getElementById('root')].forEach(function(el) {
-                        if (!el || !el.style) return;
-                        el.style.width = '1920px';
-                        el.style.height = '1080px';
-                        el.style.minWidth = '1920px';
-                        el.style.minHeight = '1080px';
-                        el.style.maxWidth = '1920px';
-                        el.style.maxHeight = '1080px';
-                        el.style.overflow = 'hidden';
-                    });
-
-                    if (document.body && document.body.style) {
-                        document.body.style.zoom = '44.45%';
-                        document.body.style.margin = '0';
-                        document.body.style.background = '#000';
+                    if (style) {
+                        style.textContent =
+                            'html,body{margin:0!important;padding:0!important;overflow:hidden!important;background:#000!important;width:100%!important;height:100%!important;}' +
+                            '#root{position:absolute!important;top:0!important;left:0!important;display:block!important;' +
+                            'width:' + TV_W + 'px!important;height:' + TV_H + 'px!important;' +
+                            'transform:scale(' + scale + ')!important;transform-origin:0 0!important;overflow:hidden!important;}' +
+                            // The app's route containers otherwise size to the real ~1280x720
+                            // viewport (vw/vh) -> a small corner inside the 1920x1080 #root.
+                            // Force them (and the player/video) to fill the design box.
+                            '.page-jI4PO{width:1920px!important;height:1080px!important;min-width:1920px!important;min-height:1080px!important;max-width:1920px!important;max-height:1080px!important;overflow:hidden!important;}' +
+                            '.page-jI4PO .inner-DXVjx{height:1080px!important;width:calc(1920px - 10rem)!important;margin-left:10rem!important;overflow:hidden!important;}' +
+                            '.page-jI4PO.hide-navbar-Q5Bl7 .inner-DXVjx{width:1920px!important;margin-left:0!important;}' +
+                            '.item-preview-nq13h{height:443px!important;}' +
+                            '.item-preview-nq13h.item-preview-720p-nskCW{height:680px!important;}' +
+                            '.item-preview-nq13h .background-container-D9GP9{position:fixed!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:1920px!important;height:1080px!important;overflow:hidden!important;}' +
+                            '.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj{position:absolute!important;top:0!important;left:0!important;width:1920px!important;height:1080px!important;overflow:hidden!important;}' +
+                            '.item-preview-nq13h .background-container-D9GP9 .background-inner-h_eaj .background-image-Tlzwm{width:1920px!important;height:1080px!important;object-fit:cover!important;object-position:center center!important;}' +
+                            '.details-omgjE .info-c3Gsa{height:475px!important;}' +
+                            '.player-SmYw4{width:1920px!important;height:1080px!important;}' +
+                            '.player-SmYw4 .background-image-jHLNn{width:1920px!important;height:1080px!important;}' +
+                            '.player-SmYw4 video{width:1920px!important;height:1080px!important;object-fit:contain!important;}';
+                    }
+                    if (window.__stremioViewportDebug) {
+                        window.__stremioViewportDebug('scale=' + scale.toFixed(4) + ' vp=' + Math.round(vp.w) + 'x' + Math.round(vp.h) + ' dpr=' + (window.devicePixelRatio || 0));
                     }
                 } catch (e) {}
             }
@@ -267,6 +268,19 @@
                 force1080Layout();
                 sendViewportDebug('hashchange');
             });
+            // Recompute the scale whenever the viewport changes - this is what makes
+            // it robust to the VIDAA devicePixelRatio 1.0<->1.5 flip (each flip fires
+            // a resize / visualViewport resize, which re-fits the 1920x1080 box).
+            if (window.visualViewport && window.visualViewport.addEventListener) {
+                window.visualViewport.addEventListener('resize', function() {
+                    force1080Layout();
+                    sendViewportDebug('visualviewport-resize');
+                });
+            }
+            window.addEventListener('resize', function() {
+                force1080Layout();
+                sendViewportDebug('window-resize');
+            });
         })();
     </script>
     <script defer="defer" src="runtime.js?v=20260710-remote-refresh"></script>
@@ -286,9 +300,9 @@
             name: 'ready'
         }), '*');
     } catch (e) {}
-    window.screen720p = false;
+    // screen720p forcing removed: let stremio-web auto-detect the TV viewport size.
     if (window.__stremioViewportDebug) {
-        window.__stremioViewportDebug('after-screen720p-disabled');
+        window.__stremioViewportDebug('after-boot');
     }
 </script>
 
